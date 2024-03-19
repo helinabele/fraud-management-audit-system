@@ -1,12 +1,13 @@
 <div class="container my-5">
   <div class="row align-items-center">
     <div class="col-md-6">
-      <h2 class="mb-4">Report Fraud and Protect Your Business</h2>
-      <p class="lead mb-5">Our secure and reliable platform allows you to report fraud and protect your business from financial losses and reputational damage.</p>
+      <h2 class="mb-4" jhiTranslate="home.header">Report Fraud and Protect Your Business</h2>
+      <p class="lead mb-5" jhiTranslate="home.body">Our secure and reliable platform allows you to report fraud and protect your business from
+        financial losses and reputational damage.</p>
       <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a> -->
     </div>
     <div class="col-md-6">
-            <img class="img-fluid reflect" src="/content/images/cbe-blg1.png" alt="Fraud Prevention">
+      <img class="img-fluid reflect" src="/content/images/cbe-blg1.png" alt="Fraud Prevention">
     </div>
   </div>
 </div>
@@ -16,17 +17,26 @@
       <div class="col">
         <div class="card h-100">
           <div class="card-body">
-            <h3 class="card-title mb-4">Whistle Blower</h3>
-            <p class="card-text mb-5">Report any suspicious behavior or activity anonymously and securely.</p>
-            <a routerLink="whistle-blower-report" class="btn btn-primary">Report Now</a>
+            <h3 class="card-title mb-4" jhiTranslate="fraudMgtApp.whistleBlowerReport.home.title">Whistle Blower</h3>
+            <p class="card-text mb-5" jhiTranslate="home.whistle">Report any suspicious behavior or activity anonymously and securely.</p>
+            <a id="fraudButton" routerLink="whistle-blower-report/new" [queryParams]="{ type: 'fraud' }" class="btn btn-primary"
+            [ngbTooltip]="getTooltipText()" placement="top" container="body" triggers="hover">
+            Fraud related 
+            </a>
+
+            <a id="complaintButton" routerLink="whistle-blower-report/new" [queryParams]="{ type: 'complaint' }" class="btn btn-primary"
+            [ngbTooltip]="getComplientText()" placement="top" container="body" triggers="hover">
+            Other complaints
+            </a>
           </div>
+
         </div>
       </div>
       <div class="col">
         <div class="card h-100">
           <div class="card-body">
-            <h3 class="card-title mb-4">Tasks</h3>
-            <p class="card-text mb-5">Manage your tasks and monitor their progress with our easy-to-use interface.</p>
+            <h3 class="card-title mb-4" jhiTranslate="fraudMgtApp.task.home.title">Tasks</h3>
+            <p class="card-text mb-5" jhiTranslate="home.taskDetail">Manage your tasks and monitor their progress with our easy-to-use interface.</p>
             <a href="/task" class="btn btn-primary">View Tasks</a>
           </div>
         </div>
@@ -34,47 +44,16 @@
       <div class="col">
         <div class="card h-100">
           <div class="card-body">
-            <h3 class="card-title mb-4">User Guide</h3>
-            <p class="card-text mb-5">Learn how to use our platform with our comprehensive user guide.</p>
-            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" target="_blank">Open Guide</a>
+            <h3 class="card-title mb-4" jhiTranslate="home.userGuide">User Guide</h3>
+            <p class="card-text mb-5" jhiTranslate="home.userGuideDetail">Learn how to use our platform with our comprehensive user guide.</p>
+            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary"
+              target="_blank" jhiTranslate="home.openGuide">Open Guide</a>
             <span>&nbsp;</span>
-            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" download>Download Guide</a>
+            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary"
+              download jhiTranslate="home.downloadGuide">Download Guide</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h2 class="card-title">Whistle Blower</h2>
-          <p class="card-text">Report any suspicious behavior or activity anonymously and securely.</p>
-          <a href="/whistle-blower-report" class="btn btn-primary" target="_blank">Report Now</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h2 class="card-title">Tasks</h2>
-          <p class="card-text">Manage your tasks and monitor their progress with our easy-to-use interface.</p>
-          <a href="/task" class="btn btn-primary" target="_blank">View Tasks</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mb-4">
-        <div class="card-body">
-          <h2 class="card-title">User Guide</h2>
-          <p class="card-text">Learn how to use our platform with our comprehensive user guide.</p>
-          <a href="/content/pdf/St_Ambrose_of_Milan_Commentary_of_Saint_Ambrose_on_the_Gospel_according.pdf"
-            class="btn btn-primary" target="_blank">Download Guide</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

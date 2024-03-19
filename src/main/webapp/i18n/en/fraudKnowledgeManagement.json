@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "reportNumber": "Report Number",
+      "fraudTitle": "Title",
       "fraudIncident": "Fraud Incident",
       "actualIncident": "Actual Incident",
       "attemptIncident": "Attempt Incident",

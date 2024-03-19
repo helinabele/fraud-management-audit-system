@@ -26,6 +26,7 @@ import { Gender } from 'app/entities/enumerations/gender.model';
   selector: 'jhi-employee-update',
   templateUrl: './employee-update.component.html',
 })
+
 export class EmployeeUpdateComponent implements OnInit {
   isSaving = false;
   employee: IEmployee | null = null;
@@ -38,7 +39,7 @@ export class EmployeeUpdateComponent implements OnInit {
   teamsSharedCollection: ITeam[] = [];
 
   editForm: EmployeeFormGroup = this.employeeFormService.createEmployeeFormGroup();
-
+  selectedEmployeePicture: File | null = null;
   constructor(
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
@@ -98,6 +99,33 @@ export class EmployeeUpdateComponent implements OnInit {
       this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
     }
   }
+
+  onChangeDateOfBirth(): void {
+    const dateOfBirthControl = this.editForm.get('dateOfBirth');
+    const ageControl = this.editForm.get('age');
+  
+    if (dateOfBirthControl && ageControl) {
+      const dateOfBirthVal = dateOfBirthControl.value;
+  
+      if (dateOfBirthVal) {
+        const today = new Date();
+        const birthDate = new Date(dateOfBirthVal);
+        let age = today.getFullYear() - birthDate.getFullYear();
+  
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+  
+        ageControl.setValue(age);
+      }
+    }
+  }
+
+  // onAddButtonClick(): void{
+  //   const employeePictures = this.editForm.get('employeePictures') as FormArray;
+  //   employeePictures.push(new FormControl(null));
+  // }
 
   previousState(): void {
     window.history.back();

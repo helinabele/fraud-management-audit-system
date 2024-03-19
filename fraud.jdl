@@ -112,7 +112,7 @@ enum FraudTypeByIncident {
     ACTUAL, ATTEMPT
 }
 enum SuspectedFraudster {
-    INTERNAL, EXTERNAL
+    INTERNAL, EXTERNAL, BOTH, OTHER
 }
 entity InternalEmployee{
     name String required
@@ -149,6 +149,33 @@ entity WhistleBlowerReport{
 	organization String
 	message String
 	attachment Blob
+    position String
+    zone String
+    description String
+}
+entity Division{
+    divisionName String required
+    description String
+}
+entity Department{
+    departmentName String required
+    description String
+}
+entity Branch{
+    branchName String required
+    description String
+}
+entity Region{
+    regionName String required
+    description String
+}
+entity City{
+    cityName String required
+    description String
+}
+entity SubCity{
+    subCityName String required
+    description String
 }
 relationship ManyToOne{
     Employee{user(login)} to User
@@ -176,6 +203,17 @@ relationship ManyToOne{
     AssignTask{team(teamName)} to Team{assignTask}
     FraudInvestigationReport{team(teamName)} to Team
     Findings to FraudInvestigationReport{findings}
+    City{region(regionName)} to Region{city}
+    SubCity{city(cityName)} to City{subCity}
+    Department{division(divisionName)} to Division{department}
+    Branch{division(divisionName)} to Division{branch}
+    Branch{department(departmentName)} to Department{branch}
+    WhistleBlowerReport{division(divisionName)} to Division{whistleBlowerReport}
+    WhistleBlowerReport{department(departmentName)} to Department{whistleBlowerReport}
+    WhistleBlowerReport{branch(branchName)} to Branch{whistleBlowerReport}
+    WhistleBlowerReport{region(regionName)} to Region{whistleBlowerReport}
+    WhistleBlowerReport{city(cityName)} to City{whistleBlowerReport}
+    WhistleBlowerReport{subCity(subCityName)} to SubCity{whistleBlowerReport}
 }
 relationship OneToOne {
     Director{user(login)} to User{director(directorName)}

@@ -69,7 +69,7 @@ export class EmployeeFormService {
       }),
       genderType: new FormControl(employeeRawValue.genderType),
       dateOfBirth: new FormControl(employeeRawValue.dateOfBirth),
-      age: new FormControl(employeeRawValue.age),
+      age: new FormControl({value: employeeRawValue.age, disabled: true}),
       email: new FormControl(employeeRawValue.email, {
         validators: [Validators.required, Validators.pattern('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')],
       }),

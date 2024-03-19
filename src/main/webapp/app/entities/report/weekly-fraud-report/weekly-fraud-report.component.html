@@ -8,7 +8,15 @@
       </button>
     </div>
   </h2>
-<table class="fraud-report-table">
+  <div class="filter-container">
+    <input class="filter-input" type="text" placeholder="Filter by Name" [(ngModel)]="nameFilter">
+    <input class="filter-input" type="text" placeholder="Filter by Address" [(ngModel)]="addressFilter">
+    <input class="filter-input" type="text" placeholder="Filter by Cause" [(ngModel)]="causeFilter">
+    <input class="filter-input" type="text" placeholder="Filter by Fraud" [(ngModel)]="fraudTypeFilter">
+    <button class="filter-button" (click)="filterResults()">Search</button>
+    <button class="filter-button">Cancle</button>
+  </div>
+<table class="fraud-report-table" data-cy="entityTable">
     <thead>
         <tr>
             <th>No</th>
@@ -19,7 +27,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let report of fraudKnowledgeManagements, let i = index">
+        <tr *ngFor="let report of filteredNameList, let i = index">
             <td>{{ i+ 1}}</td>
             <td></td>
             <td></td>

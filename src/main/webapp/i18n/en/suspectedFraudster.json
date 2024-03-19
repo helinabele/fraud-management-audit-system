@@ -3,7 +3,9 @@
     "SuspectedFraudster": {
       "null": "",
       "INTERNAL": "INTERNAL",
-      "EXTERNAL": "EXTERNAL"
+      "EXTERNAL": "EXTERNAL",
+      "BOTH": "BOTH",
+      "OTHER": "OTHER"
     }
   }
 }

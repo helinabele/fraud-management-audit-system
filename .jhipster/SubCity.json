@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20231109061715",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "sub_city",
+  "fields": [
+    {
+      "fieldName": "subCityName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SubCity",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "cityName",
+      "otherEntityName": "city",
+      "otherEntityRelationshipName": "subCity",
+      "relationshipName": "city",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "whistleBlowerReport",
+      "otherEntityRelationshipName": "subCity",
+      "relationshipName": "whistleBlowerReport",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

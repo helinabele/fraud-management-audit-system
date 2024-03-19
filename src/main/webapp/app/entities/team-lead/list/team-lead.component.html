@@ -51,12 +51,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="managerialId">
+          <!-- <th scope="col" jhiSortBy="managerialId">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.teamLead.managerialId">Managerial Id</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" jhiSortBy="user.login">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.teamLead.user">User</span>
@@ -79,7 +79,7 @@
           </td> -->
           <td>{{ teamLead.teamLeadName }}</td>
           <td>{{ teamLead.description }}</td>
-          <td>{{ teamLead.managerialId }}</td>
+          <!-- <td>{{ teamLead.managerialId }}</td> -->
           <td>
             {{ teamLead.user?.login }}
           </td>

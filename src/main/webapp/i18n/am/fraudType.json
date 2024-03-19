@@ -1,0 +1,26 @@
+{
+  "fraudMgtApp": {
+    "fraudType": {
+      "home": {
+        "title": "Fraud Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fraud Type",
+        "createOrEditLabel": "Create or edit a Fraud Type",
+        "notFound": "No Fraud Types found"
+      },
+      "created": "A new Fraud Type is created with identifier {{ param }}",
+      "updated": "A Fraud Type is updated with identifier {{ param }}",
+      "deleted": "A Fraud Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fraud Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Fraud Type"
+      },
+      "id": "ID",
+      "fraudName": "Fraud Name",
+      "description": "Description",
+      "attachment": "Attachment"
+    }
+  }
+}

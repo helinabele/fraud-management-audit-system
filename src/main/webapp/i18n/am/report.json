@@ -1,0 +1,11 @@
+{
+    "report": {
+        "title": "Report",
+        "fraudKnowledgeManagementReport": "Fraud KM Report",
+        "weeklyFraudReport": "Weekly Fraud Report",
+        "monthlyFraudAttempt": "Monthly Fraud & Attempt NBE",
+        "quarterlyInvestigationPerformanceReport": "Quarterly Investigation PerformanceReport",
+        "outstandingQuarterlySummaryReport": "Outstanding Quarterly Summary Report",
+        "whistleBlowerQuarterlyReport": "Whistle Blower Quarterly Report"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "fraudMgtApp": {
+    "FraudTypeByIncident": {
+      "null": "",
+      "ACTUAL": "ACTUAL",
+      "ATTEMPT": "ATTEMPT"
+    }
+  }
+}

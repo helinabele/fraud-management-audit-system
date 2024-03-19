@@ -1,0 +1,38 @@
+{
+  "applications": "*",
+  "changelogDate": "20231109061713",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "region",
+  "fields": [
+    {
+      "fieldName": "regionName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Region",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "city",
+      "otherEntityRelationshipName": "region",
+      "relationshipName": "city",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "whistleBlowerReport",
+      "otherEntityRelationshipName": "region",
+      "relationshipName": "whistleBlowerReport",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

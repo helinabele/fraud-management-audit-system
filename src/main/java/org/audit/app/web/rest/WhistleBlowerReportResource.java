@@ -67,20 +67,20 @@ public class WhistleBlowerReportResource {
             throw new BadRequestAlertException("A new whistleBlowerReport cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        String smsUrl = "http://172.30.6.15:8890/message?from=CBE&to=";
-        String text = "Dear" + '/' + "Sir " + whistleBlowerReportDTO.getFullName() +
-                ", we are grateful for you taking the time and effort to bring this matter to our attention and we would like to assure you that your concerns will be handled shortly. Please provide us further details if you could through email --------- "                                                                                                                                                      
-                + '&' + "telephone ------------.";
-        String restURL = "&text=" + text +
-                "&user=FRAUD&pass=Fraudpwd@123&id&dlrreq=0";
+    //    String smsUrl = "http://172.30.6.15:8890/message?from=CBE&to=";
+    //    String text = "Dear" + '/' + "Sir " + whistleBlowerReportDTO.getFullName() +
+    //            ", we are grateful for you taking the time and effort to bring this matter to our attention and we would like to assure you that your concerns will be handled shortly. Please provide us further details if you could through email --------- "
+    //            + '&' + "telephone ------------.";
+    //    String restURL = "&text=" + text +
+    //            "&user=FRAUD&pass=Fraudpwd@123&id&dlrreq=0";
 
-        String urlSMS2 = smsUrl + whistleBlowerReportDTO.getPhone() + restURL;
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<String> request = new HttpEntity<>(urlSMS2, headers);
-        restTemplate.postForObject(urlSMS2, request, String.class);
-        
+    //    String urlSMS2 = smsUrl + whistleBlowerReportDTO.getPhone() + restURL;
+    //    HttpHeaders headers = new HttpHeaders();
+    //    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    //    RestTemplate restTemplate = new RestTemplate();
+    //    HttpEntity<String> request = new HttpEntity<>(urlSMS2, headers);
+    //    restTemplate.postForObject(urlSMS2, request, String.class);
+
         WhistleBlowerReportDTO result = whistleBlowerReportService.save(whistleBlowerReportDTO);
         return ResponseEntity
             .created(new URI("/api/whistle-blower-reports/" + result.getId()))
@@ -162,18 +162,24 @@ public class WhistleBlowerReportResource {
      * {@code GET  /whistle-blower-reports} : get all the whistleBlowerReports.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of whistleBlowerReports in body.
      */
     @GetMapping("/whistle-blower-reports")
     public ResponseEntity<List<WhistleBlowerReportDTO>> getAllWhistleBlowerReports(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         log.debug("REST request to get a page of WhistleBlowerReports");
-        Page<WhistleBlowerReportDTO> page = whistleBlowerReportService.findAll(pageable);
+        Page<WhistleBlowerReportDTO> page;
+        if (eagerload) {
+            page = whistleBlowerReportService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = whistleBlowerReportService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-
     /**
      * {@code GET  /whistle-blower-reports/:id} : get the "id" whistleBlowerReport.
      *

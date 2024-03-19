@@ -1,3 +1,6 @@
+<div *ngIf="selectedReport">
+  <jhi-assign-task-update [reports]="whistleBlowerReports"></jhi-assign-task-update>
+</div>
 <div>
   <h2 id="page-heading" data-cy="WhistleBlowerReportHeading">
     <span jhiTranslate="fraudMgtApp.whistleBlowerReport.home.title">Whistle Blower Reports</span>
@@ -17,6 +20,23 @@
       </button>
     </div>
   </h2>
+  <!-- <input type="text" placeholder="Filter by Region" [(ngModel)]="searchQuery" #filterInput> -->
+  <div class="filter-container" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']">
+    <input class="filter-input" type="text" placeholder="Filter by Name" [(ngModel)]="nameFilter">
+    <select class="filter-dropdown" [(ngModel)]="genderFilter">
+      <option value="">Filter by Gender</option>
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
+    </select>
+    <input class="filter-input" type="text" placeholder="Filter by Email" [(ngModel)]="emailFilter">
+    <input class="filter-input" type="text" placeholder="Filter by Phone" [(ngModel)]="phoneFilter">
+    <input class="filter-input" type="text" placeholder="Filter by Organization" [(ngModel)]="organizationFilter">
+    <button class="filter-button" (click)="filterResults()">Search</button>
+    <button class="filter-button" (click)="cancelSearch()">Clear</button>
+  </div>
+  <!-- <div *ngIf="isLoading">
+    Loading...
+  </div> -->
 
   <jhi-alert-error></jhi-alert-error>
 
@@ -80,11 +100,67 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col"></th>
+           
+            <th scope="col" jhiSortBy="position">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.position">Position</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="zone">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.zone">Zone</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.description">Description</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="division.id">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.division">Division</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="department.id">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.department">Department</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="branch.id">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.branch">Branch</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="region.id">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.region">Region</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="city.id">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.city">City</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="subCity.id">
+              <div class="d-flex">
+                <span jhiTranslate="fraudMgtApp.whistleBlowerReport.subCity">Sub City</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col">Status</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let whistleBlowerReport of whistleBlowerReports; trackBy: trackId" data-cy="entityTable">
+          <tr *ngFor="let whistleBlowerReport of filteredNameList trackBy: trackId" data-cy="entityTable">
             <!-- <td>
               <a [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'view']">{{ whistleBlowerReport.id
                 }}</a>
@@ -103,6 +179,61 @@
               <span *ngIf="whistleBlowerReport.attachment">{{ whistleBlowerReport.attachmentContentType }}, {{
                 byteSize(whistleBlowerReport.attachment) }}</span>
             </td>
+            <td>{{ whistleBlowerReport.position }}</td>
+            <td>{{ whistleBlowerReport.zone }}</td>
+            <td>{{ whistleBlowerReport.description }}</td>
+            <td>
+              <div *ngIf="whistleBlowerReport.division">
+                <a [routerLink]="['/division', whistleBlowerReport.division.id, 'view']">{{
+                  whistleBlowerReport.division.divisionName }}</a>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="whistleBlowerReport.department">
+                <a [routerLink]="['/department', whistleBlowerReport.department.id, 'view']">{{
+                  whistleBlowerReport.department.departmentName }}</a>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="whistleBlowerReport.branch">
+                <a [routerLink]="['/branch', whistleBlowerReport.branch.id, 'view']">{{
+                  whistleBlowerReport.branch.branchName }}</a>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="whistleBlowerReport.region">
+                <a [routerLink]="['/region', whistleBlowerReport.region.id, 'view']">{{
+                  whistleBlowerReport.region.regionName }}</a>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="whistleBlowerReport.city">
+                <a [routerLink]="['/city', whistleBlowerReport.city.id, 'view']">{{ whistleBlowerReport.city.cityName
+                  }}</a>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="whistleBlowerReport.subCity">
+                <a [routerLink]="['/sub-city', whistleBlowerReport.subCity.id, 'view']">{{
+                  whistleBlowerReport.subCity.subCityName }}</a>
+              </div>
+            </td>
+            <td>
+              <ng-container *ngIf="isAssigned; else notAssigned">
+                Assigned
+              </ng-container>
+              <ng-template #notAssigned>
+                Not Assigned
+              </ng-template>
+            </td>
+            <div *ngIf="isAssigned">
+              <!-- Report has been assigned previously -->
+              <p>This report has been assigned.</p>
+            </div>
+            <div *ngIf="!isAssigned">
+              <!-- Report has not been assigned previously -->
+              <p>This report has not been assigned.</p>
+            </div>
             <td class="text-end">
               <div class="btn-group">
                 <button type="submit" [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'view']"
@@ -111,22 +242,28 @@
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                 </button>
 
-                <button type="submit" [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'edit']"
+                <button *jhiHasAnyAuthority="['ROLE_ADMIN']" type="submit"
+                  [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'edit']"
                   class="btn btn-primary btn-sm" data-cy="entityEditButton">
                   <fa-icon icon="pencil-alt"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                 </button>
                 <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
-                  [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'assign']"
-                  class="btn btn-info btn-sm" data-cy="entityAssignButton">
+                  (click)="onAssignButtonClick(whistleBlowerReport)" class="btn btn-info btn-sm"
+                  data-cy="entityAssignButton">
                   <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.Assign">Assign</span>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
                 </button>
-                <button type="submit" (click)="delete(whistleBlowerReport)" class="btn btn-danger btn-sm"
+                <button type="submit" (click)="rejectWhistleBlower()" class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" >Reject</span>
+              </button>
+                <!-- <button type="submit" (click)="delete(whistleBlowerReport)" class="btn btn-danger btn-sm"
                   data-cy="entityDeleteButton">
                   <fa-icon icon="times"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                </button>
+                </button> -->
               </div>
             </td>
           </tr>

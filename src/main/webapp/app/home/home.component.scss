@@ -12,6 +12,14 @@ Main page styles
 .reflect {
   -webkit-box-reflect: right;
 }
+
+::ng-deep .tooltip {
+  font-size: 14px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),

@@ -1,8 +1,10 @@
 package org.audit.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import org.audit.app.domain.enumeration.Gender;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -41,6 +43,45 @@ public class WhistleBlowerReport implements Serializable {
 
     @Field("attachment_content_type")
     private String attachmentContentType;
+
+    @Field("position")
+    private String position;
+
+    @Field("zone")
+    private String zone;
+
+    @Field("description")
+    private String description;
+
+    @DBRef
+    @Field("division")
+    @JsonIgnoreProperties(value = { "departments", "branches", "whistleBlowerReports" }, allowSetters = true)
+    private Division division;
+
+    @DBRef
+    @Field("department")
+    @JsonIgnoreProperties(value = { "division", "branches", "whistleBlowerReports" }, allowSetters = true)
+    private Department department;
+
+    @DBRef
+    @Field("branch")
+    @JsonIgnoreProperties(value = { "division", "department", "whistleBlowerReports" }, allowSetters = true)
+    private Branch branch;
+
+    @DBRef
+    @Field("region")
+    @JsonIgnoreProperties(value = { "cities", "whistleBlowerReports" }, allowSetters = true)
+    private Region region;
+
+    @DBRef
+    @Field("city")
+    @JsonIgnoreProperties(value = { "region", "subCities", "whistleBlowerReports" }, allowSetters = true)
+    private City city;
+
+    @DBRef
+    @Field("subCity")
+    @JsonIgnoreProperties(value = { "city", "whistleBlowerReports" }, allowSetters = true)
+    private SubCity subCity;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -161,6 +202,123 @@ public class WhistleBlowerReport implements Serializable {
         this.attachmentContentType = attachmentContentType;
     }
 
+    public String getPosition() {
+        return this.position;
+    }
+
+    public WhistleBlowerReport position(String position) {
+        this.setPosition(position);
+        return this;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getZone() {
+        return this.zone;
+    }
+
+    public WhistleBlowerReport zone(String zone) {
+        this.setZone(zone);
+        return this;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public WhistleBlowerReport description(String description) {
+        this.setDescription(description);
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Division getDivision() {
+        return this.division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
+    public WhistleBlowerReport division(Division division) {
+        this.setDivision(division);
+        return this;
+    }
+
+    public Department getDepartment() {
+        return this.department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public WhistleBlowerReport department(Department department) {
+        this.setDepartment(department);
+        return this;
+    }
+
+    public Branch getBranch() {
+        return this.branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public WhistleBlowerReport branch(Branch branch) {
+        this.setBranch(branch);
+        return this;
+    }
+
+    public Region getRegion() {
+        return this.region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public WhistleBlowerReport region(Region region) {
+        this.setRegion(region);
+        return this;
+    }
+
+    public City getCity() {
+        return this.city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public WhistleBlowerReport city(City city) {
+        this.setCity(city);
+        return this;
+    }
+
+    public SubCity getSubCity() {
+        return this.subCity;
+    }
+
+    public void setSubCity(SubCity subCity) {
+        this.subCity = subCity;
+    }
+
+    public WhistleBlowerReport subCity(SubCity subCity) {
+        this.setSubCity(subCity);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -193,6 +351,9 @@ public class WhistleBlowerReport implements Serializable {
             ", message='" + getMessage() + "'" +
             ", attachment='" + getAttachment() + "'" +
             ", attachmentContentType='" + getAttachmentContentType() + "'" +
+            ", position='" + getPosition() + "'" +
+            ", zone='" + getZone() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

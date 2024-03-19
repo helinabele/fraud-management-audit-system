@@ -1,0 +1,9 @@
+{
+  "fraudMgtApp": {
+    "SuspectedFraudster": {
+      "null": "",
+      "INTERNAL": "INTERNAL",
+      "EXTERNAL": "EXTERNAL"
+    }
+  }
+}

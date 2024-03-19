@@ -27,6 +27,15 @@ describe('WhistleBlowerReport Form Service', () => {
             organization: expect.any(Object),
             message: expect.any(Object),
             attachment: expect.any(Object),
+            position: expect.any(Object),
+            zone: expect.any(Object),
+            description: expect.any(Object),
+            division: expect.any(Object),
+            department: expect.any(Object),
+            branch: expect.any(Object),
+            region: expect.any(Object),
+            city: expect.any(Object),
+            subCity: expect.any(Object),
           })
         );
       });
@@ -44,6 +53,15 @@ describe('WhistleBlowerReport Form Service', () => {
             organization: expect.any(Object),
             message: expect.any(Object),
             attachment: expect.any(Object),
+            position: expect.any(Object),
+            zone: expect.any(Object),
+            description: expect.any(Object),
+            division: expect.any(Object),
+            department: expect.any(Object),
+            branch: expect.any(Object),
+            region: expect.any(Object),
+            city: expect.any(Object),
+            subCity: expect.any(Object),
           })
         );
       });

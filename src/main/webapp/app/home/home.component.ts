@@ -5,18 +5,30 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import fraudTooltip from 'i18n/en/whistleBlowerReport.json';
+
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  providers: [NgbTooltipConfig]
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
+  
+  tooltipText: string = fraudTooltip.fraudMgtApp.whistleBlowerReport.fraudTooltip;
+    private readonly destroy$ = new Subject<void>();
 
-  private readonly destroy$ = new Subject<void>();
-
-  constructor(private accountService: AccountService, private router: Router) {}
+  constructor(private accountService: AccountService, 
+    private router: Router,
+    private tooltipConfig: NgbTooltipConfig,
+    private translateService: TranslateService) {
+      this.translateService.setDefaultLang('en');
+      tooltipConfig.container = 'body';
+    }
 
   ngOnInit(): void {
     this.accountService
@@ -26,6 +38,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.account = account;
         localStorage.setItem('user', JSON.stringify(account));
       });
+  }
+
+  getTooltipText(): string {
+    return this.translateService.instant('fraudMgtApp.whistleBlowerReport.fraudTooltip') as string;
+  }
+
+  getComplientText(): string {
+    return this.translateService.instant('fraudMgtApp.whistleBlowerReport.fraudComplienttip') as string;
   }
 
   login(): void {

@@ -4,13 +4,12 @@ import { IFraudKnowledgeManagement } from 'app/entities/fraud-knowledge-manageme
 import { FraudKnowledgeManagementService } from 'app/entities/fraud-knowledge-management/service/fraud-knowledge-management.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'jhi-quarterly-investigation-performance-report',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './quarterly-investigation-performance-report.component.html',
-  styleUrls: ['./quarterly-investigation-performance-report.component.scss']
+  styleUrls: ['../../whistle-blower-report.component.scss'],
 })
 export class QuarterlyInvestigationPerformanceReportComponent implements OnInit {
   fraudKnowledgeManagements?: IFraudKnowledgeManagement[];
@@ -20,8 +19,13 @@ export class QuarterlyInvestigationPerformanceReportComponent implements OnInit 
   selectedReport: string | undefined;
   public searchFilter: any = '';
   noReports = `<tr><td colspan="3">No reports found.</td></tr>`;
-  fraudTypeCounts: {[key: string]: number} = {};
-isLoading = false;
+  fraudTypeCounts: { [key: string]: number } = {};
+  isLoading = false;
+
+  filteredNameList: any[] = [];
+
+  fraudTypeFilter = '';
+  frequency = '';
 
   constructor(
     private fraudKnowledgeMgtService: FraudKnowledgeManagementService,
@@ -29,43 +33,50 @@ isLoading = false;
   ) { }
 
   ngOnInit(): void {
-    this.getFraudKnowledgeMgt();
+      this.fraudKnowledgeMgtService
+      .getFraudKnowledgeManagements()
+      .subscribe(
+        fraudKnowledgeManagements => {
+          this.fraudKnowledgeManagements = fraudKnowledgeManagements;
+          this.filterResults();
+        },
+      );
   }
 
-  getFraudKnowledgeMgt(): void {
-    if (this.startDate && this.endDate) {
-      this.fraudKnowledgeMgtService.getFraudKnowledgeManagementsByDateRange(this.startDate, this.endDate)
-        .subscribe(datas => {
-          // Create a new array with only unique fraud knowledge management records
-          const uniqueFraudKnowledgeManagements = datas.reduce((acc: IFraudKnowledgeManagement[], curr: IFraudKnowledgeManagement) => {
-            const isDuplicate = acc.some((item: IFraudKnowledgeManagement) => item.fraudInvestigationReport?.title === curr.fraudInvestigationReport?.title);
-            if (!isDuplicate) {
-              acc.push(curr);
-            }
-            return acc;
-          }, []);
-          this.fraudKnowledgeManagements = uniqueFraudKnowledgeManagements;
-          this.fraudTypeCounts = this.calculateFraudTypeCounts(uniqueFraudKnowledgeManagements);
-        });
-    } else {
-      this.fraudKnowledgeMgtService.getFraudKnowledgeManagements()
-        .subscribe(datas => {
-          // Create a new array with only unique fraud knowledge management records
-          const uniqueFraudKnowledgeManagements = datas.reduce((acc: IFraudKnowledgeManagement[], curr: IFraudKnowledgeManagement) => {
-            const isDuplicate = acc.some((item: IFraudKnowledgeManagement) => item.fraudInvestigationReport?.title === curr.fraudInvestigationReport?.title);
-            if (!isDuplicate) {
-              acc.push(curr);
-            }
-            return acc;
-          }, []);
-          this.fraudKnowledgeManagements = uniqueFraudKnowledgeManagements;
-          this.fraudTypeCounts = this.calculateFraudTypeCounts(uniqueFraudKnowledgeManagements);
-        });
-    }
-  }
+  // getFraudKnowledgeMgt(): void {
+  //   if (this.startDate && this.endDate) {
+  //     this.fraudKnowledgeMgtService.getFraudKnowledgeManagementsByDateRange(this.startDate, this.endDate)
+  //       .subscribe(datas => {
+  //         // Create a new array with only unique fraud knowledge management records
+  //         const uniqueFraudKnowledgeManagements = datas.reduce((acc: IFraudKnowledgeManagement[], curr: IFraudKnowledgeManagement) => {
+  //           const isDuplicate = acc.some((item: IFraudKnowledgeManagement) => item.fraudInvestigationReport?.title === curr.fraudInvestigationReport?.title);
+  //           if (!isDuplicate) {
+  //             acc.push(curr);
+  //           }
+  //           return acc;
+  //         }, []);
+  //         this.fraudKnowledgeManagements = uniqueFraudKnowledgeManagements;
+  //         this.fraudTypeCounts = this.calculateFraudTypeCounts(uniqueFraudKnowledgeManagements);
+  //       });
+  //   } else {
+  //     this.fraudKnowledgeMgtService.getFraudKnowledgeManagements()
+  //       .subscribe(datas => {
+  //         // Create a new array with only unique fraud knowledge management records
+  //         const uniqueFraudKnowledgeManagements = datas.reduce((acc: IFraudKnowledgeManagement[], curr: IFraudKnowledgeManagement) => {
+  //           const isDuplicate = acc.some((item: IFraudKnowledgeManagement) => item.fraudInvestigationReport?.title === curr.fraudInvestigationReport?.title);
+  //           if (!isDuplicate) {
+  //             acc.push(curr);
+  //           }
+  //           return acc;
+  //         }, []);
+  //         this.fraudKnowledgeManagements = uniqueFraudKnowledgeManagements;
+  //         this.fraudTypeCounts = this.calculateFraudTypeCounts(uniqueFraudKnowledgeManagements);
+  //       });
+  //   }
+  // }
 
-  calculateFraudTypeCounts(uniqueFraudKnowledgeManagements: IFraudKnowledgeManagement[]): {[key: string]: number} {
-    const fraudTypeCounts: {[key: string]: number} = {};
+  calculateFraudTypeCounts(uniqueFraudKnowledgeManagements: IFraudKnowledgeManagement[]): { [key: string]: number } {
+    const fraudTypeCounts: { [key: string]: number } = {};
 
     // Loop through each fraud knowledge management record
     uniqueFraudKnowledgeManagements.forEach(fraudKnowledgeManagement => {
@@ -87,12 +98,27 @@ isLoading = false;
     return fraudTypeCounts;
   }
 
-  submitFilter() :void {
+  submitFilter(): void {
     // handle form submission here
-   // console.log("Form submitted:", this.startDate, this.endDate, this.searchText);
+    // console.log("Form submitted:", this.startDate, this.endDate, this.searchText);
   }
 
-  load(): void{
+  load(): void {
     this.ngOnInit();
+  }
+
+  filterResults(): void {
+    if (this.fraudKnowledgeManagements) {
+      this.filteredNameList = this.fraudKnowledgeManagements.filter(report =>
+        (!this.fraudTypeFilter || report.fraudInvestigationReport?.title)
+      );
+    } else {
+      this.filteredNameList = [];
+    }
+  }
+
+  clearResults(): void {
+    this.fraudTypeFilter = '';
+    
   }
 }

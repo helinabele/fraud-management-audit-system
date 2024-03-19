@@ -50,6 +50,25 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  shouldDisplayNavbar(): boolean {
+    const currentUrl = this.router.url;
+    const isLoggedIn = this.accountService.isAuthenticated(); // Replace with the logic to check if the user is signed in
+
+    return !(currentUrl === '/whistle-blower-report/new' && !isLoggedIn);
+  }
+
+  shouldExcludeTab(): boolean {
+    const currentUrl = this.router.url;
+    // Add any additional logic to determine whether to exclude the tab
+    return currentUrl === '/specific-path';
+  }
+
+  isNavbarVisible(): boolean {
+    const currentUrl = this.router.url;
+    const isLoggedIn = this.accountService.isAuthenticated();
+    return !(currentUrl === 'https://fraudmgt.cbe.com.et/whistle-blower-report/new' && !isLoggedIn);
+  }
+  
   changeLanguage(languageKey: string): void {
     this.sessionStorageService.store('locale', languageKey);
     this.translateService.use(languageKey);

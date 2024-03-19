@@ -17,6 +17,11 @@
       "detail": {
         "title": "Whistle Blower Report"
       },
+      "placeholder": {
+        "name": "Enter your name",
+        "email": "Enter your email address",
+        "phone": "Enter a 10-digit phone number"
+      },
       "id": "ID",
       "fullName": "Full Name",
       "genderType": "Gender Type",
@@ -24,7 +29,22 @@
       "phone": "Phone",
       "organization": "Organization",
       "message": "Message",
-      "attachment": "Attachment"
+      "attachment": "Attachment",
+      "known": "Report as Known",
+      "anonymous": "Report as Anonymous",
+      "fraudTooltip": "Fraud: means any deceitful act committed by employees or other parties, including a misrepresentation that knowingly or recklessly misleads, or attempts to mislead, the victim of deceit in order to obtain a financial or other benefit or to unlawfully avoid an obligation of a party committing the fraud or for third parties.  Or A misleading conduct done by someone, with the objective to get an illegal advantage or to harm someone else’s (victim’s) rights is commonly known as Fraud.",
+      "fraudComplienttip": "For Fraud Complient",
+      "position": "Position",
+      "zone": "Zone",
+      "description": "Description",
+      "division": "Division/Region",
+      "department": "Department/District",
+      "branch": "Branch/Unit",
+      "region": "Region",
+      "city": "City",
+      "subCity": "Sub City",
+      "reportFraudOccurrence": "Report Fraud Occurrence",
+      "cbeEmployee": " I am a CBE Employee"
     }
   }
 }

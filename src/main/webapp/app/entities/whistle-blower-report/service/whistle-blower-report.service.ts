@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -14,14 +14,43 @@ export type EntityArrayResponseType = HttpResponse<IWhistleBlowerReport[]>;
 
 @Injectable({ providedIn: 'root' })
 export class WhistleBlowerReportService {
+  selectedReportSubject = new BehaviorSubject<IWhistleBlowerReport | null>(null);
+  selectedReport$ = this.selectedReportSubject.asObservable();
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/whistle-blower-reports');
+  private selectedReport: IWhistleBlowerReport | null = null;
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
-  
+  constructor(
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService
+  ) { }
+
+
+  setSelectedReport(report: IWhistleBlowerReport): void {
+    this.selectedReportSubject.next(report);
+  }
+  // setSelectedReport(report: IWhistleBlowerReport): void {
+  //   this.selectedReport = report;
+  // }
+  assignReport(reportId: string): Observable<any> {
+    const url = `${this.resourceUrl}/${reportId}/assign`; // Adjust the API endpoint for assigning a report
+    return this.http.put(url, null); // Adjust the HTTP method and payload as per your API
+  }
+  getSelectedReport(): IWhistleBlowerReport | null {
+    return this.selectedReport;
+  }
+  /*   updateIsAssigned(whistleBlowerReport: IWhistleBlowerReport, isAssigned: boolean): Observable<IWhistleBlowerReport> {
+      const url = `${this.resourceUrl}/${this.getWhistleBlowerReportIdentifier(whistleBlowerReport)}`;
+      const updatedReport: Partial<IWhistleBlowerReport> = { isAssigned }; // Create a partial object with only the isAssigned property
+    
+      return this.http.put<IWhistleBlowerReport>(url, updatedReport);
+    } */
+
+
+
   getwhistleBlowerReports(): Observable<IWhistleBlowerReport[]> {
     return this.http.get<IWhistleBlowerReport[]>(this.resourceUrl);
   }
-  
+
   create(whistleBlowerReport: NewWhistleBlowerReport): Observable<EntityResponseType> {
     return this.http.post<IWhistleBlowerReport>(this.resourceUrl, whistleBlowerReport, { observe: 'response' });
   }
@@ -84,4 +113,5 @@ export class WhistleBlowerReportService {
     }
     return whistleBlowerReportCollection;
   }
+
 }

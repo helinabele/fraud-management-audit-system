@@ -8,12 +8,8 @@
         <span jhiTranslate="fraudMgtApp.employee.home.refreshListLabel">Refresh list</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-employee"
-        [routerLink]="['/employee/new']"
-      >
+      <button id="jh-create-entity" data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee" [routerLink]="['/employee/new']">
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="fraudMgtApp.employee.home.createLabel"> Create a new Employee </span>
       </button>
@@ -121,20 +117,18 @@
           <td>{{ employee.employeeCode }}</td>
           <td>{{ employee.name }}</td>
           <td jhiTranslate="{{ 'fraudMgtApp.Gender.' + employee.genderType }}">{{ employee.genderType }}</td>
-          <td>{{ employee.dateOfBirth | formatMediumDatetime }}</td>
+          <!-- //<td>{{ employee.dateOfBirth | formatMediumDate }}</td> -->
+          <td>{{ employee.dateOfBirth !== null ? (employee.dateOfBirth | formatMediumDate) : 'null' }}</td>
           <td>{{ employee.age }}</td>
           <td>{{ employee.email }}</td>
           <td>
-            <a *ngIf="employee.employeePicture" (click)="openFile(employee.employeePicture, employee.employeePictureContentType)">
-              <img
-                [src]="'data:' + employee.employeePictureContentType + ';base64,' + employee.employeePicture"
-                style="max-height: 30px"
-                alt="employee image"
-              />
+            <a *ngIf="employee.employeePicture"
+              (click)="openFile(employee.employeePicture, employee.employeePictureContentType)">
+              <img [src]="'data:' + employee.employeePictureContentType + ';base64,' + employee.employeePicture"
+                style="max-height: 30px" alt="employee image" />
             </a>
-            <span *ngIf="employee.employeePicture"
-              >{{ employee.employeePictureContentType }}, {{ byteSize(employee.employeePicture) }}</span
-            >
+            <span *ngIf="employee.employeePicture">{{ employee.employeePictureContentType }}, {{
+              byteSize(employee.employeePicture) }}</span>
           </td>
           <td>
             {{ employee.user?.login }}
@@ -161,27 +155,20 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/employee', employee.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
+              <button type="submit" [routerLink]="['/employee', employee.id, 'view']" class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/employee', employee.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
+              <button type="submit" [routerLink]="['/employee', employee.id, 'edit']" class="btn btn-primary btn-sm"
+                data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(employee)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(employee)" class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
@@ -198,15 +185,8 @@
     </div>
 
     <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [page]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="navigateToPage($event)"
-      ></ngb-pagination>
+      <ngb-pagination [collectionSize]="totalItems" [page]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true" (pageChange)="navigateToPage($event)"></ngb-pagination>
     </div>
   </div>
 </div>

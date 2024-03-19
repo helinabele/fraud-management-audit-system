@@ -2,6 +2,7 @@ package org.audit.app.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link org.audit.app.domain.Team} entity.
@@ -22,7 +23,17 @@ public class TeamDTO implements Serializable {
     private TeamLeadDTO teamLead;
 
     private ManagerialDTO managers;
+    
+    private Set<EmployeeDTO> employees;
 
+    public Set<EmployeeDTO> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<EmployeeDTO> employees) {
+        this.employees = employees;
+    }
+    
     public String getId() {
         return id;
     }

@@ -1,0 +1,48 @@
+{
+  "fraudMgtApp": {
+    "whistleBlowerReport": {
+      "home": {
+        "title": "ማመልከቻ",
+        "refreshListLabel": "",
+        "createLabel": "አዲስ ማመልከቻ ይፍጠሩ",
+        "createOrEditLabel": "አዲስ ማመልከቻ ይፍጠሩ ወይም ያርትዑ",
+        "notFound": "ምንም Whistle Blower Reports አልተገኘም"
+      },
+      "created": "አንድ አዲስ ማመልከቻ ከመለያ {{ param }} ጋር ተፈጠረ",
+      "updated": "አንድ ማመልከቻ ከመለያ {{ param }} ጋር ዘምኗል",
+      "deleted": "አንድ ማመልከቻ ከመለያ {{ param }} ጋር ተሰርዟል",
+      "delete": {
+        "question": "እርግጠኛ ነዎት ማመልከቻ {{ id }}ን መሰረዝ ይፈልጋሉ?"
+      },
+      "detail": {
+        "title": "ማመልከቻ"
+      },
+      "placeholder": {
+        "name": "ስም ያስገቡ",
+        "email": "የኢሜይል አድራሻዎን ያስገቡ",
+        "phone": "ባለ 10 አሃዝ ስልክ ቁጥር ያስገቡ"
+      },
+      "id": "መታወቂያ",
+      "fullName": "ሙሉ ስም",
+      "genderType": "ጾታ",
+      "emailAdress": "ኢሜይል",
+      "phone": "ሞባይል ስልክ",
+      "organization": "Organization",
+      "message": "መልዕክት",
+      "attachment": "ተያያዥ",
+      "known": "የሚታወቅ",
+      "anonymous": "በሚስጥር ለማሳወቅ",
+      "fraudTooltip": "የማጭበርበር ድርጊት፡- ማለት የገንዘብ ወይም ሌላ ጥቅም ለማግኘት ወይም ማጭበርበርን የሚፈጽም አካልን ወይም የሶስተኛ ወገኖች ግዴታን በህገ-ወጥ መንገድ ለማስወገድ በሠራተኞች ወይም በሌሎች ወገኖች የሚፈጸም የማታለል ተግባር፣ በማወቅም ሆነ በግዴለሽነት የተጭበረበረን ሰው ወይም ድርጅት የሚያሳስት ወይም ለማሳሳት የሚሞክር ማለት ነው።  ወይም ህገወጥ ጥቅም ለማግኘት ወይም የሌላ ሰውን (የተጎጂ) መብቶችን ለጣስ ወይም ዝቅ ለማድረግ በማሰብ በአንድ ሰው የተደረገ አሳሳች ባህሪ ማለት ነው።",
+      "position": "የሥራ ደረጃ",
+      "zone": "ዞን",
+      "description": "መግለጫ",
+      "division": "ምድብ",
+      "department": "ክፍል",
+      "branch": "ቅርንጫፍ",
+      "region": "ክልል",
+      "city": "ከተማ",
+      "subCity": "ክፍለ ከተማ",
+      "check": "የኢትዮጵያ ንግድ ባንክ ሰራተኛ ከሆኑ እባክዎ እዚህ ይመልከቱ፡"
+    }
+  }
+}

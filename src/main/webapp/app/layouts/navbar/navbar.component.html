@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span jhiTranslate="global.title" class="navbar-title">Sample</span>
+      <span jhiTranslate="global.title" class="navbar-title">Fraud Mgt</span>
       <!-- <span class="navbar-version">{{ version }}</span> -->
     </a>
     <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse"
@@ -32,7 +32,8 @@
         </li>
         <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
           routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICEPRESIDENT']" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu"
+          <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICEPRESIDENT']"
+            class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu"
             data-cy="entity">
             <span>
               <fa-icon icon="file-alt"></fa-icon>
@@ -63,37 +64,36 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item"
-                routerLink="/report/quarterly-investigation-performance-report" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="/report/quarterly-investigation-performance-report"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                 <fa-icon icon="users-cog" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="report.quarterlyInvestigationPerformanceReport">Quarterly Investigation Performance Report</span>
+                <span jhiTranslate="report.quarterlyInvestigationPerformanceReport">Quarterly Investigation Performance
+                  Report</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item"
-                routerLink="/report/outstanding-quarterly-summary-report" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="/report/outstanding-quarterly-summary-report"
+                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                 <fa-icon icon="clipboard-list" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="report.outstandingQuarterlySummaryReport">
                   Outstanding Quarterly Summary Report</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item"
-              routerLink="/report/whistle-blower-quarterly-report" routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-              <fa-icon icon="bullhorn" [fixedWidth]="true"></fa-icon>
-              <span jhiTranslate="report.whistleBlowerQuarterlyReport">
-                Whistle Blower Quarterly Report
-              </span>
+              <a class="dropdown-item" routerLink="/report/whistle-blower-quarterly-report" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="bullhorn" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="report.whistleBlowerQuarterlyReport">
+                  Whistle Blower Quarterly Report
+                </span>
               </a>
           </ul>
         </li>
         <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
           routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_AUDITOR', 'ROLE_TEAMLEADER', 'ROLE_MANAGER']" class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu"
+          <a *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_AUDITOR', 'ROLE_TEAMLEADER', 'ROLE_MANAGER']"
+            class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu"
             data-cy="entity">
             <span>
               <fa-icon icon="th-list"></fa-icon>
@@ -103,16 +103,14 @@
 
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
             <li>
-              <a class="dropdown-item"
-                routerLink="fraud-investigation-report" routerLinkActive="active"
+              <a class="dropdown-item" routerLink="fraud-investigation-report" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                 <fa-icon icon="chart-bar" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.fraudInvestigationReport">Fraud Investigation Report</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item"
-                routerLink="fraud-knowledge-management" routerLinkActive="active"
+              <a class="dropdown-item" routerLink="fraud-knowledge-management" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                 <fa-icon icon="users-cog" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.fraudKnowledgeManagement">Fraud Knowledge Management</span>
@@ -225,6 +223,49 @@
                 <span jhiTranslate="global.menu.entities.findings">Findings</span>
               </a>
             </li>
+
+            <li>
+              <a class="dropdown-item" routerLink="division" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="sitemap" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.division">Division</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="department" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="briefcase" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.department">Department</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="branch" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="code-fork" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.branch">Branch</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="region" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="globe" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.region">Region</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="city" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="building" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.city">City</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="sub-city" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon icon="map-marker" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.subCity">Sub City</span>
+              </a>
+            </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
         </li>
@@ -281,16 +322,12 @@
         </li>
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-            <span>
-              <fa-icon icon="flag"></fa-icon>
-              <span jhiTranslate="global.menu.language">Language</span>
-            </span>
+            <span> <fa-icon icon="flag"></fa-icon> <span jhiTranslate="global.menu.language">Language</span> </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
-            <li *ngFor="let language of languages">
-              <a class="dropdown-item" [jhiActiveMenu]="language" href="javascript:void(0);"
-                (click)="changeLanguage(language); collapseNavbar()">{{ language | findLanguageFromKey }}</a>
-            </li>
+            <li *ngFor="let language of languages"> <a class="dropdown-item" [jhiActiveMenu]="language"
+                href="javascript:void(0);" (click)="changeLanguage(language); collapseNavbar()">{{ language |
+                findLanguageFromKey }}</a> </li>
           </ul>
         </li>
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active"

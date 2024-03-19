@@ -1,0 +1,173 @@
+{
+  "global": {
+    "title": "ፍራውድ",
+    "browsehappy": "እየተጠቀሙ ያሉት <ጠንካራ> ጊዜውያለፈበት </ ጠንካራ> አሳሽ ነው እባክዎ <a href =\"http://browsehappy.com/?locale=en\"> የእርስዎን አሳሽ ለማሻሻል </a> ተሞክሮዎን ለማሻሻል.",
+    "menu": {
+      "home": "መግቢያ",
+      "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "entities": {
+        "main": "ኩባንያ",
+        "employee": "ሰራተኞች",
+        "director": "ዳይሬክቶር",
+        "managerial": "ማናጀር",
+        "teamLead": "የቡድን መሪ",
+        "task": "ተግባር",
+        "assignTask": "ተግባር መመደብ",
+        "fraudInvestigationReport": "የማጭበርበር ምርመራ ሪፖርት",
+        "findings": "ግኝቶች",
+        "fraudKnowledgeManagement": "ማጭበርበር የእውቀት አስተዳደር",
+        "fraudType": "ማጭበርበር ዓይነት",
+        "internalEmployee": "የውስጥ ሰራተኛ",
+        "externalEmployee": "የውጭ ሰራተኛ",
+        "bankAccount": "የባንክ ሒሳብ",
+        "bankService": "የባንክ አገልግሎት",
+        "team": "ቡድን",
+        "whistleBlowerReport": "የጠላፊ ሪፖርት",
+        "division": "ክፍሎች",
+        "department": "ዲፓርትመንት",
+        "branch": "ቅርንጫፍ",
+        "region": "ክልል",
+        "city": "ከተማ",
+        "subCity": "ክፍለ ከተማ",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "comment": "Comment",
+        "reports": "Reports",
+        "fraudRegistration": "Fraud Registration"
+      },
+      "account": {
+        "main": "Account",
+        "settings": "Settings",
+        "password": "Password",
+        "sessions": "Sessions",
+        "login": "Sign in",
+        "logout": "Sign out",
+        "register": "Register"
+      },
+      "admin": {
+        "main": "አስተዳዳሪ",
+        "userManagement": "ተጠቃሚ አስተዳደር",
+        "tracker": "የተጠቃሚ መከታተያ",
+        "metrics": "ማውጫ",
+        "health": "ጤና",
+        "configuration": "ውቅር",
+        "logs": "መዝገቦች",
+        "apidocs": "ኤ.ፒ.አይ",
+        "database": "ዳታቤዝ",
+        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+      },
+      "language": "ቋንቋ"
+    },
+    "form": {
+      "username.label": "የተጠቃሚ ስም",
+      "username.placeholder": "አዲሱን የይለፍ ቃል ያረጋግጡ",
+      "currentpassword.label": "የአሁኑ የይለፍ ቃል",
+      "currentpassword.placeholder": "የአሁኑ የይለፍ ቃል",
+      "newpassword.label": "አዲስ የይለፍ ቃል",
+      "newpassword.placeholder": "አዲስ የይለፍ ቃል",
+      "confirmpassword.label": "አዲስ የይለፍ ቃል ማረጋገጫ",
+      "confirmpassword.placeholder": "አዲሱን የይለፍ ቃል ያረጋግጡ",
+      "email.label": "ኢሜይል",
+      "email.placeholder": "የእርስዎ ኢሜይል"
+    },
+    "messages": {
+      "info": {
+        "authenticated": {
+          "prefix": "If you want to ",
+          "link": "sign in",
+          "suffix": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
+        },
+        "register": {
+          "noaccount": "መለያ የለዎትም?",
+          "link": "አንድ አዲስ መለያ ይመዝግቡ"
+        }
+      },
+      "error": {
+        "dontmatch": "የይለፍ ቃሉ እና ማረጋገጫው አይዛመዱም!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "የይለፍ ቃልዎ ያስፈልጋል.",
+          "minlength": "የይለፍ ቃልዎ ቢያንስ ከ 4 ካራክተሮች መሆን አለበት.",
+          "maxlength": "የይለፍ ቃልዎ ከ 50 ካራክተሮች በላይ መሆን አይችልም.",
+          "strength": "የይለፍ ቃል ጥንካሬ:"
+        },
+        "confirmpassword": {
+          "required": "የይለፍ ቃል ማረጋገጫዎ የይለፍ ቃልዎ ያስፈልጋል.",
+          "minlength": "የይለፍ ቃል ማረጋገጫዎ ቢያንስ 4 ካራክተሮች መሆን አለበት.",
+          "maxlength": "የይለፍ ቃል ማረጋገጫዎ ከ 50 ካራክተሮች በላይ መሆን አይችልም."
+        },
+        "email": {
+          "required": "ኢሜይልዎ ያስፈልጋል.",
+          "invalid": "ኢሜይልዎ ልክ አይደለም.",
+          "minlength": "ኢሜይልዎ ቢያንስ 5 ካራክተሮች መሆን ያስፈልጋል.",
+          "maxlength": "ኢሜይልዎ ከ 50 ካራክተሮች በላይ መሆን አይችልም."
+        }
+      }
+    },
+    "field": {
+      "id": "መታወቂያ"
+    },
+    "ribbon": {
+      "dev": "Development"
+    },
+    "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+  },
+  "entity": {
+    "action": {
+      "addblob": "ብሎኖች ያክሉ",
+      "addimage": "ምስል ያክሉ",
+      "back": "ተመለስ",
+      "cancel": "ይቅር",
+      "delete": "ሰርዝ",
+      "edit": "አርትዕ",
+      "open": "ክፈት",
+      "save": "አስቀምጥ",
+      "view": "ተመልከት",
+      "show": "አሳይ {{otherEntity}}",
+      "assign": "መድብ"
+    },
+    "detail": {
+      "field": "መስክ",
+      "value": "ዋጋ"
+    },
+    "delete": {
+      "title": "የማጥፋ ተግባርን ያረጋግጡ"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "minlength": "This field is required to be at least {{ min }} characters.",
+      "maxlength": "This field cannot be longer than {{ max }} characters.",
+      "min": "This field should be at least {{ min }}.",
+      "max": "This field cannot be more than {{ max }}.",
+      "minbytes": "This field should be at least {{ min }} bytes.",
+      "maxbytes": "This field cannot be more than {{ max }} bytes.",
+      "pattern": "This field should follow pattern for {{ pattern }}.",
+      "number": "This field should be a number.",
+      "datetimelocal": "This field should be a date and time.",
+      "patternLogin": "This field can only contain letters, digits and e-mail addresses."
+    },
+    "filters": {
+      "set": "Following filters are set",
+      "clear": "Clear filter",
+      "clearAll": "Clear all filters"
+    }
+  },
+  "error": {
+    "internalServerError": "Internal server error",
+    "server.not.reachable": "Server not reachable",
+    "url.not.found": "Not found",
+    "NotNull": "Field {{ fieldName }} cannot be empty!",
+    "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+    "userexists": "Login name already used!",
+    "emailexists": "Email is already in use!",
+    "idexists": "A new {{ entityName }} cannot already have an ID",
+    "idnull": "Invalid ID",
+    "idinvalid": "Invalid ID",
+    "idnotfound": "ID cannot be found",
+    "file": {
+      "could.not.extract": "Could not extract file",
+      "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
+    }
+  },
+  "footer": "This is your footer"
+}

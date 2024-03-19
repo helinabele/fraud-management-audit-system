@@ -1,0 +1,19 @@
+{
+  "login": {
+    "title": "ግባ",
+    "form": {
+      "password": "ይለፍ ቃል",
+      "password.placeholder": "Your password",
+      "rememberme": "አስታውስ",
+      "button": "እለፍ"
+    },
+    "messages": {
+      "error": {
+        "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
+      }
+    },
+    "password": {
+      "forgot": "Did you forget your password?"
+    }
+  }
+}

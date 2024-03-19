@@ -21,6 +21,7 @@ export interface IEmployee {
   manager?: Pick<IManagerial, 'id' | 'managerialName'> | null;
   teamLead?: Pick<ITeamLead, 'id' | 'teamLeadName'> | null;
   team?: Pick<ITeam, 'id' | 'teamName'> | null;
+  selected?: boolean;
 }
 
 export type NewEmployee = Omit<IEmployee, 'id'> & { id: null };

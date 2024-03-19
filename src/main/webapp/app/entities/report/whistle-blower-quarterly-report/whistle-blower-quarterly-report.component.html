@@ -8,23 +8,47 @@
     </button>
   </div>
 </h2>
-<table class="fraud-report-table">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Full Name</th>
-        <th>Message</th>
-        <th>Date</th>
-        <th>Date Issued</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let report of whistleBlowerReport, let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ report.fullName }}</td>
-        <td>{{ report.message }}</td>
-        <td>{{ report.message }}</td>
-        <td>{{ report.fullName }}</td>
-        </tr>
-    </tbody>
-  </table>
+<div class="filter-container">
+  <input class="filter-input" type="text" placeholder="Filter by Name" [(ngModel)]="nameFilter">
+  <select class="filter-dropdown" [(ngModel)]="genderFilter">
+    <option value="">Filter by Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Other">Other</option>
+  </select>
+  <input class="filter-input" type="text" placeholder="Filter by Email" [(ngModel)]="emailFilter">
+  <input class="filter-input" type="text" placeholder="Filter by Phone" [(ngModel)]="phoneFilter">
+  <input class="filter-input" type="text" placeholder="Filter by Organization" [(ngModel)]="organizationFilter">
+  <button class="filter-button" (click)="filterResults()">Search</button>
+  <button class="filter-button" (click)="cancelSearch()">Clear</button>
+</div>
+<table class="fraud-report-table"  data-cy="entityTable">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Full Name</th>
+      <th>Message</th>
+      <th>Date</th>
+      <th>Phone</th>
+      <th>Division</th>
+      <th>Department</th>
+      <th>Branch</th>
+      <th>Region</th>
+      <th>City</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of filteredNameList, let i = index" data-cy="entityTable" >
+      <td>{{ i + 1 }}</td>
+      <td>{{ report.fullName }}</td>
+      <td>{{ report.message }}</td>
+      <td>{{ report.date }}</td>
+      <td>{{ report.phone }}</td>
+      <td>{{ report.division?.divisionName }}</td>
+      <td>{{ report.department?.departmentName }}</td>
+      <td>{{ report.branch?.branchName }}</td>
+      <td>{{ report.region?.regionName }}</td>
+      <td>{{ report.city?.cityName }}</td>
+    </tr>
+  </tbody>
+</table>

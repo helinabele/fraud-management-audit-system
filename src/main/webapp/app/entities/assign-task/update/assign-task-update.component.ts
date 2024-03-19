@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { AssignTaskFormService, AssignTaskFormGroup } from './assign-task-form.service';
 import { IAssignTask } from '../assign-task.model';
@@ -22,15 +23,21 @@ import { ITask } from 'app/entities/task/task.model';
 import { TaskService } from 'app/entities/task/service/task.service';
 import { ITeam } from 'app/entities/team/team.model';
 import { TeamService } from 'app/entities/team/service/team.service';
+import { IWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle-blower-report.model';
+import { WhistleBlowerReportService } from 'app/entities/whistle-blower-report/service/whistle-blower-report.service';
+import { Authority } from 'app/config/authority.constants';
+import { User } from 'app/admin/user-management/user-management.model';
+import { Account } from 'app/core/auth/account.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-assign-task-update',
   templateUrl: './assign-task-update.component.html',
+  styleUrls: ['../assign-task.component.scss'],
 })
 export class AssignTaskUpdateComponent implements OnInit {
   isSaving = false;
   assignTask: IAssignTask | null = null;
-
   directorsSharedCollection: IDirector[] = [];
   managerialsSharedCollection: IManagerial[] = [];
   teamLeadsSharedCollection: ITeamLead[] = [];
@@ -39,6 +46,26 @@ export class AssignTaskUpdateComponent implements OnInit {
   teamsSharedCollection: ITeam[] = [];
 
   editForm: AssignTaskFormGroup = this.assignTaskFormService.createAssignTaskFormGroup();
+  whistleBlowerReportId: string | undefined;
+  fullName?: string;
+  genderType?: string;
+  attachmentContentType?: string;
+  attachment?: string;
+  emailAddress?: string;
+  message?: string;
+  whistleBlowerProperty: any;
+
+  role?: Authority;
+  roleId?: string;
+  account: any;
+
+  teams: ITeam[] = [];
+  selectedTeamId = 0;
+
+  @Input() reports?: IWhistleBlowerReport[];
+  selectedReport?: IWhistleBlowerReport | null;
+  user?: User
+  account1: Account | null = null;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -51,8 +78,12 @@ export class AssignTaskUpdateComponent implements OnInit {
     protected employeeService: EmployeeService,
     protected taskService: TaskService,
     protected teamService: TeamService,
-    protected activatedRoute: ActivatedRoute
-  ) {}
+    protected activatedRoute: ActivatedRoute,
+    private whistleBlowerReportService: WhistleBlowerReportService,
+    private accountService: AccountService,
+    private cdRef: ChangeDetectorRef,
+    private http: HttpClient
+  ) { }
 
   compareDirector = (o1: IDirector | null, o2: IDirector | null): boolean => this.directorService.compareDirector(o1, o2);
 
@@ -66,16 +97,102 @@ export class AssignTaskUpdateComponent implements OnInit {
 
   compareTeam = (o1: ITeam | null, o2: ITeam | null): boolean => this.teamService.compareTeam(o1, o2);
 
+  // ngOnInit(): void {
+  //   this.activatedRoute.data.subscribe(({ assignTask }) => {
+  //     this.assignTask = assignTask;
+  //     if (assignTask) {
+  //       this.updateForm(assignTask);
+  //     }
+  //     this.whistleBlowerReportService.selectedReport$.subscribe(report => {
+  //       this.selectedReport = report;
+  //     });
+  //     this.loadRelationshipsOptions();
+  //   });
+  // }
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ assignTask }) => {
       this.assignTask = assignTask;
       if (assignTask) {
         this.updateForm(assignTask);
+        this.loadMoreInfo(assignTask);
       }
-
-      this.loadRelationshipsOptions();
+      this.loadRelationshipsOptions(() => {
+        this.loadPreviousTask();
+        this.retrieveSelectedReport();
+      });
     });
   }
+
+  loadMoreInfo(assignTask: any): void {
+    if (assignTask.director?.id) {
+      this.getManager(assignTask.director?.id);
+    }
+    if (assignTask.manager?.id) {
+      this.getTeamLead(assignTask.manager?.id)
+    }
+  }
+
+  assignTaskToTeam(): void {
+    const foundTeam = this.teams.find((team) => team.id.toString() === this.selectedTeamId.toString());
+
+    if (foundTeam) {
+      const employees = foundTeam.employees;
+
+      employees?.forEach((employee) => {
+        this.sendNotification(Number(employee.id), "New task assigned");
+      });
+
+    }
+  }
+
+  sendNotification(employeeId: number, message: string): void {
+    const notification = { employeeId, message };
+    this.http.post('/api/notifications', notification).subscribe;
+  }
+
+  save(): void {
+    this.isSaving = true;
+    const assignTask = this.assignTaskFormService.getAssignTask(this.editForm);
+    if (assignTask.id !== null) {
+      this.subscribeToSaveResponse(this.assignTaskService.update(assignTask));
+    } else {
+      this.subscribeToSaveResponse(this.assignTaskService.create(assignTask));
+    }
+  }
+
+  // identifyUserRole(): void {
+  //   this.account = JSON.parse(localStorage.getItem('user') ?? '{}');
+  //   if (this.account.authorities.includes(Authority.DIRECTOR)) {
+  //     this.role = Authority.DIRECTOR;
+  //     this.getDirector();
+  //   } else if (this.account.authorities.includes(Authority.MANAGER)) {
+  //     this.role = Authority.MANAGER;
+  //     this.getManager();
+  //   } else if (this.account.authorities.includes(Authority.TEAM_LEADER)) {
+  //     this.role = Authority.TEAM_LEADER;
+  //     this.getTeamLead();
+  //   } else if (this.account.authorities.includes(Authority.AUDITOR)) {
+  //     this.role = Authority.AUDITOR;
+  //     this.getEmployee();
+  //   }
+  // }
+
+
+  checkAuthority(values: any[]): void {
+    this.roleId = values.find(t => t.user?.id === this.account.id)?.id;
+  }
+
+  loadPreviousTask(): void {
+    const assignedTask = localStorage.getItem('assignedTask');
+    if (assignedTask) {
+      this.assignTask = JSON.parse(assignedTask);
+    }
+  }
+
+  // handleWhistleBlowerProperty(): void {
+  //   if (this.whistleBlowerProperty) {
+  //   }
+  // }
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
@@ -96,14 +213,50 @@ export class AssignTaskUpdateComponent implements OnInit {
     window.history.back();
   }
 
-  save(): void {
-    this.isSaving = true;
-    const assignTask = this.assignTaskFormService.getAssignTask(this.editForm);
-    if (assignTask.id !== null) {
-      this.subscribeToSaveResponse(this.assignTaskService.update(assignTask));
-    } else {
-      this.subscribeToSaveResponse(this.assignTaskService.create(assignTask));
+  protected onAssignTask(assignTask: IAssignTask[]): IAssignTask[] {
+    switch (this.role) {
+      case Authority.DIRECTOR:
+        assignTask = assignTask.filter(t => t.director?.id === this.roleId);
+        break;
+      case Authority.MANAGER:
+        assignTask = assignTask.filter(t => t.manager?.id === this.roleId);
+        break;
+      case Authority.TEAM_LEADER:
+        assignTask = assignTask.filter(t => t.teamLead?.id === this.roleId);
+        break;
     }
+    return assignTask;
+  }
+
+  protected getManager(directorId: string | undefined): void {
+    this.managerialService
+      .query()
+      .pipe(map((res: HttpResponse<IManagerial[]>) => res.body ?? []))
+      .pipe(
+        map((managers: IManagerial[]) =>
+          this.managerialService.addManagerialToCollectionIfMissing<IManagerial>(managers, this.assignTask?.manager)
+        )
+      )
+      .subscribe((managers: IManagerial[]) => (this.managerialsSharedCollection = managers.filter(t => t.directors?.id === directorId)));
+  }
+  protected getTeamLead(teamLeadId: string | undefined): void {
+    this.teamLeadService
+      .query()
+      .pipe(map((res: HttpResponse<ITeamLead[]>) => res.body ?? []))
+      .pipe(
+        map((teamLeads: ITeamLead[]) =>
+          this.teamLeadService.addTeamLeadToCollectionIfMissing<ITeamLead>(teamLeads, this.assignTask?.teamLead))
+      )
+      .subscribe((teamLeads: ITeamLead[]) => (this.teamLeadsSharedCollection = teamLeads.filter(t => t.managers?.id === teamLeadId)));
+  }
+
+  protected getEmployee(): void {
+    this.employeeService
+      .query()
+      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
+      .subscribe((employees: IEmployee[]) => {
+        this.checkAuthority(employees);
+      })
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAssignTask>>): void {
@@ -149,7 +302,7 @@ export class AssignTaskUpdateComponent implements OnInit {
     this.teamsSharedCollection = this.teamService.addTeamToCollectionIfMissing<ITeam>(this.teamsSharedCollection, assignTask.team);
   }
 
-  protected loadRelationshipsOptions(): void {
+  protected loadRelationshipsOptions(callback: () => void): void {
     this.directorService
       .query()
       .pipe(map((res: HttpResponse<IDirector[]>) => res.body ?? []))
@@ -159,26 +312,6 @@ export class AssignTaskUpdateComponent implements OnInit {
         )
       )
       .subscribe((directors: IDirector[]) => (this.directorsSharedCollection = directors));
-
-    this.managerialService
-      .query()
-      .pipe(map((res: HttpResponse<IManagerial[]>) => res.body ?? []))
-      .pipe(
-        map((managerials: IManagerial[]) =>
-          this.managerialService.addManagerialToCollectionIfMissing<IManagerial>(managerials, this.assignTask?.manager)
-        )
-      )
-      .subscribe((managerials: IManagerial[]) => (this.managerialsSharedCollection = managerials));
-
-    this.teamLeadService
-      .query()
-      .pipe(map((res: HttpResponse<ITeamLead[]>) => res.body ?? []))
-      .pipe(
-        map((teamLeads: ITeamLead[]) =>
-          this.teamLeadService.addTeamLeadToCollectionIfMissing<ITeamLead>(teamLeads, this.assignTask?.teamLead)
-        )
-      )
-      .subscribe((teamLeads: ITeamLead[]) => (this.teamLeadsSharedCollection = teamLeads));
 
     this.employeeService
       .query()
@@ -201,5 +334,27 @@ export class AssignTaskUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ITeam[]>) => res.body ?? []))
       .pipe(map((teams: ITeam[]) => this.teamService.addTeamToCollectionIfMissing<ITeam>(teams, this.assignTask?.team)))
       .subscribe((teams: ITeam[]) => (this.teamsSharedCollection = teams));
+
+    this.cdRef.detectChanges();
+
+    callback();
   }
+
+  private retrieveSelectedReport(): void {
+    const storedReport = localStorage.getItem('selectedReport');
+    if (storedReport) {
+      this.selectedReport = JSON.parse(storedReport);
+    } else {
+      this.whistleBlowerReportService.selectedReport$.subscribe(report => {
+        // Clear the stored report before assigning a new report
+        localStorage.removeItem('selectedReport');
+        localStorage.removeItem('user');
+
+        this.selectedReport = report;
+        localStorage.setItem('selectedReport', JSON.stringify(report));
+        localStorage.setItem('user', JSON.stringify(this.user));
+      });
+    }
+  }
+
 }

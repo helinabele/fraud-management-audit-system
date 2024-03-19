@@ -1,0 +1,60 @@
+{
+  "fraudMgtApp": {
+    "fraudKnowledgeManagement": {
+      "home": {
+        "title": "Fraud Knowledge Managements",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fraud Knowledge Management",
+        "createOrEditLabel": "Create or edit a Fraud Knowledge Management",
+        "notFound": "No Fraud Knowledge Managements found"
+      },
+      "created": "A new Fraud Knowledge Management is created with identifier {{ param }}",
+      "updated": "A Fraud Knowledge Management is updated with identifier {{ param }}",
+      "deleted": "A Fraud Knowledge Management is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fraud Knowledge Management {{ id }}?"
+      },
+      "detail": {
+        "title": "Fraud Knowledge Management"
+      },
+      "id": "ID",
+      "reportNumber": "Report Number",
+      "fraudIncident": "Fraud Incident",
+      "actualIncident": "Actual Incident",
+      "attemptIncident": "Attempt Incident",
+      "reasonForFailure": "Reason For Failure",
+      "unit": "Unit",
+      "incidentDate": "Incident Date",
+      "dateOfDetection": "Date Of Detection",
+      "reasonForDelay": "Reason For Delay",
+      "projectCreationDate": "Project Creation Date",
+      "reportDate": "Report Date",
+      "suspectedFraudster": "Suspected Fraudster",
+      "financialLossAmount": "Financial Loss Amount",
+      "actualFraudAmount": "Actual Fraud Amount",
+      "debitAccount": "Debit Account",
+      "creditAccount": "Credit Account",
+      "techniquesandTechnologiesUsed": "Techniquesand Technologies Used",
+      "causeForAnIncident": "Cause For An Incident",
+      "systemAndProceduralLoophole": "System And Procedural Loophole",
+      "effect": "Effect",
+      "recommendationsDrawn": "Recommendations Drawn",
+      "positionJG": "Position JG",
+      "nameIdNo": "Name Id No",
+      "actionInvolved": "Action Involved",
+      "ngScreenerReport": "Ng Screener Report",
+      "committeeDecision": "Committee Decision",
+      "measureTaken": "Measure Taken",
+      "fraudAmountRecovered": "Fraud Amount Recovered",
+      "fraudAmountWrittenOff": "Fraud Amount Written Off",
+      "previouslyHeldForFraudOutstanding": "Previously Held For Fraud Outstanding",
+      "employee": "Employee",
+      "fraudInvestigationReport": "Fraud Investigation Report",
+      "fraudType": "Fraud Type",
+      "bankAccount": "Bank Account",
+      "bankService": "Bank Service",
+      "internalEmployee": "Internal Employee",
+      "externalEmployee": "External Employee"
+    }
+  }
+}
