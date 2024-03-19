@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IFraudKnowledgeManagement } from 'app/entities/fraud-knowledge-management/fraud-knowledge-management.model';
 import { FraudKnowledgeManagementService } from 'app/entities/fraud-knowledge-management/service/fraud-knowledge-management.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FraudKnowledgeManagementSortField } from '../fraud-knowledge-management-sort-field.type';
 
 @Component({
   selector: 'jhi-outstanding-quarterly-summary-report',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './outstanding-quarterly-summary-report.component.html',
-  styleUrls: ['./outstanding-quarterly-summary-report.component.scss'],
-  providers: [FormBuilder],
+  styleUrls: ['../../whistle-blower-report.component.scss'],
 })
 export class OutstandingQuarterlySummaryReportComponent implements OnInit {
   outstandingFraud?: IFraudKnowledgeManagement[];
@@ -21,6 +20,11 @@ export class OutstandingQuarterlySummaryReportComponent implements OnInit {
   currentPage = 1;
   sortField: FraudKnowledgeManagementSortField = '';
   isLoading = false;
+
+  filteredNameList: any[] = [];
+
+  nameFilter = '';
+  actualIncidentFilter = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,4 +62,20 @@ export class OutstandingQuarterlySummaryReportComponent implements OnInit {
   load(): void {
     this.ngOnInit();
   }
+
+  filteredResults(): void{
+    if(this.outstandingFraud){
+      this.filteredNameList = this.outstandingFraud.filter(report => 
+        (!this.nameFilter || (report.unit?.toLowerCase().includes(this.nameFilter.toLowerCase()))) &&
+        (!this.actualIncidentFilter || (report.actualIncident?.toLowerCase().includes(this.actualIncidentFilter.toLowerCase()))));
+    } else{
+      this.filteredNameList = [];
+    }
+  }
+
+  clearResults(): void{
+    this.nameFilter = '';
+    this.filteredResults();
+  }
+
 }

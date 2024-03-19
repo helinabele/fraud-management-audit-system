@@ -1,0 +1,27 @@
+{
+  "fraudMgtApp": {
+    "externalEmployee": {
+      "home": {
+        "title": "External Employees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new External Employee",
+        "createOrEditLabel": "Create or edit a External Employee",
+        "notFound": "No External Employees found"
+      },
+      "created": "A new External Employee is created with identifier {{ param }}",
+      "updated": "A External Employee is updated with identifier {{ param }}",
+      "deleted": "A External Employee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete External Employee {{ id }}?"
+      },
+      "detail": {
+        "title": "External Employee"
+      },
+      "id": "ID",
+      "name": "Name",
+      "occupation": "Occupation",
+      "telephone": "Telephone",
+      "address": "Address"
+    }
+  }
+}

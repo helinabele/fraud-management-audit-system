@@ -34,6 +34,18 @@
       "fieldName": "attachment",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "position",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "zone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -41,6 +53,49 @@
   "name": "WhistleBlowerReport",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "divisionName",
+      "otherEntityName": "division",
+      "otherEntityRelationshipName": "whistleBlowerReport",
+      "relationshipName": "division",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "departmentName",
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "whistleBlowerReport",
+      "relationshipName": "department",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "branchName",
+      "otherEntityName": "branch",
+      "otherEntityRelationshipName": "whistleBlowerReport",
+      "relationshipName": "branch",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "regionName",
+      "otherEntityName": "region",
+      "otherEntityRelationshipName": "whistleBlowerReport",
+      "relationshipName": "region",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "cityName",
+      "otherEntityName": "city",
+      "otherEntityRelationshipName": "whistleBlowerReport",
+      "relationshipName": "city",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "subCityName",
+      "otherEntityName": "subCity",
+      "otherEntityRelationshipName": "whistleBlowerReport",
+      "relationshipName": "subCity",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "serviceImpl"
 }

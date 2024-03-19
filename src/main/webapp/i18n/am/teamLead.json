@@ -1,0 +1,28 @@
+{
+  "fraudMgtApp": {
+    "teamLead": {
+      "home": {
+        "title": "Team Leads",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Team Lead",
+        "createOrEditLabel": "Create or edit a Team Lead",
+        "notFound": "No Team Leads found"
+      },
+      "created": "A new Team Lead is created with identifier {{ param }}",
+      "updated": "A Team Lead is updated with identifier {{ param }}",
+      "deleted": "A Team Lead is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Team Lead {{ id }}?"
+      },
+      "detail": {
+        "title": "Team Lead"
+      },
+      "id": "ID",
+      "teamLeadName": "Team Lead Name",
+      "description": "Description",
+      "managerialId": "Managerial Id",
+      "user": "User",
+      "managers": "Managers"
+    }
+  }
+}

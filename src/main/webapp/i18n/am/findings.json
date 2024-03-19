@@ -1,0 +1,26 @@
+{
+  "fraudMgtApp": {
+    "findings": {
+      "home": {
+        "title": "Findings",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Findings",
+        "createOrEditLabel": "Create or edit a Findings",
+        "notFound": "No Findings found"
+      },
+      "created": "A new Findings is created with identifier {{ param }}",
+      "updated": "A Findings is updated with identifier {{ param }}",
+      "deleted": "A Findings is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Findings {{ id }}?"
+      },
+      "detail": {
+        "title": "Findings"
+      },
+      "id": "ID",
+      "findingAndAnalysis": "Finding And Analysis",
+      "findingAndAnalysisAnnex": "Finding And Analysis Annex",
+      "fraudInvestigationReport": "Fraud Investigation Report"
+    }
+  }
+}

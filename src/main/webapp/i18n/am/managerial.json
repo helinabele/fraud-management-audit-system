@@ -1,0 +1,28 @@
+{
+  "fraudMgtApp": {
+    "managerial": {
+      "home": {
+        "title": "Managerials",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Managerial",
+        "createOrEditLabel": "Create or edit a Managerial",
+        "notFound": "No Managerials found"
+      },
+      "created": "A new Managerial is created with identifier {{ param }}",
+      "updated": "A Managerial is updated with identifier {{ param }}",
+      "deleted": "A Managerial is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Managerial {{ id }}?"
+      },
+      "detail": {
+        "title": "Managerial"
+      },
+      "id": "ID",
+      "managerialName": "Managerial Name",
+      "description": "Description",
+      "directorId": "Director Id",
+      "user": "User",
+      "directors": "Directors"
+    }
+  }
+}

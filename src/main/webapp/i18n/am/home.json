@@ -1,0 +1,28 @@
+{
+  "home": {
+    "title": "Welcome, Java Hipster!",
+    "subtitle": "This is your homepage",
+    "logged": {
+      "message": "You are logged in as user \"{{username}}\"."
+    },
+    "question": "If you have any question on JHipster:",
+    "link": {
+      "homepage": "JHipster homepage",
+      "stackoverflow": "JHipster on Stack Overflow",
+      "bugtracker": "JHipster bug tracker",
+      "chat": "JHipster public chat room",
+      "follow": "follow @jhipster on Twitter"
+    },
+    "like": "If you like JHipster, don't forget to give us a star on",
+    "github": "GitHub",
+    "header": "ማጭበርበርን ሪፖርት ያድርጉ እና ንግድዎን ይጠብቁ",
+    "body": "የእኛ ደህንነቱ የተጠበቀ እና አስተማማኝ የመሳሪያ ስርዓት ማጭበርበርን ሪፖርት ለማድረግ እና ንግድዎን ከገንዘብ ኪሳራ እና ከስም ጥፋት ለመጠበቅ ያስችልዎታል።",
+    "footer": "የማጭበርበር ሪፖርት Mgt. መብቱ በህግ የተጠበቀ ነው",
+    "whistle": "ማንኛዉንም አጠራጣሪ ባህሪ ወይም እንቅስቃሴ በስምነት እና ደህንነቱ በተጠበቀ ሁኔታ ሪፖርት ያድርጉ።",
+    "taskDetail": "ለአጠቃቀም ቀላል በሆነው በይነገጻችን ተግባሮችዎን ያቀናብሩ እና እድገታቸውን ይቆጣጠሩ።",
+    "userGuide": "የተጠቃሚ መመሪያ",
+    "userGuideDetail": "በእኛ አጠቃላይ የተጠቃሚ መመሪያ የእኛን መድረክ እንዴት መጠቀም እንዳለብን ይወቁ።",
+    "openGuide": "መመሪያን ክፈት",
+    "downloadGuide": "መመሪያ አውርድ"
+  }
+}

@@ -10,7 +10,7 @@
   </div>
 </h2>
 
-<form [formGroup]="searchForm">
+<!-- <form [formGroup]="searchForm">
   <label for="search">Search:</label>
   <input type="text" id="search" formControlName="search">
   <label for="property">Property:</label>
@@ -23,9 +23,28 @@
     <option value="reasonForFailure">Reason for Failure</option>
   </select>
   <button type="submit">Search</button>
-  <!-- <button type="button" (click)="cancelSearch()">Cancel</button> -->
-</form>
+</form> -->
 
+<div class="filter-container">
+  <input type="text" class="filter-input" [(ngModel)]="reportNumberFilter" Filter placeholder="Filter by reportNumber">
+  <input type="text" class="filter-input" [(ngModel)]="fraudInvestigationReportFilter" Filter
+    placeholder="Filter by fraudInvestigationReport?.title">
+  <input type="text" class="filter-input" [(ngModel)]="fraudIncidentFilter" Filter
+    placeholder="Filter by fraudIncident">
+  <input type="text" class="filter-input" [(ngModel)]="actualIncidentFilter" Filter
+    placeholder="Filter by actualIncident">
+  <input type="text" class="filter-input" [(ngModel)]="attemptIncidentFilter" Filter
+    placeholder="Filter by attemptIncident">
+  <input type="text" class="filter-input" [(ngModel)]="unitFilter" Filter placeholder="Filter by unit">
+  <label for="incidentDateFilter">Incident Date:</label>
+  <input class="filter-input" type="date" id="incidentDateFilter" [(ngModel)]="incidentDateFilter"
+    placeholder="Filter by incidentDate">
+  <input class="filter-input" [(ngModel)]="dateOfDetectionFilter" Filter placeholder="Filter by dateOfDetection">
+  <input class="filter-input" [(ngModel)]="employeeFilter" Filter placeholder="Filter by employee">
+  <input class="filter-input" [(ngModel)]="fraudTypeFilter" Filter placeholder="Filter by fraudType">
+  <button class="filter-button" (click)="filteredResults()">Search</button>
+  <button class="filter-button" (click)="clearResults()">Clear</button>
+</div>
 <table class="fraud-report-table">
   <thead>
     <tr>
@@ -45,7 +64,7 @@
     </tr>
   </thead>
   <tbody *ngIf="fraudKnowledgeManagements?.length">
-    <tr *ngFor="let report of fraudKnowledgeManagements, let i = index">
+    <tr *ngFor="let report of filterdNameList, let i = index">
       <td>{{i+1}}</td>
       <td>{{ report.reportNumber }}</td>
       <td>{{ report.fraudInvestigationReport?.title }}</td>

@@ -1,11 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-fraud-knowledge-management-heading"
-        data-cy="FraudKnowledgeManagementCreateUpdateHeading"
-        jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.home.createOrEditLabel"
-      >
+      <h2 id="jhi-fraud-knowledge-management-heading" data-cy="FraudKnowledgeManagementCreateUpdateHeading"
+        jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.home.createOrEditLabel">
         Create or edit a Fraud Knowledge Management
       </h2>
 
@@ -14,741 +11,409 @@
 
         <!-- <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
+            [readonly]="true" />
         </div> -->
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportNumber" for="field_reportNumber"
-            >Report Number</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="reportNumber"
-            id="field_reportNumber"
-            data-cy="reportNumber"
-            formControlName="reportNumber"
-          />
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportNumber"
+            for="field_reportNumber">Report Number</label>
+          <input type="number" class="form-control" name="reportNumber" id="field_reportNumber" data-cy="reportNumber"
+            formControlName="reportNumber" />
           <div
-            *ngIf="editForm.get('reportNumber')!.invalid && (editForm.get('reportNumber')!.dirty || editForm.get('reportNumber')!.touched)"
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('reportNumber')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
+            *ngIf="editForm.get('reportNumber')!.invalid && (editForm.get('reportNumber')!.dirty || editForm.get('reportNumber')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('reportNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required">
               This field is required.
             </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('reportNumber')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('reportNumber')?.errors?.number"
+              jhiTranslate="entity.validation.number">
               This field should be a number.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudIncident" for="field_fraudIncident"
-            >Fraud Incident</label
-          >
-          <select
-            class="form-control"
-            name="fraudIncident"
-            formControlName="fraudIncident"
-            id="field_fraudIncident"
-            data-cy="fraudIncident"
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudInvestigationReport"
+            for="field_fraudInvestigationReport">Fraud Investigation Report</label>
+          <select class="form-control" id="field_fraudInvestigationReport" data-cy="fraudInvestigationReport"
+            name="fraudInvestigationReport" formControlName="fraudInvestigationReport"
+            [compareWith]="compareFraudInvestigationReport">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="fraudInvestigationReportOption"
+              *ngFor="let fraudInvestigationReportOption of fraudInvestigationReportsSharedCollection">
+              {{ fraudInvestigationReportOption.title }}
+            </option>
+          </select>
+        </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudIncident"
+            for="field_fraudIncident">Fraud Incident</label>
+          <select class="form-control" name="fraudIncident" formControlName="fraudIncident" id="field_fraudIncident"
+            data-cy="fraudIncident">
             <option [ngValue]="null">{{ 'fraudMgtApp.FraudTypeByIncident.null' | translate }}</option>
             <option *ngFor="let fraudTypeByIncident of fraudTypeByIncidentValues" [value]="fraudTypeByIncident">
               {{ 'fraudMgtApp.FraudTypeByIncident.' + fraudTypeByIncident | translate }}
             </option>
           </select>
-          <div
-            *ngIf="
-              editForm.get('fraudIncident')!.invalid && (editForm.get('fraudIncident')!.dirty || editForm.get('fraudIncident')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('fraudIncident')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualIncident" for="field_actualIncident"
-            >Actual Incident</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="actualIncident"
-            id="field_actualIncident"
-            data-cy="actualIncident"
-            formControlName="actualIncident"
-          />
-          <div
-            *ngIf="
+        <div class="row mb-3" *ngIf="editForm.get('fraudIncident')?.value === 'ACTUAL'">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualIncident"
+            for="field_actualIncident">Actual Incident</label>
+          <input type="text" class="form-control" name="actualIncident" id="field_actualIncident"
+            data-cy="actualIncident" formControlName="actualIncident" required />
+          <div *ngIf="
               editForm.get('actualIncident')!.invalid && (editForm.get('actualIncident')!.dirty || editForm.get('actualIncident')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('actualIncident')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
+            ">
+            <small class="form-text text-danger"
+              *ngIf="editForm.get('actualIncident')?.errors?.required && editForm.get('fraudIncident')?.value === 'ACTUAL'"
+              jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3" *ngIf="editForm.get('fraudIncident')?.value === 'ATTEMPT'">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.attemptIncident"
+            for="field_attemptIncident">Attempt Incident</label>
+          <input type="text" class="form-control" name="attemptIncident" id="field_attemptIncident"
+            data-cy="attemptIncident" formControlName="attemptIncident" required />
+          <div *ngIf="
+              editForm.get('attemptIncident')!.invalid && (editForm.get('attemptIncident')!.dirty || editForm.get('attemptIncident')!.touched)
+            ">
+            <small class="form-text text-danger"
+              *ngIf="editForm.get('attemptIncident')?.errors?.required && editForm.get('fraudIncident')?.value === 'ATTEMPT'"
+              jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3" *ngIf="editForm.get('fraudIncident')?.value === 'ATTEMPT'">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForFailure"
+            for="field_reasonForFailure">Reason For Failure</label>
+          <input type="text" class="form-control" name="reasonForFailure" id="field_reasonForFailure"
+            data-cy="reasonForFailure" formControlName="reasonForFailure" required />
+          <div *ngIf="
+              editForm.get('reasonForFailure')!.invalid && (editForm.get('reasonForFailure')!.dirty || editForm.get('reasonForFailure')!.touched)
+            ">
+            <small class="form-text text-danger"
+              *ngIf="editForm.get('reasonForFailure')?.errors?.required && editForm.get('fraudIncident')?.value === 'ATTEMPT'"
+              jhiTranslate="entity.validation.required">
               This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.attemptIncident" for="field_attemptIncident"
-            >Attempt Incident</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="attemptIncident"
-            id="field_attemptIncident"
-            data-cy="attemptIncident"
-            formControlName="attemptIncident"
-          />
-          <div
-            *ngIf="
-              editForm.get('attemptIncident')!.invalid &&
-              (editForm.get('attemptIncident')!.dirty || editForm.get('attemptIncident')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('attemptIncident')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForFailure" for="field_reasonForFailure"
-            >Reason For Failure</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="reasonForFailure"
-            id="field_reasonForFailure"
-            data-cy="reasonForFailure"
-            formControlName="reasonForFailure"
-          />
-          <div
-            *ngIf="
-              editForm.get('reasonForFailure')!.invalid &&
-              (editForm.get('reasonForFailure')!.dirty || editForm.get('reasonForFailure')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('reasonForFailure')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.unit" for="field_unit">Unit</label>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.unit"
+            for="field_unit">Unit</label>
           <input type="text" class="form-control" name="unit" id="field_unit" data-cy="unit" formControlName="unit" />
           <div *ngIf="editForm.get('unit')!.invalid && (editForm.get('unit')!.dirty || editForm.get('unit')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('unit')?.errors?.required" jhiTranslate="entity.validation.required">
+            <small class="form-text text-danger" *ngIf="editForm.get('unit')?.errors?.required"
+              jhiTranslate="entity.validation.required">
               This field is required.
             </small>
           </div>
         </div>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.incidentDate"
+              for="field_incidentDate">Incident Date</label>
+            <div class="d-flex">
+              <input id="field_incidentDate" data-cy="incidentDate" type="datetime-local" class="form-control"
+                name="incidentDate" formControlName="incidentDate" placeholder="YYYY-MM-DD HH:mm" />
+            </div>
+            <div
+              *ngIf="editForm.get('incidentDate')!.invalid && (editForm.get('incidentDate')!.dirty || editForm.get('incidentDate')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('incidentDate')?.errors?.required"
+                jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('incidentDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal">
+                This field should be a date and time.
+              </small>
+            </div>
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.incidentDate" for="field_incidentDate"
-            >Incident Date</label
-          >
-          <div class="d-flex">
-            <input
-              id="field_incidentDate"
-              data-cy="incidentDate"
-              type="datetime-local"
-              class="form-control"
-              name="incidentDate"
-              formControlName="incidentDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          <div
-            *ngIf="editForm.get('incidentDate')!.invalid && (editForm.get('incidentDate')!.dirty || editForm.get('incidentDate')!.touched)"
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('incidentDate')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('incidentDate')?.errors?.datetimelocal"
-              jhiTranslate="entity.validation.datetimelocal"
-            >
-              This field should be a date and time.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.dateOfDetection" for="field_dateOfDetection"
-            >Date Of Detection</label
-          >
-          <div class="d-flex">
-            <input
-              id="field_dateOfDetection"
-              data-cy="dateOfDetection"
-              type="datetime-local"
-              class="form-control"
-              name="dateOfDetection"
-              formControlName="dateOfDetection"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          <div
-            *ngIf="
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.dateOfDetection"
+              for="field_dateOfDetection">Date Of Detection</label>
+            <div class="d-flex">
+              <input id="field_dateOfDetection" data-cy="dateOfDetection" type="datetime-local" class="form-control"
+                name="dateOfDetection" formControlName="dateOfDetection" placeholder="YYYY-MM-DD HH:mm" />
+            </div>
+            <div *ngIf="
               editForm.get('dateOfDetection')!.invalid &&
               (editForm.get('dateOfDetection')!.dirty || editForm.get('dateOfDetection')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('dateOfDetection')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('dateOfDetection')?.errors?.datetimelocal"
-              jhiTranslate="entity.validation.datetimelocal"
-            >
-              This field should be a date and time.
-            </small>
+            ">
+              <small class="form-text text-danger" *ngIf="editForm.get('dateOfDetection')?.errors?.required"
+                jhiTranslate="entity.validation.required">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('dateOfDetection')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal">
+                This field should be a date and time.
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForDelay"
+            for="field_reasonForDelay">Reason For Delay</label>
+          <input type="text" class="form-control" name="reasonForDelay" id="field_reasonForDelay"
+            data-cy="reasonForDelay" formControlName="reasonForDelay" />
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.projectCreationDate"
+              for="field_projectCreationDate">Project Creation Date</label>
+
+            <div class="d-flex">
+              <div class="input-group">
+                <input id="field_projectCreationDate" data-cy="projectCreationDate" type="text" class="form-control"
+                  name="projectCreationDate" ngbDatepicker #projectCreationDateDp="ngbDatepicker"
+                  formControlName="projectCreationDate" />
+                <button type="button" class="btn btn-secondary" (click)="projectCreationDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+              <div *ngIf="
+                editForm.get('projectCreationDate')!.invalid &&
+                (editForm.get('projectCreationDate')!.dirty || editForm.get('projectCreationDate')!.touched)
+              ">
+                <small class="form-text text-danger" *ngIf="editForm.get('projectCreationDate')?.errors?.required"
+                  jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportDate"
+              for="field_reportDate">Report Date</label>
+            <div class="input-group">
+              <input id="field_reportDate" data-cy="reportDate" type="text" class="form-control" name="reportDate"
+                ngbDatepicker #reportDateDp="ngbDatepicker" formControlName="reportDate" />
+              <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+              <div *ngIf="
+                editForm.get('reportDate')!.invalid &&
+                (editForm.get('reportDate')!.dirty || editForm.get('reportDate')!.touched)
+              ">
+                <small class="form-text text-danger" *ngIf="editForm.get('reportDate')?.errors?.required"
+                  jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForDelay" for="field_reasonForDelay"
-            >Reason For Delay</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="reasonForDelay"
-            id="field_reasonForDelay"
-            data-cy="reasonForDelay"
-            formControlName="reasonForDelay"
-          />
-        </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.projectCreationDate" for="field_projectCreationDate"
-            >Project Creation Date</label
-          >
-          <div class="input-group">
-            <input
-              id="field_projectCreationDate"
-              data-cy="projectCreationDate"
-              type="text"
-              class="form-control"
-              name="projectCreationDate"
-              ngbDatepicker
-              #projectCreationDateDp="ngbDatepicker"
-              formControlName="projectCreationDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="projectCreationDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-          <div
-            *ngIf="
-              editForm.get('projectCreationDate')!.invalid &&
-              (editForm.get('projectCreationDate')!.dirty || editForm.get('projectCreationDate')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('projectCreationDate')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportDate" for="field_reportDate"
-            >Report Date</label
-          >
-          <div class="input-group">
-            <input
-              id="field_reportDate"
-              data-cy="reportDate"
-              type="text"
-              class="form-control"
-              name="reportDate"
-              ngbDatepicker
-              #reportDateDp="ngbDatepicker"
-              formControlName="reportDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-          </div>
-          <div *ngIf="editForm.get('reportDate')!.invalid && (editForm.get('reportDate')!.dirty || editForm.get('reportDate')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('reportDate')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
+        <div class="card">
+          <div class="row card-body">
+            <div class="col-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.suspectedFraudster"
+                for="field_suspectedFraudster" style="font-weight: bold;">Suspected Fraudster</label>
+              <select class="form-control" name="suspectedFraudster" formControlName="suspectedFraudster"
+                id="field_suspectedFraudster" data-cy="suspectedFraudster">
+                <option [ngValue]="null">{{ 'fraudMgtApp.SuspectedFraudster.null' | translate }}</option>
+                <option *ngFor="let suspectedFraudster of suspectedFraudsterValues" [value]="suspectedFraudster">
+                  {{ 'fraudMgtApp.SuspectedFraudster.' + suspectedFraudster | translate }}
+                </option>
+              </select>
+              <div *ngIf="
+                editForm.get('suspectedFraudster')!.invalid &&
+                (editForm.get('suspectedFraudster')!.dirty || editForm.get('suspectedFraudster')!.touched)
+              ">
+                <small class="form-text text-danger" *ngIf="editForm.get('suspectedFraudster')?.errors?.required"
+                  jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+            <!-- <label style="font-weight: bold;">Suspected Fraudster Name</label> -->
+            <div class="col-6 b-3" *ngIf="editForm.controls['suspectedFraudster'].value === 'INTERNAL' ">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.internalEmployee"
+                for="field_internalEmployee">Internal Employee</label>
+              <select class="form-control" id="field_internalEmployee" data-cy="internalEmployee"
+                name="internalEmployee" formControlName="internalEmployee" [compareWith]="compareInternalEmployee">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="internalEmployeeOption"
+                  *ngFor="let internalEmployeeOption of internalEmployeesSharedCollection">
+                  {{ internalEmployeeOption.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-6 b-3" *ngIf="editForm.controls['suspectedFraudster'].value === 'EXTERNAL'">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.externalEmployee"
+                for="field_externalEmployee">External Employee</label>
+              <select class="form-control" id="field_externalEmployee" data-cy="externalEmployee"
+                name="externalEmployee" formControlName="externalEmployee" [compareWith]="compareExternalEmployee">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="externalEmployeeOption"
+                  *ngFor="let externalEmployeeOption of externalEmployeesSharedCollection">
+                  {{ externalEmployeeOption.name }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.financialLossAmount"
+              for="field_financialLossAmount">Financial Loss Amount</label>
+            <input type="number" class="form-control" name="financialLossAmount" id="field_financialLossAmount"
+              data-cy="financialLossAmount" formControlName="financialLossAmount" />
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.suspectedFraudster" for="field_suspectedFraudster"
-            >Suspected Fraudster</label
-          >
-          <select
-            class="form-control"
-            name="suspectedFraudster"
-            formControlName="suspectedFraudster"
-            id="field_suspectedFraudster"
-            data-cy="suspectedFraudster"
-          >
-            <option [ngValue]="null">{{ 'fraudMgtApp.SuspectedFraudster.null' | translate }}</option>
-            <option *ngFor="let suspectedFraudster of suspectedFraudsterValues" [value]="suspectedFraudster">
-              {{ 'fraudMgtApp.SuspectedFraudster.' + suspectedFraudster | translate }}
-            </option>
-          </select>
-          <div
-            *ngIf="
-              editForm.get('suspectedFraudster')!.invalid &&
-              (editForm.get('suspectedFraudster')!.dirty || editForm.get('suspectedFraudster')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('suspectedFraudster')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualFraudAmount"
+              for="field_actualFraudAmount">Actual Fraud Amount</label>
+            <input type="text" class="form-control" name="actualFraudAmount" id="field_actualFraudAmount"
+              data-cy="actualFraudAmount" formControlName="actualFraudAmount" />
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.debitAccount"
+              for="field_debitAccount">Debit Account</label>
+            <input type="text" class="form-control" name="debitAccount" id="field_debitAccount" data-cy="debitAccount"
+              formControlName="debitAccount" />
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.creditAccount"
+              for="field_creditAccount">Credit Account</label>
+            <input type="text" class="form-control" name="creditAccount" id="field_creditAccount"
+              data-cy="creditAccount" formControlName="creditAccount" />
           </div>
         </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.techniquesandTechnologiesUsed"
+            for="field_techniquesandTechnologiesUsed">Techniquesand Technologies Used</label>
+          <input type="text" class="form-control" name="techniquesandTechnologiesUsed"
+            id="field_techniquesandTechnologiesUsed" data-cy="techniquesandTechnologiesUsed"
+            formControlName="techniquesandTechnologiesUsed" />
+        </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.financialLossAmount" for="field_financialLossAmount"
-            >Financial Loss Amount</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="financialLossAmount"
-            id="field_financialLossAmount"
-            data-cy="financialLossAmount"
-            formControlName="financialLossAmount"
-          />
-          <div
-            *ngIf="
-              editForm.get('financialLossAmount')!.invalid &&
-              (editForm.get('financialLossAmount')!.dirty || editForm.get('financialLossAmount')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('financialLossAmount')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('financialLossAmount')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              This field should be a number.
-            </small>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.causeForAnIncident"
+            for="field_causeForAnIncident">Cause For An Incident</label>
+          <input type="text" class="form-control" name="causeForAnIncident" id="field_causeForAnIncident"
+            data-cy="causeForAnIncident" formControlName="causeForAnIncident" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.systemAndProceduralLoophole"
+            for="field_systemAndProceduralLoophole">System And Procedural Loophole</label>
+          <input type="text" class="form-control" name="systemAndProceduralLoophole"
+            id="field_systemAndProceduralLoophole" data-cy="systemAndProceduralLoophole"
+            formControlName="systemAndProceduralLoophole" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.effect"
+            for="field_effect">Effect</label>
+          <input type="text" class="form-control" name="effect" id="field_effect" data-cy="effect"
+            formControlName="effect" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.recommendationsDrawn"
+            for="field_recommendationsDrawn">Recommendations Drawn</label>
+          <input type="text" class="form-control" name="recommendationsDrawn" id="field_recommendationsDrawn"
+            data-cy="recommendationsDrawn" formControlName="recommendationsDrawn" />
+        </div>
+        <div class="card">
+          <div class="row card-body">
+            <label style="font-size: large; font-weight: bold;">Employees Involved on the Transaction</label>
+            <div class="col-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.positionJG"
+                for="field_positionJG">Position JG</label>
+              <input type="text" class="form-control" name="positionJG" id="field_positionJG" data-cy="positionJG"
+                formControlName="positionJG" />
+            </div>
+
+            <div class="col-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.nameIdNo"
+                for="field_nameIdNo">Name
+                Id No</label>
+              <input type="text" class="form-control" name="nameIdNo" id="field_nameIdNo" data-cy="nameIdNo"
+                formControlName="nameIdNo" />
+            </div>
+
+            <div class="col-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actionInvolved"
+                for="field_actionInvolved">Action Involved</label>
+              <input type="text" class="form-control" name="actionInvolved" id="field_actionInvolved"
+                data-cy="actionInvolved" formControlName="actionInvolved" />
+            </div>
           </div>
         </div>
-
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualFraudAmount" for="field_actualFraudAmount"
-            >Actual Fraud Amount</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="actualFraudAmount"
-            id="field_actualFraudAmount"
-            data-cy="actualFraudAmount"
-            formControlName="actualFraudAmount"
-          />
-          <div
-            *ngIf="
-              editForm.get('actualFraudAmount')!.invalid &&
-              (editForm.get('actualFraudAmount')!.dirty || editForm.get('actualFraudAmount')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('actualFraudAmount')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.ngScreenerReport"
+            for="field_ngScreenerReport">Ng Screener Report</label>
+          <input type="text" class="form-control" name="ngScreenerReport" id="field_ngScreenerReport"
+            data-cy="ngScreenerReport" formControlName="ngScreenerReport" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.debitAccount" for="field_debitAccount"
-            >Debit Account</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="debitAccount"
-            id="field_debitAccount"
-            data-cy="debitAccount"
-            formControlName="debitAccount"
-          />
-          <div
-            *ngIf="editForm.get('debitAccount')!.invalid && (editForm.get('debitAccount')!.dirty || editForm.get('debitAccount')!.touched)"
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('debitAccount')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.committeeDecision"
+            for="field_committeeDecision">Committee Decision</label>
+          <input type="text" class="form-control" name="committeeDecision" id="field_committeeDecision"
+            data-cy="committeeDecision" formControlName="committeeDecision" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.creditAccount" for="field_creditAccount"
-            >Credit Account</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="creditAccount"
-            id="field_creditAccount"
-            data-cy="creditAccount"
-            formControlName="creditAccount"
-          />
-          <div
-            *ngIf="
-              editForm.get('creditAccount')!.invalid && (editForm.get('creditAccount')!.dirty || editForm.get('creditAccount')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('creditAccount')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.measureTaken"
+            for="field_measureTaken">Measure Taken</label>
+          <input type="text" class="form-control" name="measureTaken" id="field_measureTaken" data-cy="measureTaken"
+            formControlName="measureTaken" />
         </div>
 
         <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.techniquesandTechnologiesUsed"
-            for="field_techniquesandTechnologiesUsed"
-            >Techniquesand Technologies Used</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="techniquesandTechnologiesUsed"
-            id="field_techniquesandTechnologiesUsed"
-            data-cy="techniquesandTechnologiesUsed"
-            formControlName="techniquesandTechnologiesUsed"
-          />
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountRecovered"
+            for="field_fraudAmountRecovered">Fraud Amount Recovered</label>
+          <input type="text" class="form-control" name="fraudAmountRecovered" id="field_fraudAmountRecovered"
+            data-cy="fraudAmountRecovered" formControlName="fraudAmountRecovered" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.causeForAnIncident" for="field_causeForAnIncident"
-            >Cause For An Incident</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="causeForAnIncident"
-            id="field_causeForAnIncident"
-            data-cy="causeForAnIncident"
-            formControlName="causeForAnIncident"
-          />
-          <div
-            *ngIf="
-              editForm.get('causeForAnIncident')!.invalid &&
-              (editForm.get('causeForAnIncident')!.dirty || editForm.get('causeForAnIncident')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('causeForAnIncident')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountWrittenOff"
+            for="field_fraudAmountWrittenOff">Fraud Amount Written Off</label>
+          <input type="text" class="form-control" name="fraudAmountWrittenOff" id="field_fraudAmountWrittenOff"
+            data-cy="fraudAmountWrittenOff" formControlName="fraudAmountWrittenOff" />
         </div>
 
         <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.systemAndProceduralLoophole"
-            for="field_systemAndProceduralLoophole"
-            >System And Procedural Loophole</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="systemAndProceduralLoophole"
-            id="field_systemAndProceduralLoophole"
-            data-cy="systemAndProceduralLoophole"
-            formControlName="systemAndProceduralLoophole"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.effect" for="field_effect">Effect</label>
-          <input type="text" class="form-control" name="effect" id="field_effect" data-cy="effect" formControlName="effect" />
-          <div *ngIf="editForm.get('effect')!.invalid && (editForm.get('effect')!.dirty || editForm.get('effect')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('effect')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.recommendationsDrawn"
-            for="field_recommendationsDrawn"
-            >Recommendations Drawn</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="recommendationsDrawn"
-            id="field_recommendationsDrawn"
-            data-cy="recommendationsDrawn"
-            formControlName="recommendationsDrawn"
-          />
-          <div
-            *ngIf="
-              editForm.get('recommendationsDrawn')!.invalid &&
-              (editForm.get('recommendationsDrawn')!.dirty || editForm.get('recommendationsDrawn')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('recommendationsDrawn')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.positionJG" for="field_positionJG"
-            >Position JG</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="positionJG"
-            id="field_positionJG"
-            data-cy="positionJG"
-            formControlName="positionJG"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.nameIdNo" for="field_nameIdNo">Name Id No</label>
-          <input type="text" class="form-control" name="nameIdNo" id="field_nameIdNo" data-cy="nameIdNo" formControlName="nameIdNo" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actionInvolved" for="field_actionInvolved"
-            >Action Involved</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="actionInvolved"
-            id="field_actionInvolved"
-            data-cy="actionInvolved"
-            formControlName="actionInvolved"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.ngScreenerReport" for="field_ngScreenerReport"
-            >Ng Screener Report</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="ngScreenerReport"
-            id="field_ngScreenerReport"
-            data-cy="ngScreenerReport"
-            formControlName="ngScreenerReport"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.committeeDecision" for="field_committeeDecision"
-            >Committee Decision</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="committeeDecision"
-            id="field_committeeDecision"
-            data-cy="committeeDecision"
-            formControlName="committeeDecision"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.measureTaken" for="field_measureTaken"
-            >Measure Taken</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="measureTaken"
-            id="field_measureTaken"
-            data-cy="measureTaken"
-            formControlName="measureTaken"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountRecovered"
-            for="field_fraudAmountRecovered"
-            >Fraud Amount Recovered</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="fraudAmountRecovered"
-            id="field_fraudAmountRecovered"
-            data-cy="fraudAmountRecovered"
-            formControlName="fraudAmountRecovered"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountWrittenOff"
-            for="field_fraudAmountWrittenOff"
-            >Fraud Amount Written Off</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="fraudAmountWrittenOff"
-            id="field_fraudAmountWrittenOff"
-            data-cy="fraudAmountWrittenOff"
-            formControlName="fraudAmountWrittenOff"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label
-            class="form-label"
+          <label class="form-label"
             jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.previouslyHeldForFraudOutstanding"
-            for="field_previouslyHeldForFraudOutstanding"
-            >Previously Held For Fraud Outstanding</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="previouslyHeldForFraudOutstanding"
-            id="field_previouslyHeldForFraudOutstanding"
-            data-cy="previouslyHeldForFraudOutstanding"
-            formControlName="previouslyHeldForFraudOutstanding"
-          />
+            for="field_previouslyHeldForFraudOutstanding">Previously Held For Fraud Outstanding</label>
+          <input type="text" class="form-control" name="previouslyHeldForFraudOutstanding"
+            id="field_previouslyHeldForFraudOutstanding" data-cy="previouslyHeldForFraudOutstanding"
+            formControlName="previouslyHeldForFraudOutstanding" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.employee" for="field_employee">Employee</label>
-          <select
-            class="form-control"
-            id="field_employee"
-            data-cy="employee"
-            name="employee"
-            formControlName="employee"
-            [compareWith]="compareEmployee"
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.employee"
+            for="field_employee">Employee</label>
+          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee"
+            [compareWith]="compareEmployee">
             <option [ngValue]="null"></option>
-            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{ employeeOption.name }}</option>
+            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{
+              employeeOption.name }}</option>
           </select>
         </div>
 
         <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudInvestigationReport"
-            for="field_fraudInvestigationReport"
-            >Fraud Investigation Report</label
-          >
-          <select
-            class="form-control"
-            id="field_fraudInvestigationReport"
-            data-cy="fraudInvestigationReport"
-            name="fraudInvestigationReport"
-            formControlName="fraudInvestigationReport"
-            [compareWith]="compareFraudInvestigationReport"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="fraudInvestigationReportOption"
-              *ngFor="let fraudInvestigationReportOption of fraudInvestigationReportsSharedCollection"
-            >
-              {{ fraudInvestigationReportOption.title }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudType" for="field_fraudType">Fraud Type</label>
-          <select
-            class="form-control"
-            id="field_fraudType"
-            data-cy="fraudType"
-            name="fraudType"
-            formControlName="fraudType"
-            [compareWith]="compareFraudType"
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudType"
+            for="field_fraudType">Fraud Type</label>
+          <select class="form-control" id="field_fraudType" data-cy="fraudType" name="fraudType"
+            formControlName="fraudType" [compareWith]="compareFraudType">
             <option [ngValue]="null"></option>
             <option [ngValue]="fraudTypeOption" *ngFor="let fraudTypeOption of fraudTypesSharedCollection">
               {{ fraudTypeOption.fraudName }}
@@ -757,17 +422,10 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankAccount" for="field_bankAccount"
-            >Bank Account</label
-          >
-          <select
-            class="form-control"
-            id="field_bankAccount"
-            data-cy="bankAccount"
-            name="bankAccount"
-            formControlName="bankAccount"
-            [compareWith]="compareBankAccount"
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankAccount"
+            for="field_bankAccount">Bank Account</label>
+          <select class="form-control" id="field_bankAccount" data-cy="bankAccount" name="bankAccount"
+            formControlName="bankAccount" [compareWith]="compareBankAccount">
             <option [ngValue]="null"></option>
             <option [ngValue]="bankAccountOption" *ngFor="let bankAccountOption of bankAccountsSharedCollection">
               {{ bankAccountOption.bankName }}
@@ -776,77 +434,37 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankService" for="field_bankService"
-            >Bank Service</label
-          >
-          <select
-            class="form-control"
-            id="field_bankService"
-            data-cy="bankService"
-            name="bankService"
-            formControlName="bankService"
-            [compareWith]="compareBankService"
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankService"
+            for="field_bankService">Bank Service</label>
+          <select class="form-control" id="field_bankService" data-cy="bankService" name="bankService"
+            formControlName="bankService" [compareWith]="compareBankService">
             <option [ngValue]="null"></option>
             <option [ngValue]="bankServiceOption" *ngFor="let bankServiceOption of bankServicesSharedCollection">
               {{ bankServiceOption.serviceName }}
             </option>
           </select>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.internalEmployee" for="field_internalEmployee"
-            >Internal Employee</label
-          >
-          <select
-            class="form-control"
-            id="field_internalEmployee"
-            data-cy="internalEmployee"
-            name="internalEmployee"
-            formControlName="internalEmployee"
-            [compareWith]="compareInternalEmployee"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="internalEmployeeOption" *ngFor="let internalEmployeeOption of internalEmployeesSharedCollection">
-              {{ internalEmployeeOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.externalEmployee" for="field_externalEmployee"
-            >External Employee</label
-          >
-          <select
-            class="form-control"
-            id="field_externalEmployee"
-            data-cy="externalEmployee"
-            name="externalEmployee"
-            formControlName="externalEmployee"
-            [compareWith]="compareExternalEmployee"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="externalEmployeeOption" *ngFor="let externalEmployeeOption of externalEmployeesSharedCollection">
-              {{ externalEmployeeOption.name }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+          (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
+
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-secondary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Submit</span>
+        </button>
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving" class="btn btn-dark">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Close</span>
+      </button>
       </div>
     </form>
   </div>

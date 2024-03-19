@@ -15,6 +15,7 @@ import { IManagerial } from 'app/entities/managerial/managerial.model';
 import { ManagerialService } from 'app/entities/managerial/service/managerial.service';
 
 import { TeamUpdateComponent } from './team-update.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('Team Management Update Component', () => {
   let comp: TeamUpdateComponent;
@@ -38,6 +39,7 @@ describe('Team Management Update Component', () => {
           },
         },
       ],
+      schemas:[NO_ERRORS_SCHEMA],
     })
       .overrideTemplate(TeamUpdateComponent, '')
       .compileComponents();

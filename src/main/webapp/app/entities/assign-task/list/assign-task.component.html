@@ -184,10 +184,15 @@
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
 
-              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TEAM_LEADER', 'ROLE_AUDITOR']" type="submit"
+              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
               [routerLink]="['/assign-task', assignTask.id, 'assign']" class="btn btn-info btn-sm" data-cy="entityAssignButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
+              </button>
+              <button type="submit"
+              [routerLink]="['/assign-task', assignTask.id, 'assign']" class="btn btn-info btn-sm" data-cy="entityAssignButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" >	Start Investigation</span>
               </button>
             </div>
           </td>

@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { IFraudKnowledgeManagement } from 'app/entities/fraud-knowledge-management/fraud-knowledge-management.model';
 import { FraudKnowledgeManagementService } from 'app/entities/fraud-knowledge-management/service/fraud-knowledge-management.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FraudKnowledgeManagementSortField } from '../fraud-knowledge-management-sort-field.type';
-
+import dayjs from 'dayjs';
 
 @Component({
   selector: 'jhi-fraud-knowledge-management-report',
   standalone: true,
   templateUrl: './fraud-knowledge-management-report.component.html',
-  styleUrls: ['./fraud-knowledge-management-report.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule],
+  styleUrls: ['../../whistle-blower-report.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class FraudKnowledgeManagementReportComponent implements OnInit {
   fraudKnowledgeManagements?: IFraudKnowledgeManagement[];
@@ -21,7 +21,20 @@ export class FraudKnowledgeManagementReportComponent implements OnInit {
   totalItems = 0;
   sortField: FraudKnowledgeManagementSortField = '';
   isLoading = false;
-  
+
+  filterdNameList: any[] = [];
+
+  reportNumberFilter = '';
+  fraudInvestigationReportFilter = '';
+  fraudIncidentFilter = '';
+  actualIncidentFilter = '';
+  attemptIncidentFilter = '';
+  unitFilter = '';
+  incidentDateFilter = '';
+  dateOfDetectionFilter = '';
+  employeeFilter = '';
+  fraudTypeFilter = '';
+
   public propertyMapping = {
     reportNumber: 1,
     fraudIncident: 2,
@@ -42,102 +55,45 @@ export class FraudKnowledgeManagementReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.fraudKnowledgeManagementService
-    .getFraudKnowledgeManagements()
-    .subscribe(
-      fraudKnowledgeManagements => {
-        this.fraudKnowledgeManagements = fraudKnowledgeManagements;
-      },
-    );
-    // this.search();
+      .getFraudKnowledgeManagements()
+      .subscribe(
+        fraudKnowledgeManagements => {
+          this.fraudKnowledgeManagements = fraudKnowledgeManagements;
+          this.filteredResults();
+        },
+      );
   }
-  
-  // search(): void {
-  //   const search = this.searchForm.value.search;
-  //   const property = this.searchForm.value.property;
-  //   this.fraudKnowledgeManagementService
-  //     .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-  //     .subscribe((response) => {
-  //       this.fraudKnowledgeManagements = response.content;
-  //       this.totalItems = response.totalElements;
-  //     });
-  // }
-  load(): void{
+
+  load(): void {
     this.ngOnInit();
   }
-  // search(): void {
-  //   const search = this.searchForm.value.search;
-  //   const property = this.searchForm.value.property;
-  //   this.fraudKnowledgeManagementService
-  //     .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-  //     .subscribe((response) => {
-  //       this.fraudKnowledgeManagements = response.content;
-  //       this.totalItems = response.totalElements;
-  //     });
-  // }
 
-  /* searchByReportNumber(): void {
-    const search = this.searchForm.value.search;
-    const property = this.propertyMapping["reportNumber"];
-    this.fraudKnowledgeManagementService
-      .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-      .subscribe((response) => {
-        this.fraudKnowledgeManagements = response.content;
-        this.totalItems = response.totalElements;
-      });
-  }
-
-  searchByFraudIncident(): void {
-    const search = this.searchForm.value.search;
-    const property = this.propertyMapping["fraudIncident"];
-    this.fraudKnowledgeManagementService
-      .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-      .subscribe((response) => {
-        this.fraudKnowledgeManagements = response.content;
-        this.totalItems = response.totalElements;
-      });
-  }
-
-  searchByActualIncident(): void {
-    const search = this.searchForm.value.search;
-    const property = this.propertyMapping["actualIncident"];
-    this.fraudKnowledgeManagementService
-      .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-      .subscribe((response) => {
-        this.fraudKnowledgeManagements = response.content;
-        this.totalItems = response.totalElements;
-      });
-  }
-
-  searchByAttemptIncident(): void {
-    const search = this.searchForm.value.search;
-    const property = this.propertyMapping["attemptIncident"];
-    this.fraudKnowledgeManagementService
-      .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-      .subscribe((response) => {
-        this.fraudKnowledgeManagements = response.content;
-        this.totalItems = response.totalElements;
-      });
-  }
-
-  searchByReasonForFailure(): void {
-    const search = this.searchForm.value.search;
-    const property = this.propertyMapping["reasonForFailure"];
-    this.fraudKnowledgeManagementService
-      .searchFraudKnowledgeManagements(search, property, this.currentPage - 1, this.pageSize.toString())
-      .subscribe((response) => {
-        this.fraudKnowledgeManagements = response.content;
-        this.totalItems = response.totalElements;
-      });
-  }
-
-  cancelSearch(): void {
-    this.searchForm.reset();
-    this.search();
-  } */
   onPageChange(event: any): void {
     this.currentPage = Number(event.pageIndex) + 1;
     this.pageSize = event.pageSize;
-    //this.search();
+    // this.search();
+  }
+
+  filteredResults(): void {
+    this.filterdNameList = this.fraudKnowledgeManagements?.filter(report => 
+      (!this.incidentDateFilter || 
+        (report.incidentDate && 
+          dayjs(report.incidentDate).isSame(this.incidentDateFilter) ||
+          dayjs(report.incidentDate).isAfter(this.incidentDateFilter)))
+      ) ?? []
+  } 
+
+  clearResults(): void {
+    this.reportNumberFilter = '';
+    this.fraudInvestigationReportFilter = '';
+    this.fraudIncidentFilter = '';
+    this.actualIncidentFilter = '';
+    this.attemptIncidentFilter = '';
+    this.unitFilter = '';
+    this.incidentDateFilter = '';
+    this.dateOfDetectionFilter = '';
+    this.employeeFilter = '';
+    this.fraudTypeFilter = '';
   }
 
 }

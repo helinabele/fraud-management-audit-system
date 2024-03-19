@@ -51,6 +51,56 @@
             {{ whistleBlowerReport.attachmentContentType }}, {{ byteSize(whistleBlowerReport.attachment) }}
           </div>
         </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.position">Position</span></dt>
+        <dd>
+          <span>{{ whistleBlowerReport.position }}</span>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.zone">Zone</span></dt>
+        <dd>
+          <span>{{ whistleBlowerReport.zone }}</span>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.description">Description</span></dt>
+        <dd>
+          <span>{{ whistleBlowerReport.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.division">Division</span></dt>
+        <dd>
+          <div *ngIf="whistleBlowerReport.division">
+            <a [routerLink]="['/division', whistleBlowerReport.division.id, 'view']">{{ whistleBlowerReport.division.divisionName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.department">Department</span></dt>
+        <dd>
+          <div *ngIf="whistleBlowerReport.department">
+            <a [routerLink]="['/department', whistleBlowerReport.department.id, 'view']">{{
+              whistleBlowerReport.department.departmentName
+            }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.branch">Branch</span></dt>
+        <dd>
+          <div *ngIf="whistleBlowerReport.branch">
+            <a [routerLink]="['/branch', whistleBlowerReport.branch.id, 'view']">{{ whistleBlowerReport.branch.branchName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.region">Region</span></dt>
+        <dd>
+          <div *ngIf="whistleBlowerReport.region">
+            <a [routerLink]="['/region', whistleBlowerReport.region.id, 'view']">{{ whistleBlowerReport.region.regionName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.city">City</span></dt>
+        <dd>
+          <div *ngIf="whistleBlowerReport.city">
+            <a [routerLink]="['/city', whistleBlowerReport.city.id, 'view']">{{ whistleBlowerReport.city.cityName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.whistleBlowerReport.subCity">Sub City</span></dt>
+        <dd>
+          <div *ngIf="whistleBlowerReport.subCity">
+            <a [routerLink]="['/sub-city', whistleBlowerReport.subCity.id, 'view']">{{ whistleBlowerReport.subCity.subCityName }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

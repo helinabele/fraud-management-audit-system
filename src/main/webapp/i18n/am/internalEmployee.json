@@ -1,0 +1,28 @@
+{
+  "fraudMgtApp": {
+    "internalEmployee": {
+      "home": {
+        "title": "Internal Employees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Internal Employee",
+        "createOrEditLabel": "Create or edit a Internal Employee",
+        "notFound": "No Internal Employees found"
+      },
+      "created": "A new Internal Employee is created with identifier {{ param }}",
+      "updated": "A Internal Employee is updated with identifier {{ param }}",
+      "deleted": "A Internal Employee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Internal Employee {{ id }}?"
+      },
+      "detail": {
+        "title": "Internal Employee"
+      },
+      "id": "ID",
+      "name": "Name",
+      "position": "Position",
+      "grade": "Grade",
+      "experience": "Experience",
+      "branch": "Branch"
+    }
+  }
+}

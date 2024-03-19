@@ -11,6 +11,7 @@ import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/conf
 import { EntityArrayResponseType, FraudInvestigationReportService } from '../service/fraud-investigation-report.service';
 import { FraudInvestigationReportDeleteDialogComponent } from '../delete/fraud-investigation-report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-fraud-investigation-report',
@@ -32,7 +33,8 @@ export class FraudInvestigationReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private alertService: AlertService
   ) {}
 
   trackId = (_index: number, item: IFraudInvestigationReport): string =>
@@ -42,6 +44,11 @@ export class FraudInvestigationReportComponent implements OnInit {
     this.load();
   }
 
+  // showAlert(): void {
+  //   this.alertService.success('This is a success message', {
+  //     setTimeout: 5000
+  //   })
+  // }
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }

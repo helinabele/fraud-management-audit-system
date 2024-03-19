@@ -11,196 +11,191 @@
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.title">Title</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.title }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.executiveSummary">Executive Summary</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.executiveSummary }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.introductionAnnex">Introduction Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.introductionAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.introductionAnnex, fraudInvestigationReport.introductionAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.introductionAnnexContentType }}, {{ byteSize(fraudInvestigationReport.introductionAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.introduction">Introduction</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.introduction }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.objective">Objective</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.objective }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.objectiveAnnex">Objective Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.objectiveAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.objectiveAnnex, fraudInvestigationReport.objectiveAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.objectiveAnnexContentType }}, {{ byteSize(fraudInvestigationReport.objectiveAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.scope">Scope</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.scope }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.scopeAnnex">Scope Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.scopeAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.scopeAnnex, fraudInvestigationReport.scopeAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.scopeAnnexContentType }}, {{ byteSize(fraudInvestigationReport.scopeAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitation">Limitation</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.limitation }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitationAnnex">Limitation Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.limitationAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.limitationAnnex, fraudInvestigationReport.limitationAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.limitationAnnexContentType }}, {{ byteSize(fraudInvestigationReport.limitationAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodology">Methodology</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.methodology }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodologyAnnex">Methodology Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.methodologyAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.methodologyAnnex, fraudInvestigationReport.methodologyAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.methodologyAnnexContentType }}, {{ byteSize(fraudInvestigationReport.methodologyAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysis">Finding And Analysis</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.findingAndAnalysis }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysisAnnex">Finding And Analysis Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.findingAndAnalysisAnnex">
-            <a
-              (click)="
+      <button (click)="generatePdf()">Generate PDF</button>
+      <div #reportContent>
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.title">Title</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.title }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.task">Task</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.task">
+              <a [routerLink]="['/task', fraudInvestigationReport.task.id, 'view']">{{
+                fraudInvestigationReport.task.title }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.executiveSummary">Executive Summary</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.executiveSummary }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.introductionAnnex">Introduction Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.introductionAnnex">
+              <a (click)="openFile(fraudInvestigationReport.introductionAnnex, fraudInvestigationReport.introductionAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.introductionAnnexContentType }}, {{
+              byteSize(fraudInvestigationReport.introductionAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.introduction">Introduction</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.introduction }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.objective">Objective</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.objective }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.objectiveAnnex">Objective Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.objectiveAnnex">
+              <a (click)="openFile(fraudInvestigationReport.objectiveAnnex, fraudInvestigationReport.objectiveAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.objectiveAnnexContentType }}, {{
+              byteSize(fraudInvestigationReport.objectiveAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.scope">Scope</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.scope }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.scopeAnnex">Scope Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.scopeAnnex">
+              <a (click)="openFile(fraudInvestigationReport.scopeAnnex, fraudInvestigationReport.scopeAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.scopeAnnexContentType }}, {{ byteSize(fraudInvestigationReport.scopeAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitation">Limitation</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.limitation }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitationAnnex">Limitation Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.limitationAnnex">
+              <a (click)="openFile(fraudInvestigationReport.limitationAnnex, fraudInvestigationReport.limitationAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.limitationAnnexContentType }}, {{
+              byteSize(fraudInvestigationReport.limitationAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodology">Methodology</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.methodology }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodologyAnnex">Methodology Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.methodologyAnnex">
+              <a (click)="openFile(fraudInvestigationReport.methodologyAnnex, fraudInvestigationReport.methodologyAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.methodologyAnnexContentType }}, {{
+              byteSize(fraudInvestigationReport.methodologyAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysis">Finding And Analysis</span>
+          </dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.findingAndAnalysis }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysisAnnex">Finding And Analysis
+              Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.findingAndAnalysisAnnex">
+              <a (click)="
                 openFile(fraudInvestigationReport.findingAndAnalysisAnnex, fraudInvestigationReport.findingAndAnalysisAnnexContentType)
-              "
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.findingAndAnalysisAnnexContentType }},
-            {{ byteSize(fraudInvestigationReport.findingAndAnalysisAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusion">Conclusion</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.conclusion }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusionAnnex">Conclusion Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.conclusionAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.conclusionAnnex, fraudInvestigationReport.conclusionAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.conclusionAnnexContentType }}, {{ byteSize(fraudInvestigationReport.conclusionAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendation">Recommendation</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.recommendation }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendationAnnex">Recommendation Annex</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.recommendationAnnex">
-            <a
-              (click)="openFile(fraudInvestigationReport.recommendationAnnex, fraudInvestigationReport.recommendationAnnexContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.recommendationAnnexContentType }}, {{ byteSize(fraudInvestigationReport.recommendationAnnex) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.nameOfMembers">Name Of Members</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.nameOfMembers }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.signature">Signature</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.signature }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.references">References</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.references">
-            <a
-              (click)="openFile(fraudInvestigationReport.references, fraudInvestigationReport.referencesContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            {{ fraudInvestigationReport.referencesContentType }}, {{ byteSize(fraudInvestigationReport.references) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.publicationDate">Publication Date</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.publicationDate | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.author">Author</span></dt>
-        <dd>
-          <span>{{ fraudInvestigationReport.author }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.employee">Employee</span></dt>
+              " jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.findingAndAnalysisAnnexContentType }},
+              {{ byteSize(fraudInvestigationReport.findingAndAnalysisAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusion">Conclusion</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.conclusion }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusionAnnex">Conclusion Annex</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.conclusionAnnex">
+              <a (click)="openFile(fraudInvestigationReport.conclusionAnnex, fraudInvestigationReport.conclusionAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.conclusionAnnexContentType }}, {{
+              byteSize(fraudInvestigationReport.conclusionAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendation">Recommendation</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.recommendation }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendationAnnex">Recommendation Annex</span>
+          </dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.recommendationAnnex">
+              <a (click)="openFile(fraudInvestigationReport.recommendationAnnex, fraudInvestigationReport.recommendationAnnexContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.recommendationAnnexContentType }}, {{
+              byteSize(fraudInvestigationReport.recommendationAnnex) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.nameOfMembers">Name Of Members</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.nameOfMembers }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.signature">Signature</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.signature }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.references">References</span></dt>
+          <dd>
+            <div *ngIf="fraudInvestigationReport.references">
+              <a (click)="openFile(fraudInvestigationReport.references, fraudInvestigationReport.referencesContentType)"
+                jhiTranslate="entity.action.open">Open</a>
+              {{ fraudInvestigationReport.referencesContentType }}, {{ byteSize(fraudInvestigationReport.references) }}
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.publicationDate">Publication Date</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.publicationDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.author">Author</span></dt>
+          <dd>
+            <span>{{ fraudInvestigationReport.author }}</span>
+          </dd>
+          <!-- <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.employee">Employee</span></dt>
         <dd>
           <div *ngIf="fraudInvestigationReport.employee">
             <a [routerLink]="['/employee', fraudInvestigationReport.employee.id, 'view']">{{ fraudInvestigationReport.employee.name }}</a>
           </div>
         </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.task">Task</span></dt>
-        <dd>
-          <div *ngIf="fraudInvestigationReport.task">
-            <a [routerLink]="['/task', fraudInvestigationReport.task.id, 'view']">{{ fraudInvestigationReport.task.title }}</a>
-          </div>
-        </dd>
+       
         <dt><span jhiTranslate="fraudMgtApp.fraudInvestigationReport.team">Team</span></dt>
         <dd>
           <div *ngIf="fraudInvestigationReport.team">
             <a [routerLink]="['/team', fraudInvestigationReport.team.id, 'view']">{{ fraudInvestigationReport.team.teamName }}</a>
           </div>
-        </dd>
-      </dl>
+        </dd>-->
+        </dl>
+      </div>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']"
+        class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
+      <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']"
+      class="btn btn-primary">
+      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span >Comment</span>
+    </button>
+    <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']"
+    class="btn btn-danger">
+    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span >Approve</span>
+  </button>
     </div>
   </div>
 </div>

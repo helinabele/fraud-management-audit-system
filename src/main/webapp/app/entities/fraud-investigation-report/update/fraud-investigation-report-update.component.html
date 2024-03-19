@@ -18,6 +18,14 @@
         </div> -->
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.task" for="field_task">Task</label>
+          <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task" [compareWith]="compareTask">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.title" for="field_title">Title</label>
           <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
           <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
@@ -633,12 +641,12 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+       <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.author" for="field_author">Author</label>
           <input type="text" class="form-control" name="author" id="field_author" data-cy="author" formControlName="author" />
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+         <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.employee" for="field_employee">Employee</label>
           <select
             class="form-control"
@@ -654,22 +662,14 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.task" for="field_task">Task</label>
-          <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task" [compareWith]="compareTask">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.team" for="field_team">Team</label>
           <select class="form-control" id="field_team" data-cy="team" name="team" formControlName="team" [compareWith]="compareTeam">
             <option [ngValue]="null"></option>
             <option [ngValue]="teamOption" *ngFor="let teamOption of teamsSharedCollection">{{ teamOption.teamName }}</option>
           </select>
-        </div>
-      </div>
+        </div> -->
 
+      </div>
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
@@ -683,6 +683,16 @@
           class="btn btn-primary"
         >
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span >Submit</span>
         </button>
       </div>
     </form>

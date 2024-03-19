@@ -28,6 +28,25 @@
     <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.home.notFound">No Fraud Knowledge Managements found</span>
   </div>
 
+<div class="filter-container">
+  <input class="filter-input" [(ngModel)]="reportNumberFilter" placeholder="Filter by ">
+  <input class="filter-input" [(ngModel)]="fraudIncidentFilter" placeholder="Filter by fraudIncident">
+  <input class="filter-input" [(ngModel)]="actualIncidentFilter" placeholder="Filter by actualIncident">
+  <input class="filter-input" [(ngModel)]="attemptIncidentFilter" placeholder="Filter by attemptIncident">
+  <input class="filter-input" [(ngModel)]="reasonForFailureFilter" placeholder="Filter by reasonForFailure">
+  <input class="filter-input" [(ngModel)]="unitFilter" placeholder="Filter by unit">
+  <input class="filter-input" [(ngModel)]="incidentDateFilter" placeholder="Filter by incidentDate">
+  <input class="filter-input" [(ngModel)]="dateOfDetectionFilter" placeholder="Filter by dateOfDetection">
+  <input class="filter-input" [(ngModel)]="reasonForDelayFilter" placeholder="Filter by reasonForDelay">
+  <input class="filter-input" [(ngModel)]="projectCreationDateFilter" placeholder="Filter by projectCreationDate">
+  <input class="filter-input" [(ngModel)]="reportDateFilter" placeholder="Filter by reportDate">
+  <input class="filter-input" [(ngModel)]="suspectedFraudsterFilter" placeholder="Filter by suspectedFraudster">
+  <input class="filter-input" [(ngModel)]="financialLossAmountFilter" placeholder="Filter by financialLossAmount">
+  <input class="filter-input" [(ngModel)]="actualFraudAmountFilter" placeholder="Filter by actualFraudAmount">
+  <button class="filter-button" (click)="filteredResults()">Search</button>
+  <button class="filter-button">Clear</button>
+</div>
+
   <div class="table-responsive table-entities" id="entities" *ngIf="fraudKnowledgeManagements && fraudKnowledgeManagements.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
@@ -41,6 +60,12 @@
           <th scope="col" jhiSortBy="reportNumber">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportNumber">Report Number</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="title">
+            <div class="d-flex">
+              <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudTitle">Title</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -226,12 +251,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="fraudInvestigationReport.title">
-            <div class="d-flex">
-              <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudInvestigationReport">Fraud Investigation Report</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="fraudType.fraudName">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudType">Fraud Type</span>
@@ -266,21 +285,33 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let fraudKnowledgeManagement of fraudKnowledgeManagements; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let fraudKnowledgeManagement of filteredNameList;" data-cy="entityTable">
           <!-- <td>
             <a [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'view']">{{ fraudKnowledgeManagement.id }}</a>
           </td> -->
           <td>{{ fraudKnowledgeManagement.reportNumber }}</td>
+          <td>
+            <div *ngIf="fraudKnowledgeManagement.fraudInvestigationReport">
+              <a
+                [routerLink]="['/fraud-investigation-report', fraudKnowledgeManagement.fraudInvestigationReport.id, 'view']">{{
+                fraudKnowledgeManagement.fraudInvestigationReport.title
+                }}</a>
+            </div>
+          </td>
           <td jhiTranslate="{{ 'fraudMgtApp.FraudTypeByIncident.' + fraudKnowledgeManagement.fraudIncident }}">
             {{ fraudKnowledgeManagement.fraudIncident }}
           </td>
           <td>{{ fraudKnowledgeManagement.actualIncident }}</td>
           <td>{{ fraudKnowledgeManagement.attemptIncident }}</td>
-          <td>{{ fraudKnowledgeManagement.reasonForFailure }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.reasonForFailure">
+            {{ fraudKnowledgeManagement.reasonForFailure | slice:0:50}}</td>
           <td>{{ fraudKnowledgeManagement.unit }}</td>
           <td>{{ fraudKnowledgeManagement.incidentDate | formatMediumDatetime }}</td>
           <td>{{ fraudKnowledgeManagement.dateOfDetection | formatMediumDatetime }}</td>
-          <td>{{ fraudKnowledgeManagement.reasonForDelay }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.reasonForDelay">
+            {{ fraudKnowledgeManagement.reasonForDelay | slice:0:50 }}</td>
           <td>{{ fraudKnowledgeManagement.projectCreationDate | formatMediumDate }}</td>
           <td>{{ fraudKnowledgeManagement.reportDate | formatMediumDate }}</td>
           <td jhiTranslate="{{ 'fraudMgtApp.SuspectedFraudster.' + fraudKnowledgeManagement.suspectedFraudster }}">
@@ -290,90 +321,103 @@
           <td>{{ fraudKnowledgeManagement.actualFraudAmount }}</td>
           <td>{{ fraudKnowledgeManagement.debitAccount }}</td>
           <td>{{ fraudKnowledgeManagement.creditAccount }}</td>
-          <td>{{ fraudKnowledgeManagement.techniquesandTechnologiesUsed }}</td>
-          <td>{{ fraudKnowledgeManagement.causeForAnIncident }}</td>
-          <td>{{ fraudKnowledgeManagement.systemAndProceduralLoophole }}</td>
-          <td>{{ fraudKnowledgeManagement.effect }}</td>
-          <td>{{ fraudKnowledgeManagement.recommendationsDrawn }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.techniquesandTechnologiesUsed">
+            {{ fraudKnowledgeManagement.techniquesandTechnologiesUsed | slice:0:50}}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.causeForAnIncident">
+            {{ fraudKnowledgeManagement.causeForAnIncident | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.systemAndProceduralLoophole">
+            {{ fraudKnowledgeManagement.systemAndProceduralLoophole | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.effect">
+            {{ fraudKnowledgeManagement.effect | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.recommendationsDrawn">
+            {{ fraudKnowledgeManagement.recommendationsDrawn | slice:0:50 }}</td>
           <td>{{ fraudKnowledgeManagement.positionJG }}</td>
           <td>{{ fraudKnowledgeManagement.nameIdNo }}</td>
-          <td>{{ fraudKnowledgeManagement.actionInvolved }}</td>
-          <td>{{ fraudKnowledgeManagement.ngScreenerReport }}</td>
-          <td>{{ fraudKnowledgeManagement.committeeDecision }}</td>
-          <td>{{ fraudKnowledgeManagement.measureTaken }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.actionInvolved">
+            {{ fraudKnowledgeManagement.actionInvolved | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.ngScreenerReport">
+            {{ fraudKnowledgeManagement.ngScreenerReport | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.committeeDecision">
+            {{ fraudKnowledgeManagement.committeeDecision | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data.placement]="'top'"
+            [attr.title]="fraudKnowledgeManagement.measureTaken">
+            {{ fraudKnowledgeManagement.measureTaken | slice:0:50 }}</td>
           <td>{{ fraudKnowledgeManagement.fraudAmountRecovered }}</td>
           <td>{{ fraudKnowledgeManagement.fraudAmountWrittenOff }}</td>
           <td>{{ fraudKnowledgeManagement.previouslyHeldForFraudOutstanding }}</td>
           <td>
             <div *ngIf="fraudKnowledgeManagement.employee">
-              <a [routerLink]="['/employee', fraudKnowledgeManagement.employee.id, 'view']">{{ fraudKnowledgeManagement.employee.name }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="fraudKnowledgeManagement.fraudInvestigationReport">
-              <a [routerLink]="['/fraud-investigation-report', fraudKnowledgeManagement.fraudInvestigationReport.id, 'view']">{{
-                fraudKnowledgeManagement.fraudInvestigationReport.title
-              }}</a>
+              <a [routerLink]="['/employee', fraudKnowledgeManagement.employee.id, 'view']">{{
+                fraudKnowledgeManagement.employee.name }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="fraudKnowledgeManagement.fraudType">
               <a [routerLink]="['/fraud-type', fraudKnowledgeManagement.fraudType.id, 'view']">{{
                 fraudKnowledgeManagement.fraudType.fraudName
-              }}</a>
+                }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="fraudKnowledgeManagement.bankAccount">
               <a [routerLink]="['/bank-account', fraudKnowledgeManagement.bankAccount.id, 'view']">{{
                 fraudKnowledgeManagement.bankAccount.bankName
-              }}</a>
+                }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="fraudKnowledgeManagement.bankService">
               <a [routerLink]="['/bank-service', fraudKnowledgeManagement.bankService.id, 'view']">{{
                 fraudKnowledgeManagement.bankService.serviceName
-              }}</a>
+                }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="fraudKnowledgeManagement.internalEmployee">
               <a [routerLink]="['/internal-employee', fraudKnowledgeManagement.internalEmployee.id, 'view']">{{
                 fraudKnowledgeManagement.internalEmployee.name
-              }}</a>
+                }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="fraudKnowledgeManagement.externalEmployee">
               <a [routerLink]="['/external-employee', fraudKnowledgeManagement.externalEmployee.id, 'view']">{{
                 fraudKnowledgeManagement.externalEmployee.name
-              }}</a>
+                }}</a>
             </div>
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
+              <button type="submit" [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'view']"
+                class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
+              <button type="submit" [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'edit']"
+                class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
-
-              <button type="submit" (click)="delete(fraudKnowledgeManagement)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <!-- <button type="button" class="btn btn-primary btn-sm" (click)="openCommentDialog(fraudKnowledgeManagement.id)">
+                <fa-icon icon="plus"></fa-icon>
+                <span>Add Comment</span>
+              </button>
+              
+              <button type="button" class="btn btn-primary btn-sm" (click)="openViewCommentDialog(fraudKnowledgeManagement.id)">
+                <fa-icon icon="eye"></fa-icon>
+                <span>View Comment</span>
+              </button> -->
+              <button type="submit" (click)="delete(fraudKnowledgeManagement)" class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>

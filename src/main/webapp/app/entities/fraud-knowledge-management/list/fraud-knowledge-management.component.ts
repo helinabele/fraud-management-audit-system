@@ -14,6 +14,7 @@ import { FraudKnowledgeManagementDeleteDialogComponent } from '../delete/fraud-k
 @Component({
   selector: 'jhi-fraud-knowledge-management',
   templateUrl: './fraud-knowledge-management.component.html',
+  styleUrls: ['../../whistle-blower-report.component.scss'],
 })
 export class FraudKnowledgeManagementComponent implements OnInit {
   fraudKnowledgeManagements?: IFraudKnowledgeManagement[];
@@ -26,12 +27,29 @@ export class FraudKnowledgeManagementComponent implements OnInit {
   totalItems = 0;
   page = 1;
 
+  filteredNameList: any[] = [];
+
+  reportNumberFilter = '';
+  fraudIncidentFilter = '';
+  actualIncidentFilter = '';
+  attemptIncidentFilter = '';
+  reasonForFailureFilter = '';
+  unitFilter = '';
+  incidentDateFilter = '';
+  dateOfDetectionFilter = '';
+  reasonForDelayFilter = '';
+  projectCreationDateFilter = '';
+  reportDateFilter = '';
+  suspectedFraudsterFilter = '';
+  financialLossAmountFilter = '';
+  actualFraudAmountFilter = '';
+
   constructor(
     protected fraudKnowledgeManagementService: FraudKnowledgeManagementService,
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected modalService: NgbModal
-  ) {}
+  ) { }
 
   trackId = (_index: number, item: IFraudKnowledgeManagement): string =>
     this.fraudKnowledgeManagementService.getFraudKnowledgeManagementIdentifier(item);
@@ -60,6 +78,7 @@ export class FraudKnowledgeManagementComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.filteredResults();
       },
     });
   }
@@ -70,6 +89,52 @@ export class FraudKnowledgeManagementComponent implements OnInit {
 
   navigateToPage(page = this.page): void {
     this.handleNavigation(page, this.predicate, this.ascending);
+  }
+
+  /*   filteredResults(): void {
+      if (this.fraudKnowledgeManagements) {
+        this.filteredNameList = this.fraudKnowledgeManagements.filter(report =>
+          (!this.reportNumberFilter || (report.reportNumber && report.reportNumber?.toLowerCase().includes(this.reportNumberFilter.toLowerCase()))) &&
+          (!this.fraudIncidentFilter || (report.fraudIncident && report.fraudIncident?.toLowerCase().includes(this.fraudIncidentFilter.toLowerCase()))) &&
+          (!this.actualIncidentFilter || (report.actualIncident && report.actualIncident?.toLowerCase().includes(this.actualIncidentFilter.toLowerCase()))) &&
+          (!this.attemptIncidentFilter || (report.attemptIncident && report.attemptIncident?.toLowerCase().includes(this.attemptIncidentFilter.toLowerCase()))) &&
+          (!this.reasonForFailureFilter || (report.reasonForFailure && report.reasonForFailure?.toLowerCase().includes(this.reasonForFailureFilter.toLowerCase()))) &&
+          (!this.unitFilter || (report.unit && report.unit?.toLowerCase().includes(this.unitFilter.toLowerCase()))) &&
+          (!this.incidentDateFilter || (report.incidentDate && report.incidentDate)) &&
+          (!this.dateOfDetectionFilter || (report.dateOfDetection && report.dateOfDetection)) &&
+          (!this.reasonForDelayFilter || (report.reasonForDelay && report.reasonForDelay)) &&
+          (!this.projectCreationDateFilter || (report.projectCreationDate && report.projectCreationDate)) &&
+          (!this.reportDateFilter || (report.reportDate && report.reportDate)) &&
+          (!this.suspectedFraudsterFilter || (report.suspectedFraudster && report.suspectedFraudster)) &&
+          (!this.financialLossAmountFilter || (report.financialLossAmount && report.financialLossAmount)) &&
+          (!this.actualFraudAmountFilter || (report.actualFraudAmount && report.actualFraudAmount)))
+      } else {
+        this.fraudKnowledgeManagements = [];
+      }
+    }
+   */
+
+  filteredResults(): void {
+    if (this.fraudKnowledgeManagements) {
+      this.filteredNameList = this.fraudKnowledgeManagements.filter(report =>
+        (!this.reportNumberFilter || report.reportNumber?.toString().toLowerCase().includes(this.reportNumberFilter.toLowerCase())) &&
+        (!this.fraudIncidentFilter || report.fraudIncident?.toLowerCase().includes(this.fraudIncidentFilter.toLowerCase())) &&
+        (!this.actualIncidentFilter || report.actualIncident?.toLowerCase().includes(this.actualIncidentFilter.toLowerCase())) &&
+        (!this.attemptIncidentFilter || report.attemptIncident?.toLowerCase().includes(this.attemptIncidentFilter.toLowerCase())) &&
+        (!this.reasonForFailureFilter || report.reasonForFailure?.toLowerCase().includes(this.reasonForFailureFilter.toLowerCase())) &&
+        (!this.unitFilter || report.unit?.toLowerCase().includes(this.unitFilter.toLowerCase())) &&
+        (!this.incidentDateFilter || report.incidentDate?.format('YYYY-MM-DD').includes(this.incidentDateFilter.toLowerCase())) &&
+        (!this.dateOfDetectionFilter || report.dateOfDetection?.format('YYYY-MM-DD').includes(this.dateOfDetectionFilter.toLowerCase())) &&
+        (!this.reasonForDelayFilter || report.reasonForDelay?.toLowerCase().includes(this.reasonForDelayFilter.toLowerCase())) &&
+        (!this.projectCreationDateFilter || report.projectCreationDate?.format('YYYY-MM-DD').includes(this.projectCreationDateFilter.toLowerCase())) &&
+        (!this.reportDateFilter || report.reportDate?.format('YYYY-MM-DD').includes(this.reportDateFilter.toLowerCase())) &&
+        (!this.suspectedFraudsterFilter || report.suspectedFraudster?.toLowerCase().includes(this.suspectedFraudsterFilter.toLowerCase())) &&
+        (!this.financialLossAmountFilter || report.financialLossAmount?.toString().toLowerCase().includes(this.financialLossAmountFilter.toLowerCase())) &&
+        (!this.actualFraudAmountFilter || report.actualFraudAmount?.toString().toLowerCase().includes(this.actualFraudAmountFilter.toLowerCase()))
+      );
+    } else {
+      this.filteredNameList = [];
+    }
   }
 
   protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
@@ -134,4 +199,5 @@ export class FraudKnowledgeManagementComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
 }

@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="branch">
+      <h2 data-cy="branchDetailsHeading"><span jhiTranslate="fraudMgtApp.branch.detail.title">Branch</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <!-- <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ branch.id }}</span>
+        </dd> -->
+        <dt><span jhiTranslate="fraudMgtApp.branch.branchName">Branch Name</span></dt>
+        <dd>
+          <span>{{ branch.branchName }}</span>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.branch.description">Description</span></dt>
+        <dd>
+          <span>{{ branch.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.branch.division">Division</span></dt>
+        <dd>
+          <div *ngIf="branch.division">
+            <a [routerLink]="['/division', branch.division.id, 'view']">{{ branch.division.divisionName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.branch.department">Department</span></dt>
+        <dd>
+          <div *ngIf="branch.department">
+            <a [routerLink]="['/department', branch.department.id, 'view']">{{ branch.department.departmentName }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/branch', branch.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -96,6 +96,36 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'fraudMgt.report.title' },
         loadChildren: () => import('./report/report.module').then(m => m.ReportRoutingModule),
       },
+      {
+        path: 'division',
+        data: { pageTitle: 'fraudMgtApp.division.home.title' },
+        loadChildren: () => import('./division/division.module').then(m => m.DivisionModule),
+      },
+      {
+        path: 'department',
+        data: { pageTitle: 'fraudMgtApp.department.home.title' },
+        loadChildren: () => import('./department/department.module').then(m => m.DepartmentModule),
+      },
+      {
+        path: 'branch',
+        data: { pageTitle: 'fraudMgtApp.branch.home.title' },
+        loadChildren: () => import('./branch/branch.module').then(m => m.BranchModule),
+      },
+      {
+        path: 'region',
+        data: { pageTitle: 'fraudMgtApp.region.home.title' },
+        loadChildren: () => import('./region/region.module').then(m => m.RegionModule),
+      },
+      {
+        path: 'city',
+        data: { pageTitle: 'fraudMgtApp.city.home.title' },
+        loadChildren: () => import('./city/city.module').then(m => m.CityModule),
+      },
+      {
+        path: 'sub-city',
+        data: { pageTitle: 'fraudMgtApp.subCity.home.title' },
+        loadChildren: () => import('./sub-city/sub-city.module').then(m => m.SubCityModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

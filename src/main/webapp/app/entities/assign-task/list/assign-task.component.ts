@@ -101,11 +101,11 @@ export class AssignTaskComponent implements OnInit {
   }
   getEmployee(): void {
     this.employeeService
-    .query()
-    .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
-    .subscribe((employees: IEmployee[]) => {
-      this.checkAuthority(employees);
-    })
+      .query()
+      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
+      .subscribe((employees: IEmployee[]) => {
+        this.checkAuthority(employees);
+      })
   }
   checkAuthority(values: any[]): void {
     this.roleId = values.find(t => t.user?.id === this.account.id)?.id;
@@ -113,6 +113,7 @@ export class AssignTaskComponent implements OnInit {
       this.load();
     }
   }
+
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
@@ -153,6 +154,21 @@ export class AssignTaskComponent implements OnInit {
     this.handleNavigation(page, this.predicate, this.ascending);
   }
 
+  protected onAssignTask(assignTask: IAssignTask[]): IAssignTask[] {
+    switch (this.role) {
+      case Authority.DIRECTOR:
+        assignTask = assignTask.filter(t => t.director?.id === this.roleId);
+        break;
+      case Authority.MANAGER:
+        assignTask = assignTask.filter(t => t.manager?.id === this.roleId);
+        break;
+      case Authority.TEAM_LEADER:
+        assignTask = assignTask.filter(t => t.teamLead?.id === this.roleId);
+        break;
+    }
+    return assignTask;
+  }
+  
   protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
@@ -171,7 +187,7 @@ export class AssignTaskComponent implements OnInit {
   protected onResponseSuccess(response: EntityArrayResponseType): void {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.assignTasks = dataFromBody;
+    this.assignTasks = this.onAssignTask(dataFromBody);
   }
 
   protected fillComponentAttributesFromResponseBody(data: IAssignTask[] | null): IAssignTask[] {

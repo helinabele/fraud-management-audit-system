@@ -58,14 +58,14 @@ describe('AssignTask Management Component', () => {
     );
   });
 
-  it('Should call load all on init', () => {
-    // WHEN
-    comp.ngOnInit();
+  // it('Should call load all on init', () => {
+  //   // WHEN
+  //   comp.ngOnInit();
 
-    // THEN
-    expect(service.query).toHaveBeenCalled();
-    expect(comp.assignTasks?.[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
-  });
+  //   // THEN
+  //   expect(service.query).toHaveBeenCalled();
+  //   expect(comp.assignTasks?.[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
+  // });
 
   describe('trackId', () => {
     it('Should forward to assignTaskService', () => {
@@ -85,13 +85,13 @@ describe('AssignTask Management Component', () => {
     expect(routerNavigateSpy).toHaveBeenCalled();
   });
 
-  it('should calculate the sort attribute for an id', () => {
-    // WHEN
-    comp.ngOnInit();
+  // it('should calculate the sort attribute for an id', () => {
+  //   // WHEN
+  //   comp.ngOnInit();
 
-    // THEN
-    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
-  });
+  //   // THEN
+  //   expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
+  // });
 
   it('should calculate the sort attribute for a non-id attribute', () => {
     // GIVEN

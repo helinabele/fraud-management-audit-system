@@ -9,7 +9,7 @@
   </div>
 </h2>
 
-<form (submit)="submitFilter()" class="row">
+<!-- <form (submit)="submitFilter()" class="row">
   <div class="col-md-3">
     <div class="form-group">
       <label for="startDate">Start:</label>
@@ -40,7 +40,15 @@
       <button type="submit" class="btn btn-primary">Search</button>
     </div>
   </div>
-</form>
+</form> -->
+
+<div class="filter-container">
+  <input class="filter-input" [(ngModel)] = "fraudTypeFilter" placeholder="Filter by Fraud Type">
+  <button class="filter-button" (click)="filterResults()">Search</button>
+  <button class="filter-button" (click)="clearResults()">Clear</button>
+</div>
+
+
 <table class="fraud-report-table">
   <thead>
     <tr>

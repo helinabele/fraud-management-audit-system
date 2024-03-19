@@ -1,0 +1,27 @@
+{
+  "fraudMgtApp": {
+    "subCity": {
+      "home": {
+        "title": "Sub Cities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Sub City",
+        "createOrEditLabel": "Create or edit a Sub City",
+        "notFound": "No Sub Cities found"
+      },
+      "created": "A new Sub City is created with identifier {{ param }}",
+      "updated": "A Sub City is updated with identifier {{ param }}",
+      "deleted": "A Sub City is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Sub City {{ id }}?"
+      },
+      "detail": {
+        "title": "Sub City"
+      },
+      "id": "ID",
+      "subCityName": "Sub City Name",
+      "description": "Description",
+      "city": "City",
+      "whistleBlowerReport": "Whistle Blower Report"
+    }
+  }
+}

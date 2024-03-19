@@ -7,6 +7,7 @@ import { TaskDetailComponent } from '../detail/task-detail.component';
 import { TaskUpdateComponent } from '../update/task-update.component';
 import { TaskRoutingResolveService } from './task-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
+import { AssignTaskUpdateComponent } from 'app/entities/assign-task/update/assign-task-update.component';
 
 const taskRoute: Routes = [
   {
@@ -40,6 +41,14 @@ const taskRoute: Routes = [
       task: TaskRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
+  },
+  {
+    path:':id/assign',
+    component: AssignTaskUpdateComponent,
+    resolve:{
+      task: TaskRoutingResolveService,
+    },
+    canActivate:[UserRouteAccessService]
   },
 ];
 

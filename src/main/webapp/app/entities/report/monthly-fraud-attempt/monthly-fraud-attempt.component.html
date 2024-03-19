@@ -8,6 +8,16 @@
     </button>
   </div>
 </h2>
+
+<div class="filter-container">
+  <input class="filter-input" [(ngModel)]="titleFilter" placeholder="Filter by case title">
+  <input class="filter-input" [(ngModel)]="actualFraudAmountFilter" placeholder="Filter by actual fraud amount">
+  <input class="filter-input" [(ngModel)]="financialLossAmountFilter" placeholder="Filter by financial loss amount">
+  <input class="filter-input" [(ngModel)]="frequencyFilter" placeholder="Filter by frequent incident">
+  <button class="filter-button" (click)="filteredResults()">Search</button>
+  <button class="filter-button" (click)="clearResults()">Clear</button>
+</div>
+
 <table class="fraud-report-table">
     <thead>
       <tr>

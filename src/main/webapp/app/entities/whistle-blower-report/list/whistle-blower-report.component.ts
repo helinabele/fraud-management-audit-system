@@ -15,6 +15,7 @@ import { DataUtils } from 'app/core/util/data-util.service';
 @Component({
   selector: 'jhi-whistle-blower-report',
   templateUrl: './whistle-blower-report.component.html',
+  styleUrls: ['../../whistle-blower-report.component.scss']
 })
 export class WhistleBlowerReportComponent implements OnInit {
   whistleBlowerReports?: IWhistleBlowerReport[];
@@ -26,6 +27,18 @@ export class WhistleBlowerReportComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
+  selectedReport?: IWhistleBlowerReport;
+
+  isAssigned = false;
+  searchQuery = '';
+  
+  filteredNameList: IWhistleBlowerReport[] = [];
+
+  nameFilter = '';
+  genderFilter = '';
+  emailFilter = '';
+  phoneFilter = '';
+  organizationFilter = '';
 
   constructor(
     protected whistleBlowerReportService: WhistleBlowerReportService,
@@ -33,12 +46,33 @@ export class WhistleBlowerReportComponent implements OnInit {
     public router: Router,
     protected dataUtils: DataUtils,
     protected modalService: NgbModal
-  ) {}
+  ) { }
 
   trackId = (_index: number, item: IWhistleBlowerReport): string => this.whistleBlowerReportService.getWhistleBlowerReportIdentifier(item);
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.load();
+  }
+
+  onAssignButtonClick(whistleBlowerReport: IWhistleBlowerReport): void {
+    this.whistleBlowerReportService.setSelectedReport(whistleBlowerReport);
+    this.router.navigate(['/whistle-blower-report', whistleBlowerReport.id, 'assign']);
+
+    // this.whistleBlowerReportService.assignReport(whistleBlowerReport.id).subscribe(
+    //   () => {
+    //     this.isAssigned = true;
+    //     // Any additional logic or notifications after successful assignment can be handled here
+    //   },
+    //   (error: any) => {
+    //     console.error('Error assigning report:', error);
+    //     // Handle error if the assignment fails
+    //   }
+    // );
+  }
+  
+  rejectWhistleBlower(){
+    console.log('Whistle blower rejected');
   }
 
   byteSize(base64String: string): string {
@@ -69,6 +103,7 @@ export class WhistleBlowerReportComponent implements OnInit {
     this.loadFromBackendWithRouteInformations().subscribe({
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
+        this.filterResults();
       },
     });
   }
@@ -79,6 +114,25 @@ export class WhistleBlowerReportComponent implements OnInit {
 
   navigateToPage(page = this.page): void {
     this.handleNavigation(page, this.predicate, this.ascending);
+  }
+
+  filterResults(): void {
+    this.filteredNameList = this.whistleBlowerReports?.filter(report =>
+      (!this.nameFilter || (report.fullName?.toLowerCase().includes(this.nameFilter.toLowerCase()))) &&
+      (!this.genderFilter || (report.genderType?.toLowerCase().includes(this.genderFilter.toLowerCase()))) &&
+      (!this.emailFilter || (report.emailAdress?.toLowerCase().includes(this.emailFilter.toLowerCase()))) &&
+      (!this.phoneFilter || (report.phone?.toString().includes(this.phoneFilter.toLowerCase()))) &&
+      (!this.organizationFilter || (report.organization?.toLowerCase().includes(this.organizationFilter.toLowerCase())))
+    ) ?? [];
+  }
+  
+  cancelSearch(): void {
+    this.nameFilter = '';
+    this.genderFilter = '';
+    this.emailFilter = '';
+    this.phoneFilter = '';
+    this.organizationFilter = '';
+    this.filterResults();
   }
 
   protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
@@ -142,4 +196,21 @@ export class WhistleBlowerReportComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  // filterResults(): void {
+  //   if (!this.searchQuery) {
+  //     this.filteredNameList = this.whistleBlowerReports || []; // No search query, show all reports
+  //   } else {
+  //     this.filteredNameList = this.whistleBlowerReports?.filter(report =>
+  //       (report.fullName && report.fullName.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+  //       (report.genderType && report.genderType.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+  //       (report.emailAdress && report.emailAdress.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+  //       (report.phone && report.phone.toString().includes(this.searchQuery.toLowerCase())) ||
+  //       (report.organization && report.organization.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+  //       (report.message && report.message.toLowerCase().includes(this.searchQuery.toLowerCase()))
+  //       // Include additional properties here
+  //     ) || [];
+  //   }
+  // }
+  
 }

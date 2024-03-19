@@ -32,12 +32,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <!-- <th scope="col" jhiSortBy="id">
+          <th scope="col" jhiSortBy="id">
             <div class="d-flex">
               <span jhiTranslate="global.field.id">ID</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th> -->
+          </th>
           <th scope="col" jhiSortBy="fraudName">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.fraudType.fraudName">Fraud Name</span>
@@ -61,9 +61,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let fraudType of fraudTypes; trackBy: trackId" data-cy="entityTable">
-          <!-- <td>
+          <td>
             <a [routerLink]="['/fraud-type', fraudType.id, 'view']">{{ fraudType.id }}</a>
-          </td> -->
+          </td>
           <td>{{ fraudType.fraudName }}</td>
           <td>{{ fraudType.description }}</td>
           <td>

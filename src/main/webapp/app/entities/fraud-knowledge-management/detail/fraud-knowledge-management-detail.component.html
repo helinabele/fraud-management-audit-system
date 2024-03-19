@@ -10,203 +10,218 @@
       <jhi-alert-error></jhi-alert-error>
 
       <jhi-alert></jhi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportNumber">Report Number</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.reportNumber }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudIncident">Fraud Incident</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'fraudMgtApp.FraudTypeByIncident.' + fraudKnowledgeManagement.fraudIncident }}">{{
-            fraudKnowledgeManagement.fraudIncident
-          }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualIncident">Actual Incident</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.actualIncident }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.attemptIncident">Attempt Incident</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.attemptIncident }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForFailure">Reason For Failure</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.reasonForFailure }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.unit">Unit</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.unit }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.incidentDate">Incident Date</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.incidentDate | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.dateOfDetection">Date Of Detection</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.dateOfDetection | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForDelay">Reason For Delay</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.reasonForDelay }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.projectCreationDate">Project Creation Date</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.projectCreationDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportDate">Report Date</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.reportDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.suspectedFraudster">Suspected Fraudster</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'fraudMgtApp.SuspectedFraudster.' + fraudKnowledgeManagement.suspectedFraudster }}">{{
-            fraudKnowledgeManagement.suspectedFraudster
-          }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.financialLossAmount">Financial Loss Amount</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.financialLossAmount }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualFraudAmount">Actual Fraud Amount</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.actualFraudAmount }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.debitAccount">Debit Account</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.debitAccount }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.creditAccount">Credit Account</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.creditAccount }}</span>
-        </dd>
-        <dt>
-          <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.techniquesandTechnologiesUsed">Techniquesand Technologies Used</span>
-        </dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.techniquesandTechnologiesUsed }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.causeForAnIncident">Cause For An Incident</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.causeForAnIncident }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.systemAndProceduralLoophole">System And Procedural Loophole</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.systemAndProceduralLoophole }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.effect">Effect</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.effect }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.recommendationsDrawn">Recommendations Drawn</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.recommendationsDrawn }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.positionJG">Position JG</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.positionJG }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.nameIdNo">Name Id No</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.nameIdNo }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actionInvolved">Action Involved</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.actionInvolved }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.ngScreenerReport">Ng Screener Report</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.ngScreenerReport }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.committeeDecision">Committee Decision</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.committeeDecision }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.measureTaken">Measure Taken</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.measureTaken }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountRecovered">Fraud Amount Recovered</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.fraudAmountRecovered }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountWrittenOff">Fraud Amount Written Off</span></dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.fraudAmountWrittenOff }}</span>
-        </dd>
-        <dt>
-          <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.previouslyHeldForFraudOutstanding"
-            >Previously Held For Fraud Outstanding</span
-          >
-        </dt>
-        <dd>
-          <span>{{ fraudKnowledgeManagement.previouslyHeldForFraudOutstanding }}</span>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.employee">Employee</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.employee">
-            <a [routerLink]="['/employee', fraudKnowledgeManagement.employee.id, 'view']">{{ fraudKnowledgeManagement.employee.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudInvestigationReport">Fraud Investigation Report</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.fraudInvestigationReport">
-            <a [routerLink]="['/fraud-investigation-report', fraudKnowledgeManagement.fraudInvestigationReport.id, 'view']">{{
-              fraudKnowledgeManagement.fraudInvestigationReport.title
-            }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudType">Fraud Type</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.fraudType">
-            <a [routerLink]="['/fraud-type', fraudKnowledgeManagement.fraudType.id, 'view']">{{
-              fraudKnowledgeManagement.fraudType.fraudName
-            }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankAccount">Bank Account</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.bankAccount">
-            <a [routerLink]="['/bank-account', fraudKnowledgeManagement.bankAccount.id, 'view']">{{
-              fraudKnowledgeManagement.bankAccount.bankName
-            }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankService">Bank Service</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.bankService">
-            <a [routerLink]="['/bank-service', fraudKnowledgeManagement.bankService.id, 'view']">{{
-              fraudKnowledgeManagement.bankService.serviceName
-            }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.internalEmployee">Internal Employee</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.internalEmployee">
-            <a [routerLink]="['/internal-employee', fraudKnowledgeManagement.internalEmployee.id, 'view']">{{
-              fraudKnowledgeManagement.internalEmployee.name
-            }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.externalEmployee">External Employee</span></dt>
-        <dd>
-          <div *ngIf="fraudKnowledgeManagement.externalEmployee">
-            <a [routerLink]="['/external-employee', fraudKnowledgeManagement.externalEmployee.id, 'view']">{{
-              fraudKnowledgeManagement.externalEmployee.name
-            }}</a>
-          </div>
-        </dd>
-      </dl>
-
+      <button (click)="generatePdf()">Generate Pdf</button>
+      <div #reportContent>
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportNumber">Report Number</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.reportNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudIncident">Fraud Incident</span></dt>
+          <dd>
+            <span jhiTranslate="{{ 'fraudMgtApp.FraudTypeByIncident.' + fraudKnowledgeManagement.fraudIncident }}">{{
+              fraudKnowledgeManagement.fraudIncident
+              }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualIncident">Actual Incident</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.actualIncident }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.attemptIncident">Attempt Incident</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.attemptIncident }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForFailure">Reason For Failure</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.reasonForFailure }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.unit">Unit</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.unit }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.incidentDate">Incident Date</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.incidentDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.dateOfDetection">Date Of Detection</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.dateOfDetection | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForDelay">Reason For Delay</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.reasonForDelay }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.projectCreationDate">Project Creation Date</span>
+          </dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.projectCreationDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportDate">Report Date</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.reportDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.suspectedFraudster">Suspected Fraudster</span>
+          </dt>
+          <dd>
+            <span
+              jhiTranslate="{{ 'fraudMgtApp.SuspectedFraudster.' + fraudKnowledgeManagement.suspectedFraudster }}">{{
+              fraudKnowledgeManagement.suspectedFraudster
+              }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.financialLossAmount">Financial Loss Amount</span>
+          </dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.financialLossAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualFraudAmount">Actual Fraud Amount</span>
+          </dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.actualFraudAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.debitAccount">Debit Account</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.debitAccount }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.creditAccount">Credit Account</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.creditAccount }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.techniquesandTechnologiesUsed">Techniquesand
+              Technologies Used</span>
+          </dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.techniquesandTechnologiesUsed }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.causeForAnIncident">Cause For An Incident</span>
+          </dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.causeForAnIncident }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.systemAndProceduralLoophole">System And
+              Procedural Loophole</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.systemAndProceduralLoophole }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.effect">Effect</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.effect }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.recommendationsDrawn">Recommendations
+              Drawn</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.recommendationsDrawn }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.positionJG">Position JG</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.positionJG }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.nameIdNo">Name Id No</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.nameIdNo }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actionInvolved">Action Involved</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.actionInvolved }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.ngScreenerReport">Ng Screener Report</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.ngScreenerReport }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.committeeDecision">Committee Decision</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.committeeDecision }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.measureTaken">Measure Taken</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.measureTaken }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountRecovered">Fraud Amount
+              Recovered</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.fraudAmountRecovered }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountWrittenOff">Fraud Amount Written
+              Off</span></dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.fraudAmountWrittenOff }}</span>
+          </dd>
+          <dt>
+            <span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.previouslyHeldForFraudOutstanding">Previously Held
+              For Fraud Outstanding</span>
+          </dt>
+          <dd>
+            <span>{{ fraudKnowledgeManagement.previouslyHeldForFraudOutstanding }}</span>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.employee">Employee</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.employee">
+              <a [routerLink]="['/employee', fraudKnowledgeManagement.employee.id, 'view']">{{
+                fraudKnowledgeManagement.employee.name }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudInvestigationReport">Fraud Investigation
+              Report</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.fraudInvestigationReport">
+              <a
+                [routerLink]="['/fraud-investigation-report', fraudKnowledgeManagement.fraudInvestigationReport.id, 'view']">{{
+                fraudKnowledgeManagement.fraudInvestigationReport.title
+                }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudType">Fraud Type</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.fraudType">
+              <a [routerLink]="['/fraud-type', fraudKnowledgeManagement.fraudType.id, 'view']">{{
+                fraudKnowledgeManagement.fraudType.fraudName
+                }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankAccount">Bank Account</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.bankAccount">
+              <a [routerLink]="['/bank-account', fraudKnowledgeManagement.bankAccount.id, 'view']">{{
+                fraudKnowledgeManagement.bankAccount.bankName
+                }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankService">Bank Service</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.bankService">
+              <a [routerLink]="['/bank-service', fraudKnowledgeManagement.bankService.id, 'view']">{{
+                fraudKnowledgeManagement.bankService.serviceName
+                }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.internalEmployee">Internal Employee</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.internalEmployee">
+              <a [routerLink]="['/internal-employee', fraudKnowledgeManagement.internalEmployee.id, 'view']">{{
+                fraudKnowledgeManagement.internalEmployee.name
+                }}</a>
+            </div>
+          </dd>
+          <dt><span jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.externalEmployee">External Employee</span></dt>
+          <dd>
+            <div *ngIf="fraudKnowledgeManagement.externalEmployee">
+              <a [routerLink]="['/external-employee', fraudKnowledgeManagement.externalEmployee.id, 'view']">{{
+                fraudKnowledgeManagement.externalEmployee.name
+                }}</a>
+            </div>
+          </dd>
+        </dl>
+      </div>
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'edit']" class="btn btn-primary">
+      <button type="button" [routerLink]="['/fraud-knowledge-management', fraudKnowledgeManagement.id, 'edit']"
+        class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

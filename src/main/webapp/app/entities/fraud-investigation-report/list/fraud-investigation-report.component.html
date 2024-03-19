@@ -202,8 +202,10 @@
           <!-- <td>
             <a [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'view']">{{ fraudInvestigationReport.id }}</a>
           </td> -->
-          <td>{{ fraudInvestigationReport.title }}</td>
-          <td>{{ fraudInvestigationReport.executiveSummary }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.title">
+            {{ fraudInvestigationReport.title }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.executiveSummary">
+            {{ fraudInvestigationReport.executiveSummary | slice:0:50 }}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.introductionAnnex"
@@ -215,8 +217,10 @@
               >{{ fraudInvestigationReport.introductionAnnexContentType }}, {{ byteSize(fraudInvestigationReport.introductionAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.introduction }}</td>
-          <td>{{ fraudInvestigationReport.objective }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.introduction">
+            {{ fraudInvestigationReport.introduction | slice:0:50 }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.objective">
+            {{ fraudInvestigationReport.objective  | slice:0:50 }}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.objectiveAnnex"
@@ -228,7 +232,8 @@
               >{{ fraudInvestigationReport.objectiveAnnexContentType }}, {{ byteSize(fraudInvestigationReport.objectiveAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.scope }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.objective">
+            {{ fraudInvestigationReport.scope  | slice:0:50 }}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.scopeAnnex"
@@ -240,7 +245,8 @@
               >{{ fraudInvestigationReport.scopeAnnexContentType }}, {{ byteSize(fraudInvestigationReport.scopeAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.limitation }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.objective">
+            {{ fraudInvestigationReport.limitation  | slice:0:50 }}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.limitationAnnex"
@@ -252,7 +258,8 @@
               >{{ fraudInvestigationReport.limitationAnnexContentType }}, {{ byteSize(fraudInvestigationReport.limitationAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.methodology }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.objective">
+            {{ fraudInvestigationReport.methodology  | slice:0:50 }}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.methodologyAnnex"
@@ -264,7 +271,8 @@
               >{{ fraudInvestigationReport.methodologyAnnexContentType }}, {{ byteSize(fraudInvestigationReport.methodologyAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.findingAndAnalysis }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.findingAndAnalysis">
+            {{ fraudInvestigationReport.findingAndAnalysis | slice:0:50}}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.findingAndAnalysisAnnex"
@@ -279,7 +287,8 @@
               {{ byteSize(fraudInvestigationReport.findingAndAnalysisAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.conclusion }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.conclusion">
+            {{ fraudInvestigationReport.conclusion | slice:0:50}}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.conclusionAnnex"
@@ -291,7 +300,8 @@
               >{{ fraudInvestigationReport.conclusionAnnexContentType }}, {{ byteSize(fraudInvestigationReport.conclusionAnnex) }}</span
             >
           </td>
-          <td>{{ fraudInvestigationReport.recommendation }}</td>
+          <td [attr.data.toogle]="'tooltip'" [attr.data-placement]="'top'" [attr.title]="fraudInvestigationReport.recommendation">
+            {{ fraudInvestigationReport.recommendation | slice:0:50 }}</td>
           <td>
             <a
               *ngIf="fraudInvestigationReport.recommendationAnnex"

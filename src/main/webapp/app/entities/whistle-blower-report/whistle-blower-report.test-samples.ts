@@ -7,23 +7,28 @@ export const sampleWithRequiredData: IWhistleBlowerReport = {
 };
 
 export const sampleWithPartialData: IWhistleBlowerReport = {
-  id: '79f605c4-09e7-4514-909f-d47fc331da31',
-  emailAdress: 'interactive Officer',
-  organization: 'panel strategize',
+  id: '605c409e-7514-4d09-bd47-fc331da31957',
+  emailAdress: 'Officer Oregon niches',
+  organization: 'bandwidth',
   attachment: '../fake-data/blob/hipster.png',
   attachmentContentType: 'unknown',
+  zone: 'reinvent Gorgeous',
+  description: 'Chief New SMTP',
 };
 
 export const sampleWithFullData: IWhistleBlowerReport = {
-  id: 'b1f66361-35ce-4e59-84da-e1ee4917d362',
-  fullName: 'magenta parsing Director',
-  genderType: Gender['OTHER'],
-  emailAdress: 'Mexico calculating Pants',
-  phone: 52038,
-  organization: 'networks Open-architected',
-  message: 'schemas',
+  id: '1ee4917d-362c-43b3-9f8f-59de99cdbc13',
+  fullName: 'plug-and-play',
+  genderType: Gender['FEMALE'],
+  emailAdress: 'compressing Libyan',
+  phone: 43164,
+  organization: 'Account communities Plastic',
+  message: 'Lilangeni Legacy Berkshire',
   attachment: '../fake-data/blob/hipster.png',
   attachmentContentType: 'unknown',
+  position: 'payment Supervisor',
+  zone: 'invoice Mobility Awesome',
+  description: 'Enterprise-wide Soft',
 };
 
 export const sampleWithNewData: NewWhistleBlowerReport = {

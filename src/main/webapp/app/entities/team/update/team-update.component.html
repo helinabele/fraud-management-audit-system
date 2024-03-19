@@ -1,7 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-team-heading" data-cy="TeamCreateUpdateHeading" jhiTranslate="fraudMgtApp.team.home.createOrEditLabel">
+      <h2 id="jhi-team-heading" data-cy="TeamCreateUpdateHeading"
+        jhiTranslate="fraudMgtApp.team.home.createOrEditLabel">
         Create or edit a Team
       </h2>
 
@@ -15,22 +16,52 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.teamName" for="field_teamName">Team Name</label>
-          <input type="text" class="form-control" name="teamName" id="field_teamName" data-cy="teamName" formControlName="teamName" />
+          <input type="text" class="form-control" name="teamName" id="field_teamName" data-cy="teamName"
+            formControlName="teamName" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.team.description" for="field_description">Description</label>
-          <input
-            type="text"
+          <label class="form-label" jhiTranslate="fraudMgtApp.team.description"
+            for="field_description">Description</label>
+          <input type="text" class="form-control" name="description" id="field_description" data-cy="description"
+            formControlName="description" />
+        </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.team.employee" for="field_employee">Employee</label>
+          <select multiple class="form-control" name="employee" id="field_employee" data-cy="employees" formControlName="employees">
+            <option [value]="employee" *ngFor="let employee of employees">{{ employee.name }}</option>
+          </select>
+        </div>
+        <!-- <div *ngFor="let employee of employees">
+            <input type="checkbox" [value]="employee" (change)="onEmployeeChange(getCheckedValue($event), employee)" /> {{ employee.name }}
+          </div> -->
+        <div class="row mb-3">
+          <label>Employees</label>
+          
+          <select [(ngModel)]="selectedEmployee" multiple (change)="onEmployeeChange(selectedEmployee)">
+            <option value="">Select an Employee</option>
+            <option *ngFor="let employee of employees" [value]="employee">{{employee.name}}</option>
+          </select>
+        </div>
+
+        <!-- <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.team.employee" for="field_employee">Employee</label>
+          <ng-multiselect-dropdown
             class="form-control"
-            name="description"
-            id="field_description"
-            data-cy="description"
-            formControlName="description"
-          />
-        </div>
+            name="employee"
+            id="field_employee"
+            data-cy="employees"
+            [placeholder]="'Select employees'"
+            [data]="employees"
+            formControlName="employees"
+          >
+          </ng-multiselect-dropdown>
+        </div> -->
+        
+                <!-- <input type="checkbox" [value]="employee" (change)="onEmployeeChange($event.target.checked, employee)" /> {{ employee.name }}           -->
+            <!-- <input type="checkbox" [value]="employee" (change)="onEmployeeChange($event.target['checked'] ?? false, employee)" /> {{ employee.name }} -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.managerialId" for="field_managerialId">Managerial Id</label>
           <input
             type="number"
@@ -40,23 +71,17 @@
             data-cy="managerialId"
             formControlName="managerialId"
           />
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.isCreator" for="field_isCreator">Is Creator</label>
           <input type="checkbox" class="form-check" name="isCreator" id="field_isCreator" data-cy="isCreator" formControlName="isCreator" />
-        </div>
+        </div> -->
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.team.teamLead" for="field_teamLead">Team Lead</label>
-          <select
-            class="form-control"
-            id="field_teamLead"
-            data-cy="teamLead"
-            name="teamLead"
-            formControlName="teamLead"
-            [compareWith]="compareTeamLead"
-          >
+          <label class="form-label"  for="field_teamLead">Team Leader/coordinator</label>
+          <select class="form-control" id="field_teamLead" data-cy="teamLead" name="teamLead" formControlName="teamLead"
+            [compareWith]="compareTeamLead">
             <option [ngValue]="null"></option>
             <option [ngValue]="teamLeadOption" *ngFor="let teamLeadOption of teamLeadsSharedCollection">
               {{ teamLeadOption.teamLeadName }}
@@ -64,36 +89,26 @@
           </select>
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.managers" for="field_managers">Managers</label>
-          <select
-            class="form-control"
-            id="field_managers"
-            data-cy="managers"
-            name="managers"
-            formControlName="managers"
-            [compareWith]="compareManagerial"
-          >
+          <select class="form-control" id="field_managers" data-cy="managers" name="managers" formControlName="managers"
+            [compareWith]="compareManagerial">
             <option [ngValue]="null"></option>
             <option [ngValue]="managerialOption" *ngFor="let managerialOption of managerialsSharedCollection">
               {{ managerialOption.managerialName }}
             </option>
           </select>
-        </div>
+        </div> -->
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+          (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>

@@ -52,6 +52,12 @@ import {
   faChartBar,
   faFileAlt,
   faGear,
+  faSitemap,
+  faBriefcase,
+  faCodeFork,
+  faGlobe,
+  faBuilding,
+  faMapMarker,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -112,6 +118,12 @@ export const fontAwesomeIcons = [
   faCalendar,
   faClipboardList,
   faBullhorn,
-  faGear
+  faGear,
+  faSitemap,
+  faBriefcase,
+  faCodeFork,
+  faGlobe,
+  faBuilding,
+  faMapMarker,
   // jhipster-needle-add-icon-import
 ];

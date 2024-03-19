@@ -69,10 +69,14 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
         return whistleBlowerReportRepository.findAll(pageable).map(whistleBlowerReportMapper::toDto);
     }
 
+    public Page<WhistleBlowerReportDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return whistleBlowerReportRepository.findAllWithEagerRelationships(pageable).map(whistleBlowerReportMapper::toDto);
+    }
+
     @Override
     public Optional<WhistleBlowerReportDTO> findOne(String id) {
         log.debug("Request to get WhistleBlowerReport : {}", id);
-        return whistleBlowerReportRepository.findById(id).map(whistleBlowerReportMapper::toDto);
+        return whistleBlowerReportRepository.findOneWithEagerRelationships(id).map(whistleBlowerReportMapper::toDto);
     }
 
     @Override

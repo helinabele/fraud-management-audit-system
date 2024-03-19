@@ -42,6 +42,14 @@ public interface WhistleBlowerReportService {
     Page<WhistleBlowerReportDTO> findAll(Pageable pageable);
 
     /**
+     * Get all the whistleBlowerReports with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<WhistleBlowerReportDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" whistleBlowerReport.
      *
      * @param id the id of the entity.

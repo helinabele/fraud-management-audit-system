@@ -83,8 +83,12 @@ export class DirectorUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    const req = {
+      page: 0,
+      size: 10000,
+    }
     this.userService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.director?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));

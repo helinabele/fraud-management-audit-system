@@ -36,7 +36,8 @@
               "src/main/webapp/robots.txt"
             ],
             "styles": ["src/main/webapp/content/scss/vendor.scss", "src/main/webapp/content/scss/global.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["rxjs-compat"]
           },
           "configurations": {
             "production": {
@@ -104,6 +105,7 @@
       "path": "./target/angular/",
       "environment": "all"
     },
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   }
 }

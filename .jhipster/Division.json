@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20231109061710",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "division",
+  "fields": [
+    {
+      "fieldName": "divisionName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Division",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "department",
+      "otherEntityRelationshipName": "division",
+      "relationshipName": "department",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "branch",
+      "otherEntityRelationshipName": "division",
+      "relationshipName": "branch",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "whistleBlowerReport",
+      "otherEntityRelationshipName": "division",
+      "relationshipName": "whistleBlowerReport",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

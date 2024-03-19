@@ -1,0 +1,34 @@
+{
+  "fraudMgtApp": {
+    "assignTask": {
+      "home": {
+        "title": "Assign Tasks",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Assign Task",
+        "createOrEditLabel": "Create or edit a Assign Task",
+        "notFound": "No Assign Tasks found"
+      },
+      "created": "A new Assign Task is created with identifier {{ param }}",
+      "updated": "A Assign Task is updated with identifier {{ param }}",
+      "deleted": "A Assign Task is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Assign Task {{ id }}?"
+      },
+      "detail": {
+        "title": "Assign Task"
+      },
+      "id": "ID",
+      "taskAssignmentDate": "Task Assignment Date",
+      "taskStartDate": "Task Start Date",
+      "taskEndDate": "Task End Date",
+      "attachment": "Attachment",
+      "description": "Description",
+      "director": "Director",
+      "manager": "Manager",
+      "teamLead": "Team Lead",
+      "employee": "Employee",
+      "task": "Task",
+      "team": "Team"
+    }
+  }
+}

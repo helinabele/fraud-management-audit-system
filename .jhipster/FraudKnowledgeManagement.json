@@ -64,7 +64,7 @@
       "fieldName": "suspectedFraudster",
       "fieldType": "SuspectedFraudster",
       "fieldValidateRules": ["required"],
-      "fieldValues": "INTERNAL,EXTERNAL"
+      "fieldValues": "INTERNAL,EXTERNAL,BOTH,OTHER"
     },
     {
       "fieldName": "financialLossAmount",

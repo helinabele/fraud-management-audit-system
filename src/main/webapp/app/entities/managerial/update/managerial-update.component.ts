@@ -93,14 +93,18 @@ export class ManagerialUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    const req = {
+      page: 0,
+      size: 10000
+    }
     this.userService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.managerial?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.directorService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<IDirector[]>) => res.body ?? []))
       .pipe(
         map((directors: IDirector[]) =>

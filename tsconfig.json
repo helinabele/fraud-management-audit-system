@@ -17,12 +17,17 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2020",
     "module": "es2020",
-    "lib": ["es2018", "dom"]
+    "lib": ["es2018", "dom"],
+    "resolveJsonModule": true
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "preserveWhitespaces": true
-  }
+    "preserveWhitespaces": true,
+    "skipLibCheck": true
+  },
+  "complilerOptions": {
+    "skipLibCheck": true
+}
 }

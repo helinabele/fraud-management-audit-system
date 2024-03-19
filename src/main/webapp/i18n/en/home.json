@@ -14,6 +14,15 @@
       "follow": "follow @jhipster on Twitter"
     },
     "like": "If you like JHipster, don't forget to give us a star on",
-    "github": "GitHub"
+    "github": "GitHub",
+    "header": "Report Fraud and Protect Your Business",
+    "body": "Our secure and reliable platform allows you to report fraud and protect your business from financial losses and reputational damage.",
+    "footer": "Fraud Report Mgt. All rights reserved",
+    "whistle": "Report any suspicious behavior or activity anonymously and securely.",
+    "taskDetail": "Manage your tasks and monitor their progress with our easy-to-use interface.",
+    "userGuide": "User Guide",
+    "userGuideDetail": "Learn how to use our platform with our comprehensive user guide.",
+    "openGuide": "Open Guide",
+    "downloadGuide": "Download Guide"
   }
 }

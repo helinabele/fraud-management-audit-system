@@ -1,130 +1,363 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-whistle-blower-report-heading"
-        data-cy="WhistleBlowerReportCreateUpdateHeading"
-        jhiTranslate="fraudMgtApp.whistleBlowerReport.home.createOrEditLabel"
-      >
+      <h2 id="jhi-whistle-blower-report-heading" data-cy="WhistleBlowerReportCreateUpdateHeading"
+        jhiTranslate="fraudMgtApp.whistleBlowerReport.home.createOrEditLabel">
         Create or edit a Whistle Blower Report
       </h2>
 
-      <div>
+      <div class="btn-group" role="group">
+        <div class="btn btn-dark" (click)="showDiv.known = true; showDiv.anonymous = false"
+          jhiTranslate="fraudMgtApp.whistleBlowerReport.known">
+          Report as Known
+        </div>
+        <div class="btn btn-outline-secondary" (click)="showDiv.known = false; showDiv.anonymous = true;"
+          jhiTranslate="fraudMgtApp.whistleBlowerReport.anonymous">
+          Report Anonymously
+        </div>
+      </div>
+
+      <div *ngIf="showDiv.known">
         <jhi-alert-error></jhi-alert-error>
 
         <!-- <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div> -->
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.fullName" for="field_fullName">Full Name</label>
-          <input type="text" class="form-control" name="fullName" id="field_fullName" data-cy="fullName" formControlName="fullName" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.genderType" for="field_genderType">Gender Type</label>
-          <select class="form-control" name="genderType" formControlName="genderType" id="field_genderType" data-cy="genderType">
-            <option [ngValue]="null">{{ 'fraudMgtApp.Gender.null' | translate }}</option>
-            <option *ngFor="let gender of genderValues" [value]="gender">{{ 'fraudMgtApp.Gender.' + gender | translate }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.emailAdress" for="field_emailAdress">Email Adress</label>
-          <input
-            type="text"
-            class="form-control"
-            name="emailAdress"
-            id="field_emailAdress"
-            data-cy="emailAdress"
-            formControlName="emailAdress"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.phone" for="field_phone">Phone</label>
-          <input type="number" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.organization" for="field_organization"
-            >Organization</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="organization"
-            id="field_organization"
-            data-cy="organization"
-            formControlName="organization"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.message" for="field_message">Message</label>
-          <input type="text" class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.attachment" for="field_attachment">Attachment</label>
-          <div>
-            <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
-                (click)="openFile(editForm.get('attachment')!.value!, editForm.get('attachmentContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('attachmentContentType')!.value }}, {{ byteSize(editForm.get('attachment')!.value!) }}</span
-              >
-              <button
-                type="button"
-                (click)="editForm.patchValue({ attachment: undefined, attachmentContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
-                <fa-icon icon="times"></fa-icon>
-              </button>
+        <div class="row">
+          <div class="col-5">
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.fullName"
+                for="field_fullName">Full
+                Name</label>
+              <input type="text" class="form-control" name="fullName" id="field_fullName" data-cy="fullName"
+                formControlName="fullName"
+                [placeholder]="'fraudMgtApp.whistleBlowerReport.placeholder.name' | translate" />
             </div>
-            <input
-              type="file"
-              id="file_attachment"
-              data-cy="attachment"
-              (change)="setFileData($event, 'attachment', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.genderType"
+                for="field_genderType">Gender Type</label>
+              <select class="form-control" name="genderType" formControlName="genderType" id="field_genderType"
+                data-cy="genderType">
+                <option [ngValue]="null">{{ 'fraudMgtApp.Gender.null' | translate }}</option>
+                <option *ngFor="let gender of genderValues" [value]="gender">{{ 'fraudMgtApp.Gender.' + gender |
+                  translate
+                  }}</option>
+              </select>
+            </div>
+            <!-- <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.genderType" for="field_genderType">Gender Type</label>
+          <div>
+            <label class="form-check-label" for="field_genderType_male">
+              <input type="radio" class="form-check-input" name="genderType" id="field_genderType_male" value="Male" formControlName="genderType" data-cy="genderType_male" />
+              Male
+            </label>
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="attachment"
-            id="field_attachment"
-            data-cy="attachment"
-            formControlName="attachment"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="attachmentContentType"
-            id="field_attachmentContentType"
-            formControlName="attachmentContentType"
-          />
+          <div>
+            <label class="form-check-label" for="field_genderType_female">
+              <input type="radio" class="form-check-input" name="genderType" id="field_genderType_female" value="Female" formControlName="genderType" data-cy="genderType_female" />
+              Female
+            </label>
+          </div>
+          <div>
+            <label class="form-check-label" for="field_genderType_other">
+              <input type="radio" class="form-check-input" name="genderType" id="field_genderType_other" value="Other" formControlName="genderType" data-cy="genderType_other" />
+              Other
+            </label>
+          </div>
+        </div>
+        </div> -->
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.emailAdress"
+                for="field_emailAdress">Email Adress</label>
+              <input type="email" class="form-control" name="emailAdress" id="field_emailAdress" data-cy="emailAdress"
+                formControlName="emailAdress"
+                [placeholder]="'fraudMgtApp.whistleBlowerReport.placeholder.email' | translate" />
+            </div>
+            <!-- <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.phone" for="field_phone">Phone</label>
+          <input type="number" class="form-control" name="phone" id="field_phone" data-cy="phone"
+            formControlName="phone" />
+        </div> -->
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.phone"
+                for="field_phone">Phone</label>
+              <input type="tel" class="form-control" name="phone" id="field_phone" data-cy="phone"
+                formControlName="phone" pattern="[0-9]{10}" minlength="10" maxlength="10"
+                [placeholder]="'fraudMgtApp.whistleBlowerReport.placeholder.phone' | translate" />
+            </div>
+            <!-- <div class="col-md-6 mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.organization"
+            for="field_organization">Organization</label>
+          <input type="text" class="form-control" name="organization" id="field_organization" data-cy="organization"
+            formControlName="organization" />
+        </div> -->
+          </div>
+          <div class="col-1"></div>
+          <div class="col-5">
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.message"
+                for="field_message">Message</label>
+              <textarea class="form-control" name="message" id="field_message" data-cy="message"
+                formControlName="message" required rows="4"></textarea>
+            </div>
+
+            <!-- <div *ngFor="let attachment of attachments; let i = index"> -->
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.attachment"
+                for="field_attachment">Attachment </label>
+              <div>
+                <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
+                  <a class="pull-start"
+                    (click)="openFile(editForm.get('attachment')!.value!, editForm.get('attachmentContentType')!.value!)"
+                    jhiTranslate="entity.action.open">Open</a><br />
+                  <span class="pull-start">{{ editForm.get('attachmentContentType')!.value }}, {{
+                    byteSize(editForm.get('attachment')!.value!) }}</span>
+                  <button type="button"
+                    (click)="editForm.patchValue({ attachment: undefined, attachmentContentType: undefined })"
+                    class="btn btn-secondary btn-xs pull-end">
+                    <fa-icon icon="times"></fa-icon>
+                  </button>
+                </div>
+                <input type="file" id="file_attachment" data-cy="attachment"
+                  (change)="setFileData($event, 'attachment', false)" jhiTranslate="entity.action.addblob" />
+              </div>
+              <input type="hidden" class="form-control" name="attachment" id="field_attachment" data-cy="attachment"
+                formControlName="attachment" />
+              <input type="hidden" class="form-control" name="attachmentContentType" id="field_attachmentContentType"
+                formControlName="attachmentContentType" />
+            </div>
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.description"
+                for="field_description">Description</label>
+              <input type="text" class="form-control" name="description" id="field_description" data-cy="description"
+                formControlName="description" />
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.region"
+                for="field_region">Region</label>
+              <select class="form-control" id="field_region" data-cy="region" name="region" formControlName="region"
+                [compareWith]="compareRegion" (change)="onChangeRegion()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="regionOption" *ngFor="let regionOption of regionsSharedCollection">{{
+                  regionOption.regionName }}</option>
+              </select>
+            </div>
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.city"
+                for="field_city">City</label>
+              <select class="form-control" id="field_city" data-cy="city" name="city" formControlName="city"
+                [compareWith]="compareCity" (change)="onChangeCity()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="cityOption" *ngFor="let cityOption of citiesSharedCollection">{{ cityOption.cityName
+                  }}</option>
+              </select>
+            </div>
+
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.subCity" for="field_subCity">Sub
+                City</label>
+              <select class="form-control" id="field_subCity" data-cy="subCity" name="subCity" formControlName="subCity"
+                [compareWith]="compareSubCity">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="subCityOption" *ngFor="let subCityOption of subCitiesSharedCollection">{{
+                  subCityOption.subCityName }}</option>
+              </select>
+            </div>
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.zone"
+                for="field_zone">Zone</label>
+              <input type="text" class="form-control" name="zone" id="field_zone" data-cy="zone"
+                formControlName="zone" />
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-5 checkBox">
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cbeEmployeeCheckbox"
+                [(ngModel)]="isFraudOccurCheckbox" [ngModelOptions]="{standalone: true}" name="isFraudOccurCheckbox">
+              <label class="form-check-label" for="cbeEmployeeCheckbox"
+                jhiTranslate="fraudMgtApp.whistleBlowerReport.reportFraudOccurrence">
+                Report Fraud Occurrence
+              </label>
+            </div>
+
+            <div class="row mb-3" *ngIf="isFraudOccurCheckbox">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.division"
+                for="field_division">Division</label>
+              <select class="form-control" id="field_division" data-cy="division" name="division"
+                formControlName="divisionFraud" [compareWith]="compareDivision" (change)="onChangeDivision()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="divisionOption" *ngFor="let divisionOption of divisionsSharedCollection">{{
+                  divisionOption.divisionName }}</option>
+              </select>
+            </div>
+
+            <div class="row mb-3" *ngIf="isFraudOccurCheckbox">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.department"
+                for="field_department">Department</label>
+              <select class="form-control" id="field_department" data-cy="department" name="department"
+                formControlName="departmentFraud" [compareWith]="compareDepartment" (change)="onChangeDepartment()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="departmentOption" *ngFor="let departmentOption of departmentsSharedCollection">
+                  {{ departmentOption.departmentName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="row mb-3" *ngIf="isFraudOccurCheckbox">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.branch"
+                for="field_branch">Branch</label>
+              <select class="form-control" id="field_branch" data-cy="branch" name="branch"
+                formControlName="branchFraud" [compareWith]="compareBranch">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="branchOption" *ngFor="let branchOption of branchesSharedCollection">{{
+                  branchOption.branchName }}</option>
+              </select>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cbeEmployeeCheckbox" [(ngModel)]="isCbeEmployee"
+                [ngModelOptions]="{standalone: true}" name="isCbeEmployee">
+              <label class="form-check-label" for="cbeEmployeeCheckbox"
+                jhiTranslate="fraudMgtApp.whistleBlowerReport.cbeEmployee">
+                I am a CBE Employee
+              </label>
+            </div>
+            <div class="row mb-3" *ngIf="isCbeEmployee">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.division"
+                for="field_division">Division</label>
+              <select class="form-control" id="field_division" data-cy="division" name="division"
+                formControlName="division" [compareWith]="compareDivision" (change)="onChangeDivision()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="divisionOption" *ngFor="let divisionOption of divisionsSharedCollection">{{
+                  divisionOption.divisionName }}</option>
+              </select>
+            </div>
+
+            <div class="row mb-3" *ngIf="isCbeEmployee">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.department"
+                for="field_department">Department</label>
+              <select class="form-control" id="field_department" data-cy="department" name="department"
+                formControlName="department" [compareWith]="compareDepartment" (change)="onChangeDepartment()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="departmentOption" *ngFor="let departmentOption of departmentsSharedCollection">
+                  {{ departmentOption.departmentName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="row mb-3" *ngIf="isCbeEmployee">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.branch"
+                for="field_branch">Branch</label>
+              <select class="form-control" id="field_branch" data-cy="branch" name="branch" formControlName="branch"
+                [compareWith]="compareBranch">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="branchOption" *ngFor="let branchOption of branchesSharedCollection">{{
+                  branchOption.branchName }}</option>
+              </select>
+            </div>
+
+          </div>
+          <!-- <button type="button" class="btn btn-primary btn-xs pull-end" (click)="addAttachment()">
+          My New Button
+        </button> -->
         </div>
       </div>
+      <!-- </div> -->
+      <div *ngIf="showDiv.anonymous">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.message" for="field_message">Message</label>
+              <textarea class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" required rows="4"></textarea>
+            </div>
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.attachment"
+                for="field_attachment">Attachment </label>
+              <div>
+                <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
+                  <a class="pull-start"
+                    (click)="openFile(editForm.get('attachment')!.value!, editForm.get('attachmentContentType')!.value!)"
+                    jhiTranslate="entity.action.open">Open</a><br />
+                  <span class="pull-start">{{ editForm.get('attachmentContentType')!.value }}, {{
+                    byteSize(editForm.get('attachment')!.value!) }}</span>
+                  <button type="button"
+                    (click)="editForm.patchValue({ attachment: undefined, attachmentContentType: undefined })"
+                    class="btn btn-secondary btn-xs pull-end">
+                    <fa-icon icon="times"></fa-icon>
+                  </button>
+                </div>
+                <input type="file" id="file_attachment" data-cy="attachment"
+                  (change)="setFileData($event, 'attachment', false)" jhiTranslate="entity.action.addblob" />
+              </div>
+              <input type="hidden" class="form-control" name="attachment" id="field_attachment" data-cy="attachment"
+                formControlName="attachment" />
+              <input type="hidden" class="form-control" name="attachmentContentType" id="field_attachmentContentType"
+                formControlName="attachmentContentType" />
+            </div>
+            <div class="row mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.description"
+                for="field_description">Description</label>
+              <input type="text" class="form-control" name="description" id="field_description" data-cy="description"
+                formControlName="description" />
+            </div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-5 checkBox">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cbeEmployeeCheckbox" [(ngModel)]="isFraudOccurCheckbox" [ngModelOptions]="{standalone: true}" name="isFraudOccurCheckbox">
+              <label class="form-check-label" for="cbeEmployeeCheckbox">Where the Fraud occurs:</label>
+            </div>
 
+            <div class="row mb-3" *ngIf="isFraudOccurCheckbox">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.division"
+                for="field_division">Division</label>
+              <select class="form-control" id="field_division" data-cy="division" name="division"
+                formControlName="divisionFraud" [compareWith]="compareDivision" (change)="onChangeDivision()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="divisionOption" *ngFor="let divisionOption of divisionsSharedCollection">{{
+                  divisionOption.divisionName }}</option>
+              </select>
+            </div>
+
+            <div class="row mb-3" *ngIf="isFraudOccurCheckbox">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.department"
+                for="field_department">Department</label>
+              <select class="form-control" id="field_department" data-cy="department" name="department"
+                formControlName="departmentFraud" [compareWith]="compareDepartment" (change)="onChangeDepartment()">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="departmentOption" *ngFor="let departmentOption of departmentsSharedCollection">
+                  {{ departmentOption.departmentName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="row mb-3" *ngIf="isFraudOccurCheckbox">
+              <label class="form-label" jhiTranslate="fraudMgtApp.whistleBlowerReport.branch"
+                for="field_branch">Branch</label>
+              <select class="form-control" id="field_branch" data-cy="branch" name="branch"
+                formControlName="branchFraud" [compareWith]="compareBranch">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="branchOption" *ngFor="let branchOption of branchesSharedCollection">{{
+                  branchOption.branchName }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+          (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>

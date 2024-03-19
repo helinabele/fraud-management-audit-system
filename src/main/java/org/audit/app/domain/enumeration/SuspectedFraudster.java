@@ -6,4 +6,6 @@ package org.audit.app.domain.enumeration;
 public enum SuspectedFraudster {
     INTERNAL,
     EXTERNAL,
+    BOTH,
+    OTHER,
 }

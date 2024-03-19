@@ -27,6 +27,23 @@ public class WhistleBlowerReportDTO implements Serializable {
     private byte[] attachment;
 
     private String attachmentContentType;
+    private String position;
+
+    private String zone;
+
+    private String description;
+
+    private DivisionDTO division;
+
+    private DepartmentDTO department;
+
+    private BranchDTO branch;
+
+    private RegionDTO region;
+
+    private CityDTO city;
+
+    private SubCityDTO subCity;
 
     public String getId() {
         return id;
@@ -100,6 +117,78 @@ public class WhistleBlowerReportDTO implements Serializable {
         this.attachmentContentType = attachmentContentType;
     }
 
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getZone() {
+        return zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public DivisionDTO getDivision() {
+        return division;
+    }
+
+    public void setDivision(DivisionDTO division) {
+        this.division = division;
+    }
+
+    public DepartmentDTO getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(DepartmentDTO department) {
+        this.department = department;
+    }
+
+    public BranchDTO getBranch() {
+        return branch;
+    }
+
+    public void setBranch(BranchDTO branch) {
+        this.branch = branch;
+    }
+
+    public RegionDTO getRegion() {
+        return region;
+    }
+
+    public void setRegion(RegionDTO region) {
+        this.region = region;
+    }
+
+    public CityDTO getCity() {
+        return city;
+    }
+
+    public void setCity(CityDTO city) {
+        this.city = city;
+    }
+
+    public SubCityDTO getSubCity() {
+        return subCity;
+    }
+
+    public void setSubCity(SubCityDTO subCity) {
+        this.subCity = subCity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -133,6 +222,15 @@ public class WhistleBlowerReportDTO implements Serializable {
             ", organization='" + getOrganization() + "'" +
             ", message='" + getMessage() + "'" +
             ", attachment='" + getAttachment() + "'" +
+            ", position='" + getPosition() + "'" +
+            ", zone='" + getZone() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", division=" + getDivision() +
+            ", department=" + getDepartment() +
+            ", branch=" + getBranch() +
+            ", region=" + getRegion() +
+            ", city=" + getCity() +
+            ", subCity=" + getSubCity() +
             "}";
     }
 }

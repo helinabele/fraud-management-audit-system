@@ -1,0 +1,50 @@
+{
+  "fraudMgtApp": {
+    "fraudInvestigationReport": {
+      "home": {
+        "title": "Fraud Investigation Reports",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fraud Investigation Report",
+        "createOrEditLabel": "Create or edit a Fraud Investigation Report",
+        "notFound": "No Fraud Investigation Reports found"
+      },
+      "created": "A new Fraud Investigation Report is created with identifier {{ param }}",
+      "updated": "A Fraud Investigation Report is updated with identifier {{ param }}",
+      "deleted": "A Fraud Investigation Report is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fraud Investigation Report {{ id }}?"
+      },
+      "detail": {
+        "title": "Fraud Investigation Report"
+      },
+      "id": "ID",
+      "title": "Title",
+      "executiveSummary": "Executive Summary",
+      "introductionAnnex": "Introduction Annex",
+      "introduction": "Introduction",
+      "objective": "Objective",
+      "objectiveAnnex": "Objective Annex",
+      "scope": "Scope",
+      "scopeAnnex": "Scope Annex",
+      "limitation": "Limitation",
+      "limitationAnnex": "Limitation Annex",
+      "methodology": "Methodology",
+      "methodologyAnnex": "Methodology Annex",
+      "findingAndAnalysis": "Finding And Analysis",
+      "findingAndAnalysisAnnex": "Finding And Analysis Annex",
+      "conclusion": "Conclusion",
+      "conclusionAnnex": "Conclusion Annex",
+      "recommendation": "Recommendation",
+      "recommendationAnnex": "Recommendation Annex",
+      "nameOfMembers": "Name Of Members",
+      "signature": "Signature",
+      "references": "References",
+      "publicationDate": "Publication Date",
+      "author": "Author",
+      "employee": "Employee",
+      "task": "Task",
+      "team": "Team",
+      "findings": "Findings"
+    }
+  }
+}
