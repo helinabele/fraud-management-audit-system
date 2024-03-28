@@ -7,10 +7,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IWhistleBlowerReport } from '../whistle-blower-report.model';
 
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA, ITEM_REJECTED_EVENT } from 'app/config/navigation.constants';
 import { EntityArrayResponseType, WhistleBlowerReportService } from '../service/whistle-blower-report.service';
 import { WhistleBlowerReportDeleteDialogComponent } from '../delete/whistle-blower-report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import { WhistleBlowerReportRejectDialogComponent } from '../reject/whistle-blower-report-reject-dialog.component';
 
 @Component({
   selector: 'jhi-whistle-blower-report',
@@ -20,7 +21,7 @@ import { DataUtils } from 'app/core/util/data-util.service';
 export class WhistleBlowerReportComponent implements OnInit {
   whistleBlowerReports?: IWhistleBlowerReport[];
   isLoading = false;
-
+  rejectedReports?: IWhistleBlowerReport[] = [];
   predicate = 'id';
   ascending = true;
 
@@ -45,7 +46,7 @@ export class WhistleBlowerReportComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     public router: Router,
     protected dataUtils: DataUtils,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
   ) { }
 
   trackId = (_index: number, item: IWhistleBlowerReport): string => this.whistleBlowerReportService.getWhistleBlowerReportIdentifier(item);
@@ -71,9 +72,57 @@ export class WhistleBlowerReportComponent implements OnInit {
     // );
   }
   
-  rejectWhistleBlower(){
-    console.log('Whistle blower rejected');
+  // rejectWhistleBlower(whistleBlowerReport: IWhistleBlowerReport): void {
+  //   if (this.whistleBlowerReports) {
+  //     const index = this.whistleBlowerReports.findIndex(item => item.id === whistleBlowerReport.id);
+  //     if (index !== -1) {
+  //       const rejectedReport = this.whistleBlowerReports.splice(index, 1)[0];
+  //       this.rejectedReports = this.rejectedReports ?? [];
+  //       this.rejectedReports.push(rejectedReport);
+  //     }
+  //   }
+  // }
+
+  // rejectWhistleBlower(whistleBlowerReport: IWhistleBlowerReport): void {
+  //   const confirmed = confirm('Are you sure you want to reject this whistleblower report?');
+  //   if (confirmed) {
+  //     // Remove the item from the list
+  //     if (this.whistleBlowerReports) {
+  //       const index = this.whistleBlowerReports.findIndex(item => item.id === whistleBlowerReport.id);
+  //       if (index !== -1) {
+  //         const rejectedReport = this.whistleBlowerReports.splice(index, 1)[0];
+  //         this.rejectedReports = this.rejectedReports ?? [];
+  //         this.rejectedReports.push(rejectedReport);
+  //       }
+  //     }
+  //   }
+  // }
+
+  rejectWhistleBlower(whistleBlowerReport: IWhistleBlowerReport): void {
+    const modalRef = this.modalService.open(WhistleBlowerReportRejectDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.whistleBlowerReport = whistleBlowerReport;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed
+      .pipe(
+        filter(reason => reason === ITEM_REJECTED_EVENT),
+        switchMap(() => this.loadFromBackendWithRouteInformations())
+      )
+      .subscribe({
+        next: (res: EntityArrayResponseType) => {
+          this.onResponseSuccess(res);
+        },
+      });
   }
+
+ /*  rejectWhistleBlower(id: string): void {
+    this.whistleBlowerReportService.rejectReport(id).subscribe(() => {
+      const rejectedRep = this.whistleBlowerReports?.find(report => report.id === id);
+      if(rejectedRep){
+        this.rejectedReports?.push(rejectedRep);
+        this.whistleBlowerReports?.filter(report => report.id !== id);
+      }
+    });
+  } */
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);

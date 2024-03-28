@@ -100,7 +100,7 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-           
+
             <th scope="col" jhiSortBy="position">
               <div class="d-flex">
                 <span jhiTranslate="fraudMgtApp.whistleBlowerReport.position">Position</span>
@@ -160,7 +160,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let whistleBlowerReport of filteredNameList trackBy: trackId" data-cy="entityTable">
+          <ng-container *ngFor="let whistleBlowerReport of filteredNameList; trackBy: trackId">
+          <tr data-cy="entityTable" *ngIf="whistleBlowerReport.reportStatus !== 'REJECTED'">
+            <!-- <span *ngIf="whistleBlowerReport.reportStatus !== 'IN_PROGRESS'" /> -->
             <!-- <td>
               <a [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'view']">{{ whistleBlowerReport.id
                 }}</a>
@@ -254,11 +256,11 @@
                   <fa-icon icon="pencil-alt"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
                 </button>
-                <button type="submit" (click)="rejectWhistleBlower()" class="btn btn-danger btn-sm"
-                data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" >Reject</span>
-              </button>
+                <button type="submit" (click)="rejectWhistleBlower(whistleBlowerReport)" class="btn btn-danger btn-sm"
+                  data-cy="entityRejectButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline">Reject</span>
+                </button>
                 <!-- <button type="submit" (click)="delete(whistleBlowerReport)" class="btn btn-danger btn-sm"
                   data-cy="entityDeleteButton">
                   <fa-icon icon="times"></fa-icon>
@@ -266,7 +268,9 @@
                 </button> -->
               </div>
             </td>
+          <!-- </div> -->
           </tr>
+        </ng-container>
         </tbody>
       </table>
     </div>
