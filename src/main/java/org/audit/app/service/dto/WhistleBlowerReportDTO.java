@@ -3,6 +3,7 @@ package org.audit.app.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import org.audit.app.domain.enumeration.Gender;
+import org.audit.app.service.impl.ReportStatus;
 
 /**
  * A DTO for the {@link org.audit.app.domain.WhistleBlowerReport} entity.
@@ -44,6 +45,16 @@ public class WhistleBlowerReportDTO implements Serializable {
     private CityDTO city;
 
     private SubCityDTO subCity;
+
+    private ReportStatus reportStatus;
+
+    public ReportStatus getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(ReportStatus reportStatus) {
+        this.reportStatus = reportStatus;
+    }
 
     public String getId() {
         return id;
@@ -231,6 +242,7 @@ public class WhistleBlowerReportDTO implements Serializable {
             ", region=" + getRegion() +
             ", city=" + getCity() +
             ", subCity=" + getSubCity() +
+            ", reportStatus=" + getReportStatus() +
             "}";
     }
 }

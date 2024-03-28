@@ -3,6 +3,7 @@ package org.audit.app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import org.audit.app.domain.enumeration.Gender;
+import org.audit.app.service.impl.ReportStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -83,10 +84,21 @@ public class WhistleBlowerReport implements Serializable {
     @JsonIgnoreProperties(value = { "city", "whistleBlowerReports" }, allowSetters = true)
     private SubCity subCity;
 
+    @Field("reportStatus")
+    private ReportStatus reportStatus;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
         return this.id;
+    }
+
+    public ReportStatus getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(ReportStatus reportStatus) {
+        this.reportStatus = reportStatus;
     }
 
     public WhistleBlowerReport id(String id) {
@@ -319,7 +331,8 @@ public class WhistleBlowerReport implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -334,7 +347,8 @@ public class WhistleBlowerReport implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -342,18 +356,19 @@ public class WhistleBlowerReport implements Serializable {
     @Override
     public String toString() {
         return "WhistleBlowerReport{" +
-            "id=" + getId() +
-            ", fullName='" + getFullName() + "'" +
-            ", genderType='" + getGenderType() + "'" +
-            ", emailAdress='" + getEmailAdress() + "'" +
-            ", phone=" + getPhone() +
-            ", organization='" + getOrganization() + "'" +
-            ", message='" + getMessage() + "'" +
-            ", attachment='" + getAttachment() + "'" +
-            ", attachmentContentType='" + getAttachmentContentType() + "'" +
-            ", position='" + getPosition() + "'" +
-            ", zone='" + getZone() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
+                "id=" + getId() +
+                ", fullName='" + getFullName() + "'" +
+                ", genderType='" + getGenderType() + "'" +
+                ", emailAdress='" + getEmailAdress() + "'" +
+                ", phone=" + getPhone() +
+                ", organization='" + getOrganization() + "'" +
+                ", message='" + getMessage() + "'" +
+                ", attachment='" + getAttachment() + "'" +
+                ", attachmentContentType='" + getAttachmentContentType() + "'" +
+                ", position='" + getPosition() + "'" +
+                ", zone='" + getZone() + "'" +
+                ", description='" + getDescription() + "'" +
+                ", reportStatus='" + getReportStatus() + "'" +
+                "}";
     }
 }

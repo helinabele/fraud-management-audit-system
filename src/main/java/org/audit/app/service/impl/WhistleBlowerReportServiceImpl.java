@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 /**
  * Service Implementation for managing {@link WhistleBlowerReport}.
  */
@@ -24,12 +25,16 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
 
     private final WhistleBlowerReportMapper whistleBlowerReportMapper;
 
+    private final WhistleBlowerReportRepository reportRepository;
+
     public WhistleBlowerReportServiceImpl(
         WhistleBlowerReportRepository whistleBlowerReportRepository,
-        WhistleBlowerReportMapper whistleBlowerReportMapper
+        WhistleBlowerReportMapper whistleBlowerReportMapper,
+        WhistleBlowerReportRepository reportRepository
     ) {
         this.whistleBlowerReportRepository = whistleBlowerReportRepository;
         this.whistleBlowerReportMapper = whistleBlowerReportMapper;
+        this.reportRepository = reportRepository;
     }
 
     @Override
@@ -64,13 +69,22 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
     }
 
     @Override
-    public Page<WhistleBlowerReportDTO> findAll(Pageable pageable) {
+    public Page<Object> findAll(Pageable pageable) {
+        log.debug("Request to get all WhistleBlowerReports");
+        return whistleBlowerReportRepository.findAll(pageable).map(whistleBlowerReportMapper::toDto)
+        .map(status->status.getReportStatus() != ReportStatus.REJECTED);
+    }
+
+    @Override
+    public Page<WhistleBlowerReportDTO> findByReportStatus(Pageable pageable) {
         log.debug("Request to get all WhistleBlowerReports");
         return whistleBlowerReportRepository.findAll(pageable).map(whistleBlowerReportMapper::toDto);
     }
 
+
     public Page<WhistleBlowerReportDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return whistleBlowerReportRepository.findAllWithEagerRelationships(pageable).map(whistleBlowerReportMapper::toDto);
+        return whistleBlowerReportRepository.findAllWithEagerRelationships(pageable)
+        .map(whistleBlowerReportMapper::toDto);
     }
 
     @Override
@@ -84,4 +98,36 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
         log.debug("Request to delete WhistleBlowerReport : {}", id);
         whistleBlowerReportRepository.deleteById(id);
     }
+
+    @Override
+    public boolean rejectReport(String id) {
+        // Logic to reject the report and update its status in the database
+        // ...
+    
+        // Example: Update the report's status to "Rejected"
+        Optional<WhistleBlowerReport> optionalReport = reportRepository.findById(id);
+        if (optionalReport.isPresent()) {
+            WhistleBlowerReport report = optionalReport.get();
+            report.setReportStatus(ReportStatus.REJECTED);
+            reportRepository.save(report);
+        } else {
+            // Handle the case when the report with the given ID is not found
+            throw new RuntimeException("WhistleBlowerReport not found with id: " + id);
+            // or any other appropriate exception/error handling
+        }
+        return false;
+    }
+
+    // @Override
+    // public Optional<WhistleBlowerReportDTO> findByReportStatus(String status) {
+    //     /**
+    //      * Write the logic which fecthes the report status with not rejected 
+    //      */
+    //     if(status != ReportStatus.REJECTED.toString()){
+    //         return (Optional<WhistleBlowerReportDTO>) reportRepository.findByReportStatus(status);
+    //     }
+    //     throw new UnsupportedOperationException("Unimplemented method 'findByReportStatus'");
+    // }
+    
+    
 }

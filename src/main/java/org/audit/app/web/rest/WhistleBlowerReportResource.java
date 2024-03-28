@@ -122,6 +122,26 @@ public class WhistleBlowerReportResource {
             .body(result);
     }
 
+
+    @PutMapping("/whistle-blower-reports/{id}/reject")
+    public ResponseEntity<String> rejectReport(@PathVariable String id) {
+        // Logic to reject the report and update its status in the database
+        // ...
+        boolean reportRejected = (boolean) whistleBlowerReportService.rejectReport(id);
+        if (reportRejected) {
+            return ResponseEntity.ok().build(); // Return a success response
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("WhistleBlowerReport not found with id: " + id);
+            // Return a 404 Not Found response with a message indicating that the report was not found
+        }
+    }
+
+   /*  @RejectMapping("/whistle-blower-reports/{id}/reject")
+    public ResponseEntity<Void> rejectWhistleBlowerReport(@PathVariable String id) {
+        log.debug("REST request to reject WhistleBlowerReport : {}", id);
+        whistleBlowerReportService.rejectReport(id);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
+    } */
     /**
      * {@code PATCH  /whistle-blower-reports/:id} : Partial updates given fields of an existing whistleBlowerReport, field will ignore if it is null
      *
@@ -172,11 +192,12 @@ public class WhistleBlowerReportResource {
     ) {
         log.debug("REST request to get a page of WhistleBlowerReports");
         Page<WhistleBlowerReportDTO> page;
-        if (eagerload) {
+        // if (eagerload) {
             page = whistleBlowerReportService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = whistleBlowerReportService.findAll(pageable);
-        }
+        // } 
+        // else {
+        //     page = whistleBlowerReportService.findAll(pageable);
+        // }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -205,4 +226,7 @@ public class WhistleBlowerReportResource {
         whistleBlowerReportService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
+
+  
+
 }

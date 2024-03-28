@@ -5,6 +5,8 @@ import org.audit.app.service.dto.WhistleBlowerReportDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.google.api.services.storage.Storage.BucketAccessControls.List;
+
 /**
  * Service Interface for managing {@link org.audit.app.domain.WhistleBlowerReport}.
  */
@@ -39,7 +41,9 @@ public interface WhistleBlowerReportService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<WhistleBlowerReportDTO> findAll(Pageable pageable);
+    Page<Object> findAll(Pageable pageable);
+    // Optional<WhistleBlowerReportDTO> findByReportStatus(String status);
+    
 
     /**
      * Get all the whistleBlowerReports with eager load of many-to-many relationships.
@@ -48,6 +52,7 @@ public interface WhistleBlowerReportService {
      * @return the list of entities.
      */
     Page<WhistleBlowerReportDTO> findAllWithEagerRelationships(Pageable pageable);
+    Page<WhistleBlowerReportDTO> findByReportStatus(Pageable pageable);
 
     /**
      * Get the "id" whistleBlowerReport.
@@ -63,4 +68,8 @@ public interface WhistleBlowerReportService {
      * @param id the id of the entity.
      */
     void delete(String id);
+
+    boolean rejectReport(String id);
+    // list<String> findByReportStatus();
+
 }

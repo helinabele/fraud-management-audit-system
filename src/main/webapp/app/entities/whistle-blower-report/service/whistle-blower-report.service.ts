@@ -84,6 +84,14 @@ export class WhistleBlowerReportService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  // rejectReport(id: string): Observable<HttpResponse<{}>> {
+  //   return this.http.put(`${this.resourceUrl}/${id}/reject`, null, {observe: 'response'});
+  // }
+
+  rejectReport(id: String) {
+    return this.http.put(`${this.resourceUrl}/${id}/reject`, {});
+  }
+
   getWhistleBlowerReportIdentifier(whistleBlowerReport: Pick<IWhistleBlowerReport, 'id'>): string {
     return whistleBlowerReport.id;
   }

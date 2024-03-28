@@ -124,7 +124,8 @@
       "save": "Save",
       "view": "View",
       "show": "Show {{otherEntity}}",
-      "assign": "Assign"
+      "assign": "Assign",
+      "reject": "Reject"
     },
     "detail": {
       "field": "Field",
@@ -132,6 +133,9 @@
     },
     "delete": {
       "title": "Confirm delete operation"
+    },
+    "reject": {
+      "title": "Confirm reject operation"
     },
     "validation": {
       "required": "This field is required.",

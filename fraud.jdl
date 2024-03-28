@@ -177,8 +177,24 @@ entity SubCity{
     subCityName String required
     description String
 }
+
+entity JobTitle{
+    jobTitleName String required
+    description String
+}
+entity JobGrade{
+    jobGradeName String required
+    description String
+}
+entity ReportRepository{
+    reportName String required
+    attachment Blob
+    description String
+}
 relationship ManyToOne{
-    Employee{user(login)} to User
+    Employee{user(login)} to User with builtInEntity
+    Employee{jobGrade(jobGradeName)} to JobGrade
+    Employee{jobTitles(jobTitleName)} to JobTitle
     Managerial{directors(directorName)} to Director{manager(directorId)}
     TeamLead{managers(managerialName)} to Managerial
     Team{managers(managerialName)} to Managerial
@@ -216,9 +232,9 @@ relationship ManyToOne{
     WhistleBlowerReport{subCity(subCityName)} to SubCity{whistleBlowerReport}
 }
 relationship OneToOne {
-    Director{user(login)} to User{director(directorName)}
-    Managerial{user(login)} to User{manager(managerialName)}
-    TeamLead{user(login)} to User{teamLead(teamLeadName)}
+    Director{user(login)} to User{director(directorName)} with builtInEntity
+    Managerial{user(login)} to User{manager(managerialName)} with builtInEntity
+    TeamLead{user(login)} to User{teamLead(teamLeadName)} with builtInEntity
     Team{teamLead(teamLeadName)} to TeamLead
 }
 paginate * with pagination

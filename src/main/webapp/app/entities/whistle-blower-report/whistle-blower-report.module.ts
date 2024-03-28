@@ -6,6 +6,7 @@ import { WhistleBlowerReportUpdateComponent } from './update/whistle-blower-repo
 import { WhistleBlowerReportDeleteDialogComponent } from './delete/whistle-blower-report-delete-dialog.component';
 import { WhistleBlowerReportRoutingModule } from './route/whistle-blower-report-routing.module';
 import { AssignTaskUpdateComponent } from '../assign-task/update/assign-task-update.component';
+import { WhistleBlowerReportRejectDialogComponent } from './reject/whistle-blower-report-reject-dialog.component';
 
 @NgModule({
   imports: [SharedModule, WhistleBlowerReportRoutingModule],
@@ -14,6 +15,7 @@ import { AssignTaskUpdateComponent } from '../assign-task/update/assign-task-upd
     WhistleBlowerReportDetailComponent,
     WhistleBlowerReportUpdateComponent,
     WhistleBlowerReportDeleteDialogComponent,
+    WhistleBlowerReportRejectDialogComponent,
     AssignTaskUpdateComponent
   ],
 })
