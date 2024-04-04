@@ -1,0 +1,109 @@
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2 id="jhi-reportRepository-heading" data-cy="ReportRepositoryCreateUpdateHeading" jhiTranslate="fraudMgtApp.reportRepository.home.createOrEditLabel">
+          Create or edit a Report Repository
+        </h2>
+  
+        <div>
+          <jhi-alert-error></jhi-alert-error>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.reportRepository.reportRepositoryName" for="field_reportRepository"
+              >Report Repository Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="reportRepositoryName"
+              id="field_reportRepositoryName"
+              data-cy="reportRepositoryName"
+              formControlName="reportRepositoryName"
+            />
+          </div>
+  
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.reportRepository.attachment" for="field_attachment"
+              >Attachment</label
+            >
+            <div>
+              <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="
+                    openFile(editForm.get('attachment')!.value!, editForm.get('attachmentContentType')!.value!)
+                  "
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('attachmentContentType')!.value }},
+                  {{ byteSize(editForm.get('attachment')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ attachment: undefined, attachmentContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+              <input
+                type="file"
+                id="file_attachment"
+                data-cy="attachment"
+                (change)="setFileData($event, 'attachment', false)"
+                jhiTranslate="entity.action.addblob"
+              />
+            </div>
+            <input
+              type="hidden"
+              class="form-control"
+              name="attachment"
+              id="field_attachment"
+              data-cy="attachment"
+              formControlName="attachment"
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              name="attachmentContentType"
+              id="field_attachmentContentType"
+              formControlName="attachmentContentType"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.reportRepository.description" for="field_description"
+              >Description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="description"
+              id="field_description"
+              data-cy="description"
+              formControlName="description"
+            />
+          </div>
+  
+         
+        </div>
+  
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+  
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
