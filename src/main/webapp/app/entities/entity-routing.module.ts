@@ -126,6 +126,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'fraudMgtApp.subCity.home.title' },
         loadChildren: () => import('./sub-city/sub-city.module').then(m => m.SubCityModule),
       },
+      {
+        path: 'report-repository',
+        data: { pageTitle: 'fraudMgtApp.reportRepository.home.title' },
+        loadChildren: () => import('./report-repository/report-repository.module').then(m => m.ReportRepositoryModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

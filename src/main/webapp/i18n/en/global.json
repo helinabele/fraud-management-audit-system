@@ -32,7 +32,8 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "comment": "Comment",
         "reports": "Reports",
-        "fraudRegistration": "Fraud Registration"
+        "fraudRegistration": "Fraud Registration",
+        "reportRepository": "Report Repository"
       },
       "account": {
         "main": "Account",
