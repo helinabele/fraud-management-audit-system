@@ -1,11 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="jhi-fraud-investigation-report-heading"
-        data-cy="FraudInvestigationReportCreateUpdateHeading"
-        jhiTranslate="fraudMgtApp.fraudInvestigationReport.home.createOrEditLabel"
-      >
+      <h2 id="jhi-fraud-investigation-report-heading" data-cy="FraudInvestigationReportCreateUpdateHeading"
+        jhiTranslate="fraudMgtApp.fraudInvestigationReport.home.createOrEditLabel">
         Create or edit a Fraud Investigation Report
       </h2>
 
@@ -16,637 +13,379 @@
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div> -->
-
+        <div class="card">
+          <div class="row mb-3">
+            <div class="col-md-5">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.task">Task</label>
+              <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task"
+                [compareWith]="compareTask">
+                <option [ngValue]="null">Select a task</option>
+                <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+              <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.title"
+                for="field_title">Title</label>
+              <input type="text" class="form-control" name="title" id="field_title" data-cy="title"
+                formControlName="title" />
+              <div
+                *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required"
+                  jhiTranslate="entity.validation.required">
+                  This field is required.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.task" for="field_task">Task</label>
-          <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task" [compareWith]="compareTask">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}</option>
-          </select>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.executiveSummary"
+            for="field_executiveSummary">Executive Summary</label>
+          <input type="text" class="form-control" name="executiveSummary" id="field_executiveSummary"
+            data-cy="executiveSummary" formControlName="executiveSummary" />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.title" for="field_title">Title</label>
-          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
-          <div *ngIf="editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+        <div class="row mb-3" (click)="toggleSection('introduction')">
+          <fa-icon [icon]="isSectionOpen('introduction') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introduction"
+            for="field_introduction">Introduction</label>
+          <input *ngIf="isSectionOpen('introduction')" type="text" class="form-control" name="introduction"
+            id="field_introduction" data-cy="introduction" formControlName="introduction" />
+          <div
+            *ngIf="editForm.get('introduction')!.invalid && (editForm.get('introduction')!.dirty || editForm.get('introduction')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('introduction')?.errors?.required"
+              jhiTranslate="entity.validation.required">
               This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.executiveSummary" for="field_executiveSummary"
-            >Executive Summary</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="executiveSummary"
-            id="field_executiveSummary"
-            data-cy="executiveSummary"
-            formControlName="executiveSummary"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introductionAnnex" for="field_introductionAnnex"
-            >Introduction Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introductionAnnex"
+            for="field_introductionAnnex">Introduction Annex</label>
           <div>
             <div *ngIf="editForm.get('introductionAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('introductionAnnex')!.value!, editForm.get('introductionAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('introductionAnnexContentType')!.value }}, {{ byteSize(editForm.get('introductionAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('introductionAnnexContentType')!.value }}, {{
+                byteSize(editForm.get('introductionAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ introductionAnnex: undefined, introductionAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_introductionAnnex"
-              data-cy="introductionAnnex"
-              (change)="setFileData($event, 'introductionAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_introductionAnnex" data-cy="introductionAnnex"
+              (change)="setFileData($event, 'introductionAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="introductionAnnex"
-            id="field_introductionAnnex"
-            data-cy="introductionAnnex"
-            formControlName="introductionAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="introductionAnnexContentType"
-            id="field_introductionAnnexContentType"
-            formControlName="introductionAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="introductionAnnex" id="field_introductionAnnex"
+            data-cy="introductionAnnex" formControlName="introductionAnnex" />
+          <input type="hidden" class="form-control" name="introductionAnnexContentType"
+            id="field_introductionAnnexContentType" formControlName="introductionAnnexContentType" />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introduction" for="field_introduction"
-            >Introduction</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="introduction"
-            id="field_introduction"
-            data-cy="introduction"
-            formControlName="introduction"
-          />
+        <div class="row mb-3" (click)="toggleSection('objective')">
+          <fa-icon [icon]="isSectionOpen('objective') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.objective"
+            for="field_objective">Objective</label>
+          <input *ngIf="isSectionOpen('objective')" type="text" class="form-control" name="objective"
+            id="field_objective" data-cy="objective" formControlName="objective" />
           <div
-            *ngIf="editForm.get('introduction')!.invalid && (editForm.get('introduction')!.dirty || editForm.get('introduction')!.touched)"
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('introduction')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
+            *ngIf="editForm.get('objective')!.invalid && (editForm.get('objective')!.dirty || editForm.get('objective')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('objective')?.errors?.required"
+              jhiTranslate="entity.validation.required">
               This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.objective" for="field_objective">Objective</label>
-          <input type="text" class="form-control" name="objective" id="field_objective" data-cy="objective" formControlName="objective" />
-          <div *ngIf="editForm.get('objective')!.invalid && (editForm.get('objective')!.dirty || editForm.get('objective')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('objective')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.objectiveAnnex" for="field_objectiveAnnex"
-            >Objective Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.objectiveAnnex"
+            for="field_objectiveAnnex">Objective Annex</label>
           <div>
             <div *ngIf="editForm.get('objectiveAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('objectiveAnnex')!.value!, editForm.get('objectiveAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('objectiveAnnexContentType')!.value }}, {{ byteSize(editForm.get('objectiveAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('objectiveAnnexContentType')!.value }}, {{
+                byteSize(editForm.get('objectiveAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ objectiveAnnex: undefined, objectiveAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_objectiveAnnex"
-              data-cy="objectiveAnnex"
-              (change)="setFileData($event, 'objectiveAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_objectiveAnnex" data-cy="objectiveAnnex"
+              (change)="setFileData($event, 'objectiveAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="objectiveAnnex"
-            id="field_objectiveAnnex"
-            data-cy="objectiveAnnex"
-            formControlName="objectiveAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="objectiveAnnexContentType"
-            id="field_objectiveAnnexContentType"
-            formControlName="objectiveAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="objectiveAnnex" id="field_objectiveAnnex"
+            data-cy="objectiveAnnex" formControlName="objectiveAnnex" />
+          <input type="hidden" class="form-control" name="objectiveAnnexContentType"
+            id="field_objectiveAnnexContentType" formControlName="objectiveAnnexContentType" />
+        </div>
+
+        <div class="row mb-3" (click)="toggleSection('scope')">
+          <fa-icon [icon]="isSectionOpen('scope') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.scope"
+            for="field_scope">Scope</label>
+          <input *ngIf="isSectionOpen('scope')" type="text" class="form-control" name="scope" id="field_scope" data-cy="scope"
+            formControlName="scope" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.scope" for="field_scope">Scope</label>
-          <input type="text" class="form-control" name="scope" id="field_scope" data-cy="scope" formControlName="scope" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.scopeAnnex" for="field_scopeAnnex"
-            >Scope Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.scopeAnnex"
+            for="field_scopeAnnex">Scope Annex</label>
           <div>
             <div *ngIf="editForm.get('scopeAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('scopeAnnex')!.value!, editForm.get('scopeAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('scopeAnnexContentType')!.value }}, {{ byteSize(editForm.get('scopeAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('scopeAnnexContentType')!.value }}, {{
+                byteSize(editForm.get('scopeAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ scopeAnnex: undefined, scopeAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_scopeAnnex"
-              data-cy="scopeAnnex"
-              (change)="setFileData($event, 'scopeAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_scopeAnnex" data-cy="scopeAnnex"
+              (change)="setFileData($event, 'scopeAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="scopeAnnex"
-            id="field_scopeAnnex"
-            data-cy="scopeAnnex"
-            formControlName="scopeAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="scopeAnnexContentType"
-            id="field_scopeAnnexContentType"
-            formControlName="scopeAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="scopeAnnex" id="field_scopeAnnex" data-cy="scopeAnnex"
+            formControlName="scopeAnnex" />
+          <input type="hidden" class="form-control" name="scopeAnnexContentType" id="field_scopeAnnexContentType"
+            formControlName="scopeAnnexContentType" />
+        </div>
+
+        <div class="row mb-3" (click)="toggleSection('limitation')">
+          <fa-icon [icon]="isSectionOpen('limitation') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitation"
+            for="field_limitation">Limitation</label>
+          <input *ngIf="isSectionOpen('limitation')" type="text" class="form-control" name="limitation" id="field_limitation" data-cy="limitation"
+            formControlName="limitation" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitation" for="field_limitation">Limitation</label>
-          <input
-            type="text"
-            class="form-control"
-            name="limitation"
-            id="field_limitation"
-            data-cy="limitation"
-            formControlName="limitation"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitationAnnex" for="field_limitationAnnex"
-            >Limitation Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitationAnnex"
+            for="field_limitationAnnex">Limitation Annex</label>
           <div>
             <div *ngIf="editForm.get('limitationAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('limitationAnnex')!.value!, editForm.get('limitationAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('limitationAnnexContentType')!.value }}, {{ byteSize(editForm.get('limitationAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('limitationAnnexContentType')!.value }}, {{
+                byteSize(editForm.get('limitationAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ limitationAnnex: undefined, limitationAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_limitationAnnex"
-              data-cy="limitationAnnex"
-              (change)="setFileData($event, 'limitationAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_limitationAnnex" data-cy="limitationAnnex"
+              (change)="setFileData($event, 'limitationAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="limitationAnnex"
-            id="field_limitationAnnex"
-            data-cy="limitationAnnex"
-            formControlName="limitationAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="limitationAnnexContentType"
-            id="field_limitationAnnexContentType"
-            formControlName="limitationAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="limitationAnnex" id="field_limitationAnnex"
+            data-cy="limitationAnnex" formControlName="limitationAnnex" />
+          <input type="hidden" class="form-control" name="limitationAnnexContentType"
+            id="field_limitationAnnexContentType" formControlName="limitationAnnexContentType" />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodology" for="field_methodology"
-            >Methodology</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="methodology"
-            id="field_methodology"
-            data-cy="methodology"
-            formControlName="methodology"
-          />
-          <div *ngIf="editForm.get('methodology')!.invalid && (editForm.get('methodology')!.dirty || editForm.get('methodology')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('methodology')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
+        <div class="row mb-3" (click)="toggleSection('methodology')">
+          <fa-icon [icon]="isSectionOpen('methodology') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon> 
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodology"
+            for="field_methodology">Methodology</label>
+          <input *ngIf="isSectionOpen('methodology')" type="text" class="form-control" name="methodology" id="field_methodology" data-cy="methodology"
+            formControlName="methodology" />
+          <div
+            *ngIf="editForm.get('methodology')!.invalid && (editForm.get('methodology')!.dirty || editForm.get('methodology')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('methodology')?.errors?.required"
+              jhiTranslate="entity.validation.required">
               This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodologyAnnex" for="field_methodologyAnnex"
-            >Methodology Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodologyAnnex"
+            for="field_methodologyAnnex">Methodology Annex</label>
           <div>
             <div *ngIf="editForm.get('methodologyAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('methodologyAnnex')!.value!, editForm.get('methodologyAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('methodologyAnnexContentType')!.value }}, {{ byteSize(editForm.get('methodologyAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('methodologyAnnexContentType')!.value }}, {{
+                byteSize(editForm.get('methodologyAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ methodologyAnnex: undefined, methodologyAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_methodologyAnnex"
-              data-cy="methodologyAnnex"
-              (change)="setFileData($event, 'methodologyAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_methodologyAnnex" data-cy="methodologyAnnex"
+              (change)="setFileData($event, 'methodologyAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="methodologyAnnex"
-            id="field_methodologyAnnex"
-            data-cy="methodologyAnnex"
-            formControlName="methodologyAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="methodologyAnnexContentType"
-            id="field_methodologyAnnexContentType"
-            formControlName="methodologyAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="methodologyAnnex" id="field_methodologyAnnex"
+            data-cy="methodologyAnnex" formControlName="methodologyAnnex" />
+          <input type="hidden" class="form-control" name="methodologyAnnexContentType"
+            id="field_methodologyAnnexContentType" formControlName="methodologyAnnexContentType" />
+        </div>
+
+        <div class="row mb-3" (click)="toggleSection('findingAndAnalysis')">
+          <fa-icon [icon]="isSectionOpen('findingAndAnalysis') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysis"
+            for="field_findingAndAnalysis">Finding And Analysis</label>
+          <input *ngIf="isSectionOpen('findingAndAnalysis')" type="text" class="form-control" name="findingAndAnalysis" id="field_findingAndAnalysis"
+            data-cy="findingAndAnalysis" formControlName="findingAndAnalysis" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysis" for="field_findingAndAnalysis"
-            >Finding And Analysis</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="findingAndAnalysis"
-            id="field_findingAndAnalysis"
-            data-cy="findingAndAnalysis"
-            formControlName="findingAndAnalysis"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label
-            class="form-label"
-            jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysisAnnex"
-            for="field_findingAndAnalysisAnnex"
-            >Finding And Analysis Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysisAnnex"
+            for="field_findingAndAnalysisAnnex">Finding And Analysis Annex</label>
           <div>
             <div *ngIf="editForm.get('findingAndAnalysisAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
-                (click)="
+              <a class="pull-start" (click)="
                   openFile(editForm.get('findingAndAnalysisAnnex')!.value!, editForm.get('findingAndAnalysisAnnexContentType')!.value!)
-                "
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('findingAndAnalysisAnnexContentType')!.value }},
-                {{ byteSize(editForm.get('findingAndAnalysisAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                " jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('findingAndAnalysisAnnexContentType')!.value }},
+                {{ byteSize(editForm.get('findingAndAnalysisAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ findingAndAnalysisAnnex: undefined, findingAndAnalysisAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_findingAndAnalysisAnnex"
-              data-cy="findingAndAnalysisAnnex"
-              (change)="setFileData($event, 'findingAndAnalysisAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_findingAndAnalysisAnnex" data-cy="findingAndAnalysisAnnex"
+              (change)="setFileData($event, 'findingAndAnalysisAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="findingAndAnalysisAnnex"
-            id="field_findingAndAnalysisAnnex"
-            data-cy="findingAndAnalysisAnnex"
-            formControlName="findingAndAnalysisAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="findingAndAnalysisAnnexContentType"
-            id="field_findingAndAnalysisAnnexContentType"
-            formControlName="findingAndAnalysisAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="findingAndAnalysisAnnex" id="field_findingAndAnalysisAnnex"
+            data-cy="findingAndAnalysisAnnex" formControlName="findingAndAnalysisAnnex" />
+          <input type="hidden" class="form-control" name="findingAndAnalysisAnnexContentType"
+            id="field_findingAndAnalysisAnnexContentType" formControlName="findingAndAnalysisAnnexContentType" />
+        </div>
+
+        <div class="row mb-3" (click)="toggleSection('conclusion')">
+          <fa-icon [icon]="isSectionOpen('conclusion') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusion"
+            for="field_conclusion">Conclusion</label>
+          <input *ngIf="isSectionOpen('conclusion')" type="text" class="form-control" name="conclusion" id="field_conclusion" data-cy="conclusion"
+            formControlName="conclusion" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusion" for="field_conclusion">Conclusion</label>
-          <input
-            type="text"
-            class="form-control"
-            name="conclusion"
-            id="field_conclusion"
-            data-cy="conclusion"
-            formControlName="conclusion"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusionAnnex" for="field_conclusionAnnex"
-            >Conclusion Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusionAnnex"
+            for="field_conclusionAnnex">Conclusion Annex</label>
           <div>
             <div *ngIf="editForm.get('conclusionAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('conclusionAnnex')!.value!, editForm.get('conclusionAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('conclusionAnnexContentType')!.value }}, {{ byteSize(editForm.get('conclusionAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('conclusionAnnexContentType')!.value }}, {{
+                byteSize(editForm.get('conclusionAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ conclusionAnnex: undefined, conclusionAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_conclusionAnnex"
-              data-cy="conclusionAnnex"
-              (change)="setFileData($event, 'conclusionAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_conclusionAnnex" data-cy="conclusionAnnex"
+              (change)="setFileData($event, 'conclusionAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="conclusionAnnex"
-            id="field_conclusionAnnex"
-            data-cy="conclusionAnnex"
-            formControlName="conclusionAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="conclusionAnnexContentType"
-            id="field_conclusionAnnexContentType"
-            formControlName="conclusionAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="conclusionAnnex" id="field_conclusionAnnex"
+            data-cy="conclusionAnnex" formControlName="conclusionAnnex" />
+          <input type="hidden" class="form-control" name="conclusionAnnexContentType"
+            id="field_conclusionAnnexContentType" formControlName="conclusionAnnexContentType" />
+        </div>
+
+        <div class="row mb-3" (click)="toggleSection('recommendation')">
+          <fa-icon [icon]="isSectionOpen('recommendation') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendation"
+            for="field_recommendation">Recommendation</label>
+          <input type="text" class="form-control" name="recommendation" id="field_recommendation"
+            data-cy="recommendation" formControlName="recommendation" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendation" for="field_recommendation"
-            >Recommendation</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="recommendation"
-            id="field_recommendation"
-            data-cy="recommendation"
-            formControlName="recommendation"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendationAnnex" for="field_recommendationAnnex"
-            >Recommendation Annex</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendationAnnex"
+            for="field_recommendationAnnex">Recommendation Annex</label>
           <div>
             <div *ngIf="editForm.get('recommendationAnnex')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('recommendationAnnex')!.value!, editForm.get('recommendationAnnexContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('recommendationAnnexContentType')!.value }},
-                {{ byteSize(editForm.get('recommendationAnnex')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('recommendationAnnexContentType')!.value }},
+                {{ byteSize(editForm.get('recommendationAnnex')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ recommendationAnnex: undefined, recommendationAnnexContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_recommendationAnnex"
-              data-cy="recommendationAnnex"
-              (change)="setFileData($event, 'recommendationAnnex', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_recommendationAnnex" data-cy="recommendationAnnex"
+              (change)="setFileData($event, 'recommendationAnnex', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="recommendationAnnex"
-            id="field_recommendationAnnex"
-            data-cy="recommendationAnnex"
-            formControlName="recommendationAnnex"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="recommendationAnnexContentType"
-            id="field_recommendationAnnexContentType"
-            formControlName="recommendationAnnexContentType"
-          />
+          <input type="hidden" class="form-control" name="recommendationAnnex" id="field_recommendationAnnex"
+            data-cy="recommendationAnnex" formControlName="recommendationAnnex" />
+          <input type="hidden" class="form-control" name="recommendationAnnexContentType"
+            id="field_recommendationAnnexContentType" formControlName="recommendationAnnexContentType" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.nameOfMembers" for="field_nameOfMembers"
-            >Name Of Members</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="nameOfMembers"
-            id="field_nameOfMembers"
-            data-cy="nameOfMembers"
-            formControlName="nameOfMembers"
-          />
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.nameOfMembers"
+            for="field_nameOfMembers">Name Of Members</label>
+          <input type="text" class="form-control" name="nameOfMembers" id="field_nameOfMembers" data-cy="nameOfMembers"
+            formControlName="nameOfMembers" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.signature" for="field_signature">Signature</label>
-          <input type="text" class="form-control" name="signature" id="field_signature" data-cy="signature" formControlName="signature" />
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.signature"
+            for="field_signature">Signature</label>
+          <input type="text" class="form-control" name="signature" id="field_signature" data-cy="signature"
+            formControlName="signature" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.references" for="field_references">References</label>
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.references"
+            for="field_references">References</label>
           <div>
             <div *ngIf="editForm.get('references')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
+              <a class="pull-start"
                 (click)="openFile(editForm.get('references')!.value!, editForm.get('referencesContentType')!.value!)"
-                jhiTranslate="entity.action.open"
-                >Open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('referencesContentType')!.value }}, {{ byteSize(editForm.get('references')!.value!) }}</span
-              >
-              <button
-                type="button"
+                jhiTranslate="entity.action.open">Open</a><br />
+              <span class="pull-start">{{ editForm.get('referencesContentType')!.value }}, {{
+                byteSize(editForm.get('references')!.value!) }}</span>
+              <button type="button"
                 (click)="editForm.patchValue({ references: undefined, referencesContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
+                class="btn btn-secondary btn-xs pull-end">
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-            <input
-              type="file"
-              id="file_references"
-              data-cy="references"
-              (change)="setFileData($event, 'references', false)"
-              jhiTranslate="entity.action.addblob"
-            />
+            <input type="file" id="file_references" data-cy="references"
+              (change)="setFileData($event, 'references', false)" jhiTranslate="entity.action.addblob" />
           </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="references"
-            id="field_references"
-            data-cy="references"
-            formControlName="references"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="referencesContentType"
-            id="field_referencesContentType"
-            formControlName="referencesContentType"
-          />
+          <input type="hidden" class="form-control" name="references" id="field_references" data-cy="references"
+            formControlName="references" />
+          <input type="hidden" class="form-control" name="referencesContentType" id="field_referencesContentType"
+            formControlName="referencesContentType" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.publicationDate" for="field_publicationDate"
-            >Publication Date</label
-          >
+          <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.publicationDate"
+            for="field_publicationDate">Publication Date</label>
           <div class="d-flex">
-            <input
-              id="field_publicationDate"
-              data-cy="publicationDate"
-              type="datetime-local"
-              class="form-control"
-              name="publicationDate"
-              formControlName="publicationDate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
+            <input id="field_publicationDate" data-cy="publicationDate" type="datetime-local" class="form-control"
+              name="publicationDate" formControlName="publicationDate" placeholder="YYYY-MM-DD HH:mm" />
           </div>
         </div>
 
-       <!-- <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.author" for="field_author">Author</label>
           <input type="text" class="form-control" name="author" id="field_author" data-cy="author" formControlName="author" />
         </div> -->
 
-         <!-- <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.employee" for="field_employee">Employee</label>
           <select
             class="form-control"
@@ -671,28 +410,19 @@
 
       </div>
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+          (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span >Submit</span>
+        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Submit</span>
         </button>
       </div>
     </form>

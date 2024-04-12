@@ -8,6 +8,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 @Component({
   selector: 'jhi-fraud-investigation-report-detail',
   templateUrl: './fraud-investigation-report-detail.component.html',
+  styleUrls: ['fraud-investigation-report-detail.scss'],
 })
 export class FraudInvestigationReportDetailComponent implements OnInit {
   //@ViewChild('pdfTable') pdfTable!: ElementRef<any>;
@@ -28,7 +29,9 @@ export class FraudInvestigationReportDetailComponent implements OnInit {
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
-
+  getProperty(obj: any, property: string): any {
+    return obj[property];
+  }
   openFile(base64String: string, contentType: string | null | undefined): void {
     this.dataUtils.openFile(base64String, contentType);
   }

@@ -22,16 +22,14 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 export class TeamUpdateComponent implements OnInit {
   isSaving = false;
   team: ITeam | null = null;
-  employees: IEmployee[] | null = [];
+  employees: IEmployee[] | undefined | null = [];
   teamLeadsSharedCollection: ITeamLead[] = [];
   managerialsSharedCollection: IManagerial[] = [];
   employeesSharedCollection: IEmployee[] = [];
-
+  selectedEmployeeIds: string[] = [];
   editForm: TeamFormGroup = this.teamFormService.createTeamFormGroup();
   
-  selectedEmployees: Pick<IEmployee, 'id' | 'name'>[] = [];
-  
-  selectedEmployee: IEmployee[] = [];
+  selectedEmployees: IEmployee[] = [];
   selectedItems = [];
   dropdownSettings = {};
 
@@ -54,36 +52,39 @@ export class TeamUpdateComponent implements OnInit {
       if (team) {
         this.updateForm(team);
       }
-
       this.loadRelationshipsOptions();
       this.loadEmployees();
     });
-    this.dropdownSettings = {
-      singleSelection: false,
-      closeDropDownOnSelection:true,
-      idField: "item_id",
-      textField: "item_text",
-      selectAllText: "Select All",
-      unSelectAllText: "UnSelect All",
-      itemsShowLimit: 1,
-      enableCheckAll: false,
-      allowSearchFilter: true
-      };
+    
   }
 
   previousState(): void {
     window.history.back();
   }
 
-  save(): void {
+save(): void {
     this.isSaving = true;
     const team = this.teamFormService.getTeam(this.editForm);
-    team.employees = this.selectedEmployees;
+    
+    // Get the selected employee IDs from the form control
+    // Assuming this.team?.employees is an array of IEmployee objects
+    const selectedEmployeeIds: string[] = this.team?.employees?.map(employee => employee.id) || [];
+  
+    // Map the selected employee IDs to IEmployee objects
+    const selectedEmployees: IEmployee[] = selectedEmployeeIds.map(id => ({
+      id: id,
+      // Add other properties if needed
+    }));
+    
+    // Assign the selected employees to the team object
+    team.employees = selectedEmployees;
+    
     if (team.id !== null) {
       this.subscribeToSaveResponse(this.teamService.update(team));
     } else {
       this.subscribeToSaveResponse(this.teamService.create(team));
     }
+    console.log('Selected employees:', selectedEmployees);
   }
 
   loadEmployees(): void {
@@ -93,14 +94,14 @@ export class TeamUpdateComponent implements OnInit {
       .subscribe((employees: IEmployee[]) => (this.employees = employees));
   }
 
-  selectEmployee(employee: IEmployee): void {
+/*   selectEmployee(employee: IEmployee): void {
     const index = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);
     if (index === -1) {
       this.selectedEmployees.push(employee);
     } else {
       this.selectedEmployees.splice(index, 1);
     }
-  }
+  } */
 
   trackTeamLeadById(index: number, item: ITeamLead): string {
     return item.id;
@@ -115,18 +116,18 @@ export class TeamUpdateComponent implements OnInit {
   }
 
   onEmployeeSelect(employee: IEmployee): void {
-    const existingEmployee = this.selectedEmployees.find((emp) => emp.id === employee.id);
+    const existingEmployee = this.selectedEmployees?.find((emp) => emp.id === employee.id);
     if (!existingEmployee) {
-      this.selectedEmployees.push({ id: employee.id, name: employee.name });
+      this.selectedEmployees?.push({ id: employee.id, name: employee.name });
     }
   }
 
-  onEmployeeRemove(employee: IEmployee): void {
-    const employeeIndex = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);
-    if (employeeIndex !== -1) {
-      this.selectedEmployees.splice(employeeIndex, 1);
-    }
-  }
+  // onEmployeeRemove(employee: IEmployee): void {
+  //   const employeeIndex = this.selectedEmployees?.findIndex((emp) => emp.id === employee.id);
+  //   if (employeeIndex !== -1) {
+  //     this.selectedEmployees?.splice(employeeIndex, 1);
+  //   }
+  // }
 
   getCheckedValue(event: Event): boolean {
     const target = event.target as HTMLInputElement;
@@ -146,13 +147,17 @@ export class TeamUpdateComponent implements OnInit {
     }
   } */
 
-  onEmployeeChange(selectedEmployee: any[]): void {
-   
-      console.log("Selected employee:", selectedEmployee);
-      // Perform any additional logic based on the selected employee
-  
+  onEmployeeChange(event: any): void {
+    const selectedEmployeeIds = Array.from(event.target.selectedOptions).map((option: any) => option.value);
+    // Now you have the array of selected employee IDs
+    console.log(selectedEmployeeIds);
   }
-
+  
+  protected getEmployees(): void {
+    this.employeeService.query().subscribe(empl => {
+      this.employees = empl.body;
+    })
+  }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITeam>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -212,10 +217,6 @@ export class TeamUpdateComponent implements OnInit {
       .subscribe((managerials: IManagerial[]) => (this.managerialsSharedCollection = managerials));
   }
 
-  protected getEmployees(): void {
-    this.employeeService.query().subscribe(empl => {
-      this.employees = empl.body;
-    })
-  }
+ 
 
 }

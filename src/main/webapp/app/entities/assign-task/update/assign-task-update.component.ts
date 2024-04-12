@@ -66,6 +66,8 @@ export class AssignTaskUpdateComponent implements OnInit {
   selectedReport?: IWhistleBlowerReport | null;
   user?: User
   account1: Account | null = null;
+getTitle: any;
+getId:any;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -110,6 +112,7 @@ export class AssignTaskUpdateComponent implements OnInit {
   //   });
   // }
   ngOnInit(): void {
+ 
     this.activatedRoute.data.subscribe(({ assignTask }) => {
       this.assignTask = assignTask;
       if (assignTask) {
@@ -120,6 +123,16 @@ export class AssignTaskUpdateComponent implements OnInit {
         this.loadPreviousTask();
         this.retrieveSelectedReport();
       });
+    });
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      const title = params['title'];
+      if (title) {
+        // Set the value of the 'task' form control to the title obtained from the route parameter
+        this.editForm.patchValue({
+          task: title
+        });
+      }
     });
   }
 

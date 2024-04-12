@@ -179,6 +179,36 @@
         </dd>-->
         </dl>
       </div>
+      <div class="annex-table-container">
+        <h1>Annex Table</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Annex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let property of ['introduction', 'objective', 'scope', 'limitation', 'methodology', 'findingAndAnalysis', 'conclusion', 'recommendation']; let i = index">
+              <tr *ngIf="getProperty(fraudInvestigationReport, property) || getProperty(fraudInvestigationReport, property + 'Annex')">
+                <td>{{ i + 1 }}</td> <!-- Row number -->
+                <td>{{ property | titlecase }}</td>
+                <td>
+                  <div *ngIf="getProperty(fraudInvestigationReport, property + 'Annex')">
+                    <a (click)="openFile(getProperty(fraudInvestigationReport, property + 'Annex'), 
+                      getProperty(fraudInvestigationReport, property + 'AnnexContentType'))"
+                      jhiTranslate="entity.action.open">Open</a>
+                    {{ getProperty(fraudInvestigationReport, property + 'AnnexContentType') }}, 
+                    {{ byteSize(getProperty(fraudInvestigationReport, property + 'Annex')) }}
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
@@ -189,13 +219,13 @@
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
       <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']"
-      class="btn btn-primary">
-      <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span >Comment</span>
-    </button>
-    <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']"
-    class="btn btn-danger">
-    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span >Approve</span>
-  </button>
+        class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Comment</span>
+      </button>
+      <button type="button" [routerLink]="['/fraud-investigation-report', fraudInvestigationReport.id, 'edit']"
+        class="btn btn-danger">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Approve</span>
+      </button>
     </div>
   </div>
 </div>

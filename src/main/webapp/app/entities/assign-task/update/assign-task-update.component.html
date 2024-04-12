@@ -35,6 +35,8 @@
   <!-- <div>
     <p>Whistle Blower Property: {{ whistleBlowerProperty }}</p>
   </div> -->
+
+  <jhi-team-update></jhi-team-update>
   <div class="col-md-9">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-assign-task-heading" data-cy="AssignTaskCreateUpdateHeading"
@@ -51,7 +53,7 @@
             [readonly]="true" />
         </div> -->
         <div class="row">
-        <div class="col-md-6 mb-3">
+        <!-- <div class="col-md-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.task" for="field_task">Task</label>
           <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task"
             [compareWith]="compareTask">
@@ -59,7 +61,22 @@
             <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}
             </option>
           </select>
+        </div> -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.task" for="field_task">Task</label>
+          <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task">
+            <option *ngFor="let taskOption of tasksSharedCollection" [ngValue]="taskOption.title" [selected]="taskOption.title === editForm.get('task')?.value">{{ taskOption.title }}</option>
+          </select>
         </div>
+        
+        
+        
+        
+        
+        <!-- <div class="form-group">
+          <label for="task">Task</label>
+          <input type="text" class="form-control" id="task" name="task" [(ngModel)]="assignTask.task?.title">
+        </div> -->
         <div class="col-md-6 mb-3" *jhiHasAnyAuthority="['ROLE_VICE_PRESIDENT']">
           <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.director" for="field_director">Director</label>
           <select class="form-control" id="field_director" data-cy="director" name="director" formControlName="director"

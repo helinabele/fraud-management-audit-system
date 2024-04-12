@@ -7,6 +7,6 @@ import { AssignTaskRoutingModule } from './route/assign-task-routing.module';
 
 @NgModule({
   imports: [SharedModule, AssignTaskRoutingModule],
-  declarations: [AssignTaskComponent, AssignTaskDetailComponent, AssignTaskDeleteDialogComponent],
+  declarations: [AssignTaskComponent, AssignTaskDetailComponent, AssignTaskDeleteDialogComponent ],
 })
 export class AssignTaskModule {}
