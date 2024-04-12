@@ -26,16 +26,22 @@
           <input type="text" class="form-control" name="description" id="field_description" data-cy="description"
             formControlName="description" />
         </div>
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.team.employee" for="field_employee">Employee</label>
-          <select multiple class="form-control" name="employee" id="field_employee" data-cy="employees" formControlName="employees">
-            <option [value]="employee" *ngFor="let employee of employees">{{ employee.name }}</option>
+
+        
+        <div class="form-group">
+          <label class="form-label" jhiTranslate="fraudMgtApp.team.employee"
+          for="field_employees">Select Employees:</label>
+          <select multiple class="form-control" name="employees" id="field_employees" data-cy="employees"
+           formControlName="employees" (change)="onEmployeeChange($event)">
+            <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
           </select>
         </div>
+        
+
         <!-- <div *ngFor="let employee of employees">
             <input type="checkbox" [value]="employee" (change)="onEmployeeChange(getCheckedValue($event), employee)" /> {{ employee.name }}
           </div> -->
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label>Employees</label>
           
           <select [(ngModel)]="selectedEmployee" multiple (change)="onEmployeeChange(selectedEmployee)">
@@ -43,8 +49,8 @@
             <option *ngFor="let employee of employees" [value]="employee">{{employee.name}}</option>
           </select>
         </div>
-
-        <!-- <div class="row mb-3">
+ -->
+        <!--  <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.employee" for="field_employee">Employee</label>
           <ng-multiselect-dropdown
             class="form-control"
@@ -57,9 +63,9 @@
           >
           </ng-multiselect-dropdown>
         </div> -->
-        
-                <!-- <input type="checkbox" [value]="employee" (change)="onEmployeeChange($event.target.checked, employee)" /> {{ employee.name }}           -->
-            <!-- <input type="checkbox" [value]="employee" (change)="onEmployeeChange($event.target['checked'] ?? false, employee)" /> {{ employee.name }} -->
+
+        <!-- <input type="checkbox" [value]="employee" (change)="onEmployeeChange($event.target.checked, employee)" /> {{ employee.name }}           -->
+        <!-- <input type="checkbox" [value]="employee" (change)="onEmployeeChange($event.target['checked'] ?? false, employee)" /> {{ employee.name }} -->
 
         <!-- <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.managerialId" for="field_managerialId">Managerial Id</label>
@@ -79,7 +85,7 @@
         </div> -->
 
         <div class="row mb-3">
-          <label class="form-label"  for="field_teamLead">Team Leader/coordinator</label>
+          <label class="form-label" for="field_teamLead">Team Leader/coordinator</label>
           <select class="form-control" id="field_teamLead" data-cy="teamLead" name="teamLead" formControlName="teamLead"
             [compareWith]="compareTeamLead">
             <option [ngValue]="null"></option>

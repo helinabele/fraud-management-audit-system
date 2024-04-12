@@ -95,11 +95,12 @@
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
-              <button type="submit" [routerLink]="['/task', task.id, 'assign']" class="btn btn-info btn-sm"
+              <button type="submit" [routerLink]="['/task', task.id, 'assign']" [queryParams]="{ title: task.title }" class="btn btn-info btn-sm"
                 data-cy="entityAssignButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
-              </button>
+</button>
+
               <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
                 (click)="delete(task)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>

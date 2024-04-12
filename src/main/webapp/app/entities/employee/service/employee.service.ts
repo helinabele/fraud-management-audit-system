@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
 
 import { isPresent } from 'app/core/util/operators';
@@ -61,7 +61,15 @@ export class EmployeeService {
     const options = createRequestOption(req);
     return this.http
       .get<RestEmployee[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map(res => this.convertResponseArrayFromServer(res)));
+      .pipe(
+        tap(res => {
+          console.log('Response from server (before mapping):', res);
+        }),
+        map(res => this.convertResponseArrayFromServer(res)),
+        tap(employees => {
+          console.log('Employees after mapping:', employees);
+        })
+      );
   }
 
   delete(id: string): Observable<HttpResponse<{}>> {

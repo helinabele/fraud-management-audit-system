@@ -58,6 +58,8 @@ import {
   faGlobe,
   faBuilding,
   faMapMarker,
+  faChevronCircleDown,
+  faChevronCircleUp,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -125,5 +127,7 @@ export const fontAwesomeIcons = [
   faGlobe,
   faBuilding,
   faMapMarker,
+  faChevronCircleDown,
+  faChevronCircleUp
   // jhipster-needle-add-icon-import
 ];

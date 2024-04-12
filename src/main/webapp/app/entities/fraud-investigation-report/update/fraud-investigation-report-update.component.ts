@@ -31,6 +31,8 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
 
   editForm: FraudInvestigationReportFormGroup = this.fraudInvestigationReportFormService.createFraudInvestigationReportFormGroup();
 
+  openSections: Set<string> = new Set(['introduction', 'objective', 'scope', 'limitation', 'methodology', 'findingAndAnalysis', 'conclusion', 'recommendation', '']);
+
   constructor(
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
@@ -40,7 +42,7 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     protected taskService: TaskService,
     protected teamService: TeamService,
     protected activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   compareEmployee = (o1: IEmployee | null, o2: IEmployee | null): boolean => this.employeeService.compareEmployee(o1, o2);
 
@@ -62,7 +64,17 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
+  toggleSection(section: string): void {
+    if (this.isSectionOpen(section)) {
+      this.openSections.delete(section);
+    } else {
+      this.openSections.add(section);
+    }
+  }
 
+  isSectionOpen(section: string): boolean {
+    return this.openSections.has(section);
+  }
   openFile(base64String: string, contentType: string | null | undefined): void {
     this.dataUtils.openFile(base64String, contentType);
   }
