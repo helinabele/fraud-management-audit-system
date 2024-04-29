@@ -1,26 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { IBankAccount } from '../job-grade.model';
+import { IJobGrade } from '../job-grade.model';
 import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../job-grade.test-samples';
 
-import { BankAccountService } from './job-grade.service';
+import { JobGradeService } from './job-grade.service';
 
-const requireRestSample: IBankAccount = {
+const requireRestSample: IJobGrade = {
   ...sampleWithRequiredData,
 };
 
-describe('BankAccount Service', () => {
-  let service: BankAccountService;
+describe('JobGrade Service', () => {
+  let service: JobGradeService;
   let httpMock: HttpTestingController;
-  let expectedResult: IBankAccount | IBankAccount[] | boolean | null;
+  let expectedResult: IJobGrade | IJobGrade[] | boolean | null;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
     expectedResult = null;
-    service = TestBed.inject(BankAccountService);
+    service = TestBed.inject(JobGradeService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -36,32 +36,32 @@ describe('BankAccount Service', () => {
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should create a BankAccount', () => {
+    it('should create a JobGrade', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const bankAccount = { ...sampleWithNewData };
+      const jobGrade = { ...sampleWithNewData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.create(bankAccount).subscribe(resp => (expectedResult = resp.body));
+      service.create(jobGrade).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'POST' });
       req.flush(returnedFromService);
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should update a BankAccount', () => {
-      const bankAccount = { ...sampleWithRequiredData };
+    it('should update a JobGrade', () => {
+      const jobGrade = { ...sampleWithRequiredData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
 
-      service.update(bankAccount).subscribe(resp => (expectedResult = resp.body));
+      service.update(jobGrade).subscribe(resp => (expectedResult = resp.body));
 
       const req = httpMock.expectOne({ method: 'PUT' });
       req.flush(returnedFromService);
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should partial update a BankAccount', () => {
+    it('should partial update a JobGrade', () => {
       const patchObject = { ...sampleWithPartialData };
       const returnedFromService = { ...requireRestSample };
       const expected = { ...sampleWithRequiredData };
@@ -73,7 +73,7 @@ describe('BankAccount Service', () => {
       expect(expectedResult).toMatchObject(expected);
     });
 
-    it('should return a list of BankAccount', () => {
+    it('should return a list of JobGrade', () => {
       const returnedFromService = { ...requireRestSample };
 
       const expected = { ...sampleWithRequiredData };
@@ -86,7 +86,7 @@ describe('BankAccount Service', () => {
       expect(expectedResult).toMatchObject([expected]);
     });
 
-    it('should delete a BankAccount', () => {
+    it('should delete a JobGrade', () => {
       const expected = true;
 
       service.delete('ABC').subscribe(resp => (expectedResult = resp.ok));
@@ -96,70 +96,70 @@ describe('BankAccount Service', () => {
       expect(expectedResult).toBe(expected);
     });
 
-    describe('addBankAccountToCollectionIfMissing', () => {
-      it('should add a BankAccount to an empty array', () => {
-        const bankAccount: IBankAccount = sampleWithRequiredData;
-        expectedResult = service.addBankAccountToCollectionIfMissing([], bankAccount);
+    describe('addJobGradeToCollectionIfMissing', () => {
+      it('should add a JobGrade to an empty array', () => {
+        const jobGrade: IJobGrade = sampleWithRequiredData;
+        expectedResult = service.addJobGradeToCollectionIfMissing([], jobGrade);
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(bankAccount);
+        expect(expectedResult).toContain(jobGrade);
       });
 
-      it('should not add a BankAccount to an array that contains it', () => {
-        const bankAccount: IBankAccount = sampleWithRequiredData;
-        const bankAccountCollection: IBankAccount[] = [
+      it('should not add a JobGrade to an array that contains it', () => {
+        const jobGrade: IJobGrade = sampleWithRequiredData;
+        const jobGradeCollection: IJobGrade[] = [
           {
-            ...bankAccount,
+            ...jobGrade,
           },
           sampleWithPartialData,
         ];
-        expectedResult = service.addBankAccountToCollectionIfMissing(bankAccountCollection, bankAccount);
+        expectedResult = service.addJobGradeToCollectionIfMissing(jobGradeCollection, jobGrade);
         expect(expectedResult).toHaveLength(2);
       });
 
-      it("should add a BankAccount to an array that doesn't contain it", () => {
-        const bankAccount: IBankAccount = sampleWithRequiredData;
-        const bankAccountCollection: IBankAccount[] = [sampleWithPartialData];
-        expectedResult = service.addBankAccountToCollectionIfMissing(bankAccountCollection, bankAccount);
+      it("should add a JobGrade to an array that doesn't contain it", () => {
+        const jobGrade: IJobGrade = sampleWithRequiredData;
+        const jobGradeCollection: IJobGrade[] = [sampleWithPartialData];
+        expectedResult = service.addJobGradeToCollectionIfMissing(jobGradeCollection, jobGrade);
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(bankAccount);
+        expect(expectedResult).toContain(jobGrade);
       });
 
-      it('should add only unique BankAccount to an array', () => {
-        const bankAccountArray: IBankAccount[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
-        const bankAccountCollection: IBankAccount[] = [sampleWithRequiredData];
-        expectedResult = service.addBankAccountToCollectionIfMissing(bankAccountCollection, ...bankAccountArray);
+      it('should add only unique JobGrade to an array', () => {
+        const jobGradeArray: IJobGrade[] = [sampleWithRequiredData, sampleWithPartialData, sampleWithFullData];
+        const jobGradeCollection: IJobGrade[] = [sampleWithRequiredData];
+        expectedResult = service.addJobGradeToCollectionIfMissing(jobGradeCollection, ...jobGradeArray);
         expect(expectedResult).toHaveLength(3);
       });
 
       it('should accept varargs', () => {
-        const bankAccount: IBankAccount = sampleWithRequiredData;
-        const bankAccount2: IBankAccount = sampleWithPartialData;
-        expectedResult = service.addBankAccountToCollectionIfMissing([], bankAccount, bankAccount2);
+        const jobGrade: IJobGrade = sampleWithRequiredData;
+        const jobGrade2: IJobGrade = sampleWithPartialData;
+        expectedResult = service.addJobGradeToCollectionIfMissing([], jobGrade, jobGrade2);
         expect(expectedResult).toHaveLength(2);
-        expect(expectedResult).toContain(bankAccount);
-        expect(expectedResult).toContain(bankAccount2);
+        expect(expectedResult).toContain(jobGrade);
+        expect(expectedResult).toContain(jobGrade2);
       });
 
       it('should accept null and undefined values', () => {
-        const bankAccount: IBankAccount = sampleWithRequiredData;
-        expectedResult = service.addBankAccountToCollectionIfMissing([], null, bankAccount, undefined);
+        const jobGrade: IJobGrade = sampleWithRequiredData;
+        expectedResult = service.addJobGradeToCollectionIfMissing([], null, jobGrade, undefined);
         expect(expectedResult).toHaveLength(1);
-        expect(expectedResult).toContain(bankAccount);
+        expect(expectedResult).toContain(jobGrade);
       });
 
-      it('should return initial array if no BankAccount is added', () => {
-        const bankAccountCollection: IBankAccount[] = [sampleWithRequiredData];
-        expectedResult = service.addBankAccountToCollectionIfMissing(bankAccountCollection, undefined, null);
-        expect(expectedResult).toEqual(bankAccountCollection);
+      it('should return initial array if no JobGrade is added', () => {
+        const jobGradeCollection: IJobGrade[] = [sampleWithRequiredData];
+        expectedResult = service.addJobGradeToCollectionIfMissing(jobGradeCollection, undefined, null);
+        expect(expectedResult).toEqual(jobGradeCollection);
       });
     });
 
-    describe('compareBankAccount', () => {
+    describe('compareJobGrade', () => {
       it('Should return true if both entities are null', () => {
         const entity1 = null;
         const entity2 = null;
 
-        const compareResult = service.compareBankAccount(entity1, entity2);
+        const compareResult = service.compareJobGrade(entity1, entity2);
 
         expect(compareResult).toEqual(true);
       });
@@ -168,8 +168,8 @@ describe('BankAccount Service', () => {
         const entity1 = { id: 'ABC' };
         const entity2 = null;
 
-        const compareResult1 = service.compareBankAccount(entity1, entity2);
-        const compareResult2 = service.compareBankAccount(entity2, entity1);
+        const compareResult1 = service.compareJobGrade(entity1, entity2);
+        const compareResult2 = service.compareJobGrade(entity2, entity1);
 
         expect(compareResult1).toEqual(false);
         expect(compareResult2).toEqual(false);
@@ -179,8 +179,8 @@ describe('BankAccount Service', () => {
         const entity1 = { id: 'ABC' };
         const entity2 = { id: 'CBA' };
 
-        const compareResult1 = service.compareBankAccount(entity1, entity2);
-        const compareResult2 = service.compareBankAccount(entity2, entity1);
+        const compareResult1 = service.compareJobGrade(entity1, entity2);
+        const compareResult2 = service.compareJobGrade(entity2, entity1);
 
         expect(compareResult1).toEqual(false);
         expect(compareResult2).toEqual(false);
@@ -190,8 +190,8 @@ describe('BankAccount Service', () => {
         const entity1 = { id: 'ABC' };
         const entity2 = { id: 'ABC' };
 
-        const compareResult1 = service.compareBankAccount(entity1, entity2);
-        const compareResult2 = service.compareBankAccount(entity2, entity1);
+        const compareResult1 = service.compareJobGrade(entity1, entity2);
+        const compareResult2 = service.compareJobGrade(entity2, entity1);
 
         expect(compareResult1).toEqual(true);
         expect(compareResult2).toEqual(true);

@@ -40,16 +40,16 @@ public class JobGrade implements Serializable {
         this.id = id;
     }
 
-    public String getJobGrade() {
+    public String getJobGradeName() {
         return this.jobGradeName;
     }
 
     public JobGrade jobGradeName(String jobGradeName) {
-        this.setJobGrade(jobGradeName);
+        this.setJobGradeName(jobGradeName);
         return this;
     }
 
-    public void setJobGrade(String jobGradeName) {
+    public void setJobGradeName(String jobGradeName) {
         this.jobGradeName = jobGradeName;
     }
 
@@ -90,7 +90,7 @@ public class JobGrade implements Serializable {
     public String toString() {
         return "JobGrade{" +
             "id=" + getId() +
-            ", jobGradeName='" + getJobGrade() + "'" +
+            ", jobGradeName='" + getJobGradeName() + "'" +
             ", description='" + getDescription() + "'" +
             "}";
     }
