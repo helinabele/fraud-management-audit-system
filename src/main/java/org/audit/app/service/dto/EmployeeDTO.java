@@ -11,7 +11,6 @@ import org.audit.app.domain.enumeration.Gender;
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class EmployeeDTO implements Serializable {
-
     private String id;
 
     private String employeeCode;
@@ -42,6 +41,10 @@ public class EmployeeDTO implements Serializable {
 
     private TeamDTO team;
 
+    public EmployeeDTO() {
+        // Initialize any fields if needed
+    }
+    
     public String getId() {
         return id;
     }

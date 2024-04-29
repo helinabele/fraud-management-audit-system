@@ -22,13 +22,13 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 export class TeamUpdateComponent implements OnInit {
   isSaving = false;
   team: ITeam | null = null;
-  employees: IEmployee[] | undefined | null = [];
+  employee: IEmployee[] | undefined | null = [];
   teamLeadsSharedCollection: ITeamLead[] = [];
   managerialsSharedCollection: IManagerial[] = [];
   employeesSharedCollection: IEmployee[] = [];
   selectedEmployeeIds: string[] = [];
   editForm: TeamFormGroup = this.teamFormService.createTeamFormGroup();
-  
+
   selectedEmployees: IEmployee[] = [];
   selectedItems = [];
   dropdownSettings = {};
@@ -55,53 +55,37 @@ export class TeamUpdateComponent implements OnInit {
       this.loadRelationshipsOptions();
       this.loadEmployees();
     });
-    
   }
 
   previousState(): void {
     window.history.back();
   }
 
-save(): void {
+  save(): void {
     this.isSaving = true;
     const team = this.teamFormService.getTeam(this.editForm);
-    
-    // Get the selected employee IDs from the form control
-    // Assuming this.team?.employees is an array of IEmployee objects
-    const selectedEmployeeIds: string[] = this.team?.employees?.map(employee => employee.id) || [];
-  
-    // Map the selected employee IDs to IEmployee objects
-    const selectedEmployees: IEmployee[] = selectedEmployeeIds.map(id => ({
-      id: id,
-      // Add other properties if needed
-    }));
-    
-    // Assign the selected employees to the team object
-    team.employees = selectedEmployees;
-    
     if (team.id !== null) {
       this.subscribeToSaveResponse(this.teamService.update(team));
     } else {
       this.subscribeToSaveResponse(this.teamService.create(team));
     }
-    console.log('Selected employees:', selectedEmployees);
   }
 
   loadEmployees(): void {
     this.employeeService
       .query()
       .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
-      .subscribe((employees: IEmployee[]) => (this.employees = employees));
+      .subscribe((employee: IEmployee[]) => (this.employee = employee));
   }
 
-/*   selectEmployee(employee: IEmployee): void {
-    const index = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);
-    if (index === -1) {
-      this.selectedEmployees.push(employee);
-    } else {
-      this.selectedEmployees.splice(index, 1);
-    }
-  } */
+  /*   selectEmployee(employee: IEmployee): void {
+      const index = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);
+      if (index === -1) {
+        this.selectedEmployees.push(employee);
+      } else {
+        this.selectedEmployees.splice(index, 1);
+      }
+    } */
 
   trackTeamLeadById(index: number, item: ITeamLead): string {
     return item.id;
@@ -133,29 +117,29 @@ save(): void {
     const target = event.target as HTMLInputElement;
     return target.checked;
   }
-  
-/*   onEmployeeChange(checked: boolean, employee: IEmployee): void {
-    if (checked) {
-      // Add the employee to the selectedEmployees array
-      this.selectedEmployees.push(employee);
-    } else {
-      // Remove the employee from the selectedEmployees array
-      const index = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);
-      if (index !== -1) {
-        this.selectedEmployees.splice(index, 1);
+
+  /*   onEmployeeChange(checked: boolean, employee: IEmployee): void {
+      if (checked) {
+        // Add the employee to the selectedEmployees array
+        this.selectedEmployees.push(employee);
+      } else {
+        // Remove the employee from the selectedEmployees array
+        const index = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);
+        if (index !== -1) {
+          this.selectedEmployees.splice(index, 1);
+        }
       }
-    }
-  } */
+    } */
 
   onEmployeeChange(event: any): void {
     const selectedEmployeeIds = Array.from(event.target.selectedOptions).map((option: any) => option.value);
     // Now you have the array of selected employee IDs
     console.log(selectedEmployeeIds);
   }
-  
+
   protected getEmployees(): void {
     this.employeeService.query().subscribe(empl => {
-      this.employees = empl.body;
+      this.employee = empl.body;
     })
   }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITeam>>): void {
@@ -180,22 +164,36 @@ save(): void {
   protected updateForm(team: ITeam): void {
     this.team = team;
     this.teamFormService.resetForm(this.editForm, team);
-
+  
     this.teamLeadsSharedCollection = this.teamLeadService.addTeamLeadToCollectionIfMissing<ITeamLead>(
       this.teamLeadsSharedCollection,
       team.teamLead
     );
+  
     this.managerialsSharedCollection = this.managerialService.addManagerialToCollectionIfMissing<IManagerial>(
       this.managerialsSharedCollection,
       team.managers
     );
-    // this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(
-    //   this.employeesSharedCollection,
-    //   team.employees
-    // );
-
-    // this.selectedEmployees = team.employees || [];
+  
+    if (team.employee) {
+      if (Array.isArray(team.employee)) {
+        team.employee.forEach(employee => {
+          this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(
+            this.employeesSharedCollection,
+            employee
+          );
+        });
+      } else {
+        this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(
+          this.employeesSharedCollection,
+          team.employee
+        );
+      }
+    }
+  
+    this.selectedEmployees = team.employee || [];
   }
+  
 
   protected loadRelationshipsOptions(): void {
     this.teamLeadService
@@ -216,7 +214,4 @@ save(): void {
       )
       .subscribe((managerials: IManagerial[]) => (this.managerialsSharedCollection = managerials));
   }
-
- 
-
 }

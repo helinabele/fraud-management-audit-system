@@ -24,7 +24,7 @@ type TeamFormGroupContent = {
   isCreator: FormControl<ITeam['isCreator']>;
   teamLead: FormControl<ITeam['teamLead']>;
   managers: FormControl<ITeam['managers']>;
-  employees: FormControl<ITeam['employees']>;
+  employee: FormControl<ITeam['employee']>;
 };
 
 export type TeamFormGroup = FormGroup<TeamFormGroupContent>;
@@ -50,7 +50,7 @@ export class TeamFormService {
       isCreator: new FormControl(teamRawValue.isCreator),
       teamLead: new FormControl(teamRawValue.teamLead),
       managers: new FormControl(teamRawValue.managers),
-      employees: new FormControl(teamRawValue.employees),
+      employee: new FormControl(teamRawValue.employee),
     });
   }
 

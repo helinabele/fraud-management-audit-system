@@ -33,7 +33,9 @@
         "comment": "Comment",
         "reports": "Reports",
         "fraudRegistration": "Fraud Registration",
-        "reportRepository": "Report Repository"
+        "reportRepository": "Report Repository",
+        "jobGrade": "Job Grade",
+        "jobTitle": "Job Title"
       },
       "account": {
         "main": "Account",
@@ -126,7 +128,8 @@
       "view": "View",
       "show": "Show {{otherEntity}}",
       "assign": "Assign",
-      "reject": "Reject"
+      "reject": "Reject",
+      "comment": "Comment"
     },
     "detail": {
       "field": "Field",

@@ -35,8 +35,11 @@
   <!-- <div>
     <p>Whistle Blower Property: {{ whistleBlowerProperty }}</p>
   </div> -->
-
-  <jhi-team-update></jhi-team-update>
+  <div>
+    <input type="checkbox" id="myCheckbox" [(ngModel)]="isChecked">
+    <label for="myCheckbox">If you need to create Team first click here</label>
+<jhi-team-update *ngIf="isChecked"></jhi-team-update>
+</div>
   <div class="col-md-9">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-assign-task-heading" data-cy="AssignTaskCreateUpdateHeading"

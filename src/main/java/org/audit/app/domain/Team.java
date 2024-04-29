@@ -2,7 +2,9 @@ package org.audit.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -45,7 +47,7 @@ public class Team implements Serializable {
     @DBRef
     @Field("employee")
     @JsonIgnoreProperties(value = { "user", "director", "manager", "teamLead", "team" }, allowSetters = true)
-    private Set<Employee> employees = new HashSet<>();
+    private List<Employee> employees = new ArrayList<>();
 
     @DBRef
     @Field("assignTask")
@@ -145,22 +147,22 @@ public class Team implements Serializable {
         return this;
     }
 
-    public Set<Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return this.employees;
     }
 
-    public void setEmployees(Set<Employee> employees) {
+    public void setEmployees(List<Employee> employee) {
         if (this.employees != null) {
             this.employees.forEach(i -> i.setTeam(null));
         }
-        if (employees != null) {
-            employees.forEach(i -> i.setTeam(this));
+        if (employee != null) {
+            employee.forEach(i -> i.setTeam(this));
         }
-        this.employees = employees;
+        this.employees = employee;
     }
 
-    public Team employees(Set<Employee> employees) {
-        this.setEmployees(employees);
+    public Team employee(List<Employee> employee) {
+        this.setEmployees(employee);
         return this;
     }
 

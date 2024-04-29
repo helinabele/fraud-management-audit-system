@@ -89,12 +89,12 @@ public class NotificationService {
         String taskTitle = task.getTitle();
 
         // Retrieve the employees under the team
-        Set<EmployeeDTO> employees = team.getEmployees();
+        List<EmployeeDTO> employee = team.getEmployee();
 
         // Check if employees are not null
-        if (employees != null && !employees.isEmpty()) {
-            for (EmployeeDTO employee : employees) {
-                String recipientToken = getRecipientTokenForEmployee(employee);
+        if (employee != null && !employee.isEmpty()) {
+            for (EmployeeDTO employee1 : employee) {
+                String recipientToken = getRecipientTokenForEmployee(employee1);
 
                 // Send notification to each employee
                 if (recipientToken != null) {

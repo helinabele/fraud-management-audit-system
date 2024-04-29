@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -18,6 +18,7 @@ import { AlertService } from 'app/core/util/alert.service';
   templateUrl: './fraud-investigation-report.component.html',
 })
 export class FraudInvestigationReportComponent implements OnInit {
+  @ViewChild('commentModal') commentModal: any;
   fraudInvestigationReports?: IFraudInvestigationReport[];
   isLoading = false;
 
@@ -52,7 +53,9 @@ export class FraudInvestigationReportComponent implements OnInit {
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
-
+  openCommentModal(): void {
+    this.modalService.open(this.commentModal);
+  }
   openFile(base64String: string, contentType: string | null | undefined): void {
     return this.dataUtils.openFile(base64String, contentType);
   }

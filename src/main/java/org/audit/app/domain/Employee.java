@@ -70,7 +70,7 @@ public class Employee implements Serializable {
 
     @DBRef
     @Field("team")
-    @JsonIgnoreProperties(value = { "teamLead", "managers", "employees", "assignTasks" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "teamLead", "managers", "employee", "assignTasks" }, allowSetters = true)
     private Team team;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
