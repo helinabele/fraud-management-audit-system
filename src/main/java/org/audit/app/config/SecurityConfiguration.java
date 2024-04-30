@@ -88,6 +88,7 @@ public class SecurityConfiguration {
             .antMatchers("/api/cities").permitAll()
             .antMatchers("/api/sub-cities").permitAll()
             .antMatchers("/api/report-repository").permitAll()
+            .antMatchers("/api/job-grades").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)

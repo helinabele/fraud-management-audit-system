@@ -1,6 +1,5 @@
 package org.audit.app.service.mapper;
-
-import java.util.Set;
+import java.util.List;
 
 import org.audit.app.domain.Employee;
 import org.audit.app.domain.Managerial;
@@ -19,7 +18,7 @@ import org.mapstruct.*;
 public interface TeamMapper extends EntityMapper<TeamDTO, Team> {
     @Mapping(target = "teamLead", source = "teamLead", qualifiedByName = "teamLeadTeamLeadName")
     @Mapping(target = "managers", source = "managers", qualifiedByName = "managerialManagerialName")
-    @Mapping(target = "employees", source = "employees", qualifiedByName = "employeeName")
+    @Mapping(target = "employee", source = "employees", qualifiedByName = "employeeName")
     TeamDTO toDto(Team s);
 
     @Named("teamLeadTeamLeadName")
@@ -33,10 +32,10 @@ public interface TeamMapper extends EntityMapper<TeamDTO, Team> {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "managerialName", source = "managerialName")
     ManagerialDTO toDtoManagerialManagerialName(Managerial managerial);
- 
+
     @Named("employeeName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
-    Set<EmployeeDTO> toDtoEmployeeName(Set<Employee> employees);
+    List<EmployeeDTO> toDtoEmployeeName(List<Employee> employees);
 }

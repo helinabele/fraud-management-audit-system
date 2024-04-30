@@ -1,0 +1,26 @@
+{
+    "fraudMgtApp": {
+      "jobGrade": {
+        "home": {
+          "title": "Job Grades",
+          "refreshListLabel": "Refresh list",
+          "createLabel": "Create a new Job Grade",
+          "createOrEditLabel": "Create or edit a Job Grade",
+          "notFound": "No Job Grades found"
+        },
+        "created": "A new Job Grade is created with identifier {{ param }}",
+        "updated": "A Job Grade is updated with identifier {{ param }}",
+        "deleted": "A Job Grade is deleted with identifier {{ param }}",
+        "delete": {
+          "question": "Are you sure you want to delete Job Grade {{ id }}?"
+        },
+        "detail": {
+          "title": "Job Grade"
+        },
+        "id": "ID",
+        "jobGradeName": "Job Grade Name",
+        "description": "Description"
+      }
+    }
+  }
+  

@@ -10,6 +10,16 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule),
       },
       {
+        path: 'job-grade',
+        data: { pageTitle: 'fraudMgtApp.jobGrade.home.title' },
+        loadChildren: () => import('./job-grade/job-grade.module').then(m => m.JobGradeModule),
+      },
+      {
+        path: 'job-title',
+        data: { pageTitle: 'fraudMgtApp.jobTitle.home.title' },
+        loadChildren: () => import('./job-title/job-title.module').then(m => m.JobTitleModule),
+      },
+      {
         path: 'director',
         data: { pageTitle: 'fraudMgtApp.director.home.title' },
         loadChildren: () => import('./director/director.module').then(m => m.DirectorModule),

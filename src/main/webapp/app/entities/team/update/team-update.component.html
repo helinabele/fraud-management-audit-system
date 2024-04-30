@@ -31,9 +31,9 @@
         <div class="form-group">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.employee"
           for="field_employees">Select Employees:</label>
-          <select multiple class="form-control" name="employees" id="field_employees" data-cy="employees"
-           formControlName="employees" (change)="onEmployeeChange($event)">
-            <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+          <select multiple class="form-control" name="employee" id="field_employees" data-cy="employee"
+           formControlName="employee" (change)="onEmployeeChange($event)">
+            <option *ngFor="let employee of employee" [value]="employee.id">{{ employee.name }}</option>
           </select>
         </div>
         

@@ -54,7 +54,7 @@ export class AssignTaskUpdateComponent implements OnInit {
   emailAddress?: string;
   message?: string;
   whistleBlowerProperty: any;
-
+  isChecked: boolean = false;
   role?: Authority;
   roleId?: string;
   account: any;
@@ -149,10 +149,10 @@ getId:any;
     const foundTeam = this.teams.find((team) => team.id.toString() === this.selectedTeamId.toString());
 
     if (foundTeam) {
-      const employees = foundTeam.employees;
+      const employees = foundTeam.employee;
 
       employees?.forEach((employee) => {
-        this.sendNotification(Number(employee.id), "New task assigned");
+        this.sendNotification(Number(employee), "New task assigned");
       });
 
     }

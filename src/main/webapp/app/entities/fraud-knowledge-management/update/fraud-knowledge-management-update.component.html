@@ -14,8 +14,8 @@
           <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
             [readonly]="true" />
         </div> -->
-
-        <div class="row mb-3">
+        <div class="row">
+        <div class="col-6">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reportNumber"
             for="field_reportNumber">Report Number</label>
           <input type="number" class="form-control" name="reportNumber" id="field_reportNumber" data-cy="reportNumber"
@@ -33,7 +33,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudInvestigationReport"
             for="field_fraudInvestigationReport">Fraud Investigation Report</label>
           <select class="form-control" id="field_fraudInvestigationReport" data-cy="fraudInvestigationReport"
@@ -46,7 +46,9 @@
             </option>
           </select>
         </div>
-        <div class="row mb-3">
+      
+
+        <div class="col-6">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudIncident"
             for="field_fraudIncident">Fraud Incident</label>
           <select class="form-control" name="fraudIncident" formControlName="fraudIncident" id="field_fraudIncident"
@@ -58,7 +60,7 @@
           </select>
         </div>
 
-        <div class="row mb-3" *ngIf="editForm.get('fraudIncident')?.value === 'ACTUAL'">
+        <div class="col-6" *ngIf="editForm.get('fraudIncident')?.value === 'ACTUAL'">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.actualIncident"
             for="field_actualIncident">Actual Incident</label>
           <input type="text" class="form-control" name="actualIncident" id="field_actualIncident"
@@ -74,7 +76,7 @@
           </div>
         </div>
 
-        <div class="row mb-3" *ngIf="editForm.get('fraudIncident')?.value === 'ATTEMPT'">
+        <div class="col-6" *ngIf="editForm.get('fraudIncident')?.value === 'ATTEMPT'">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.attemptIncident"
             for="field_attemptIncident">Attempt Incident</label>
           <input type="text" class="form-control" name="attemptIncident" id="field_attemptIncident"
@@ -90,7 +92,7 @@
           </div>
         </div>
 
-        <div class="row mb-3" *ngIf="editForm.get('fraudIncident')?.value === 'ATTEMPT'">
+        <div class="col-6" *ngIf="editForm.get('fraudIncident')?.value === 'ATTEMPT'">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.reasonForFailure"
             for="field_reasonForFailure">Reason For Failure</label>
           <input type="text" class="form-control" name="reasonForFailure" id="field_reasonForFailure"
@@ -105,8 +107,9 @@
             </small>
           </div>
         </div>
-
-        <div class="row mb-3">
+      </div>
+      <div class="row">
+        <div class="col-4">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.unit"
             for="field_unit">Unit</label>
           <input type="text" class="form-control" name="unit" id="field_unit" data-cy="unit" formControlName="unit" />
@@ -117,8 +120,9 @@
             </small>
           </div>
         </div>
-        <div class="row">
-          <div class="col-6 mb-3">
+      
+        
+          <div class="col-4 mb-3">
             <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.incidentDate"
               for="field_incidentDate">Incident Date</label>
             <div class="d-flex">
@@ -138,7 +142,7 @@
             </div>
           </div>
 
-          <div class="col-6 mb-3">
+          <div class="col-4 mb-3">
             <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.dateOfDetection"
               for="field_dateOfDetection">Date Of Detection</label>
             <div class="d-flex">
@@ -291,8 +295,8 @@
             <input type="text" class="form-control" name="creditAccount" id="field_creditAccount"
               data-cy="creditAccount" formControlName="creditAccount" />
           </div>
-        </div>
-        <div class="row mb-3">
+        
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.techniquesandTechnologiesUsed"
             for="field_techniquesandTechnologiesUsed">Techniquesand Technologies Used</label>
           <input type="text" class="form-control" name="techniquesandTechnologiesUsed"
@@ -300,14 +304,14 @@
             formControlName="techniquesandTechnologiesUsed" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.causeForAnIncident"
             for="field_causeForAnIncident">Cause For An Incident</label>
           <input type="text" class="form-control" name="causeForAnIncident" id="field_causeForAnIncident"
             data-cy="causeForAnIncident" formControlName="causeForAnIncident" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.systemAndProceduralLoophole"
             for="field_systemAndProceduralLoophole">System And Procedural Loophole</label>
           <input type="text" class="form-control" name="systemAndProceduralLoophole"
@@ -315,19 +319,20 @@
             formControlName="systemAndProceduralLoophole" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.effect"
             for="field_effect">Effect</label>
           <input type="text" class="form-control" name="effect" id="field_effect" data-cy="effect"
             formControlName="effect" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.recommendationsDrawn"
             for="field_recommendationsDrawn">Recommendations Drawn</label>
           <input type="text" class="form-control" name="recommendationsDrawn" id="field_recommendationsDrawn"
             data-cy="recommendationsDrawn" formControlName="recommendationsDrawn" />
         </div>
+      </div>
         <div class="card">
           <div class="row card-body">
             <label style="font-size: large; font-weight: bold;">Employees Involved on the Transaction</label>
@@ -354,42 +359,43 @@
             </div>
           </div>
         </div>
-        <div class="row mb-3">
+        <div class="row">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.ngScreenerReport"
             for="field_ngScreenerReport">Ng Screener Report</label>
           <input type="text" class="form-control" name="ngScreenerReport" id="field_ngScreenerReport"
             data-cy="ngScreenerReport" formControlName="ngScreenerReport" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.committeeDecision"
             for="field_committeeDecision">Committee Decision</label>
           <input type="text" class="form-control" name="committeeDecision" id="field_committeeDecision"
             data-cy="committeeDecision" formControlName="committeeDecision" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.measureTaken"
             for="field_measureTaken">Measure Taken</label>
           <input type="text" class="form-control" name="measureTaken" id="field_measureTaken" data-cy="measureTaken"
             formControlName="measureTaken" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountRecovered"
             for="field_fraudAmountRecovered">Fraud Amount Recovered</label>
           <input type="text" class="form-control" name="fraudAmountRecovered" id="field_fraudAmountRecovered"
             data-cy="fraudAmountRecovered" formControlName="fraudAmountRecovered" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudAmountWrittenOff"
             for="field_fraudAmountWrittenOff">Fraud Amount Written Off</label>
           <input type="text" class="form-control" name="fraudAmountWrittenOff" id="field_fraudAmountWrittenOff"
             data-cy="fraudAmountWrittenOff" formControlName="fraudAmountWrittenOff" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label"
             jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.previouslyHeldForFraudOutstanding"
             for="field_previouslyHeldForFraudOutstanding">Previously Held For Fraud Outstanding</label>
@@ -398,7 +404,7 @@
             formControlName="previouslyHeldForFraudOutstanding" />
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.employee"
             for="field_employee">Employee</label>
           <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee"
@@ -409,7 +415,7 @@
           </select>
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.fraudType"
             for="field_fraudType">Fraud Type</label>
           <select class="form-control" id="field_fraudType" data-cy="fraudType" name="fraudType"
@@ -421,7 +427,7 @@
           </select>
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankAccount"
             for="field_bankAccount">Bank Account</label>
           <select class="form-control" id="field_bankAccount" data-cy="bankAccount" name="bankAccount"
@@ -433,7 +439,7 @@
           </select>
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudKnowledgeManagement.bankService"
             for="field_bankService">Bank Service</label>
           <select class="form-control" id="field_bankService" data-cy="bankService" name="bankService"
@@ -444,6 +450,7 @@
             </option>
           </select>
         </div>
+      </div>
       </div>
 
       <div>

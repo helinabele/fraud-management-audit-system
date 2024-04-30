@@ -10,7 +10,8 @@ export interface ITeam {
   isCreator?: boolean | null;
   teamLead?: Pick<ITeamLead, 'id' | 'teamLeadName'> | null;
   managers?: Pick<IManagerial, 'id' | 'managerialName'> | null;
-  employees?: IEmployee[] | null | undefined;
+  employee?: IEmployee[] | null | undefined;
 }
+
 
 export type NewTeam = Omit<ITeam, 'id'> & { id: null };
