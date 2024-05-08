@@ -30,8 +30,8 @@ export class TeamUpdateComponent implements OnInit {
   editForm: TeamFormGroup = this.teamFormService.createTeamFormGroup();
 
   selectedEmployees: IEmployee[] = [];
-  selectedItems = [];
-  dropdownSettings = {};
+  selectedItems: any[] = [];
+    dropdownSettings = {};
 
   constructor(
     protected teamService: TeamService,
@@ -54,13 +54,29 @@ export class TeamUpdateComponent implements OnInit {
       }
       this.loadRelationshipsOptions();
       this.loadEmployees();
+      this.setSelectedEmployees();
     });
   }
 
   previousState(): void {
     window.history.back();
   }
-
+  loadEmployees(): void {
+    this.employeeService
+      .query()
+      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
+      .subscribe((employees: IEmployee[]) => {
+        this.employee = employees;
+        this.setSelectedEmployees();
+      });
+  }
+  setSelectedEmployees(): void {
+    if (this.team && this.employee) {
+      const selectedEmployeeIds = this.team.employee?.map(employee => employee.id) ?? [];
+      this.selectedEmployees = this.employee.filter(employee => selectedEmployeeIds.includes(employee.id));
+      this.selectedItems = this.selectedEmployees.map(employee => employee.id);
+    }
+  }
   save(): void {
     this.isSaving = true;
     const team = this.teamFormService.getTeam(this.editForm);
@@ -71,12 +87,7 @@ export class TeamUpdateComponent implements OnInit {
     }
   }
 
-  loadEmployees(): void {
-    this.employeeService
-      .query()
-      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
-      .subscribe((employee: IEmployee[]) => (this.employee = employee));
-  }
+
 
   /*   selectEmployee(employee: IEmployee): void {
       const index = this.selectedEmployees.findIndex((emp) => emp.id === employee.id);

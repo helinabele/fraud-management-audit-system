@@ -3,7 +3,6 @@ package org.audit.app.service.dto;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A DTO for the {@link org.audit.app.domain.Team} entity.

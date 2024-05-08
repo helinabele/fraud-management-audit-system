@@ -23,7 +23,6 @@ public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
     @Mapping(target = "director", source = "director", qualifiedByName = "directorDirectorName")
     @Mapping(target = "manager", source = "manager", qualifiedByName = "managerialManagerialName")
     @Mapping(target = "teamLead", source = "teamLead", qualifiedByName = "teamLeadTeamLeadName")
-    @Mapping(target = "team", source = "team", qualifiedByName = "teamTeamName")
     EmployeeDTO toDto(Employee s);
 
     @Named("userLogin")
@@ -49,10 +48,4 @@ public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "teamLeadName", source = "teamLeadName")
     TeamLeadDTO toDtoTeamLeadTeamLeadName(TeamLead teamLead);
-
-    @Named("teamTeamName")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "teamName", source = "teamName")
-    TeamDTO toDtoTeamTeamName(Team team);
 }

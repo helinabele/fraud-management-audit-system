@@ -42,22 +42,30 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     TranslationModule,
     NgxDatatableModule,
     CommonModule,
-    NgMultiSelectDropDownModule.forRoot(),
+   /*  AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireMessagingModule, */
   ],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
+    /* FirebaseConfigurationService,
+    FirebaseMessagingService, */
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
 })
 export class AppModule {
-  constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {
+  constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig,
+    /* firebaseConfigurationService: FirebaseConfigurationService,
+    angularFireMessaging: AngularFireMessaging,
+    firebaseMessagingService: FirebaseMessagingService */
+  ) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
     iconLibrary.addIcons(...fontAwesomeIcons);
     dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
+    // const app = initializeApp(firebaseConfigurationService.getConfig());
   }
 }

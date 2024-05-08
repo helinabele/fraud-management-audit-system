@@ -26,6 +26,14 @@ public class TaskDTO implements Serializable {
     private String attachmentContentType;
     private StatusEnum status;
 
+    public TaskDTO() {
+        // default constructor
+    }
+    
+    public TaskDTO(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
