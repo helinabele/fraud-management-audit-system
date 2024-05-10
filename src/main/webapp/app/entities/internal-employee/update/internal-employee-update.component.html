@@ -47,6 +47,40 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.internalEmployee.jobGrade" for="field_jobGrade">Job Grade</label>
+          <select
+            class="form-control"
+            id="field_director"
+            data-cy="jobGrade"
+            name="jobGrade"
+            formControlName="jobGrade"
+            [compareWith]="compareJobGrade"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="jobGradeOption" *ngFor="let jobGradeOption of jobGradesSharedCollection">
+              {{ jobGradeOption.jobGradeName }}
+            </option>
+          </select>
+        </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="fraudMgtApp.internalEmployee.jobTitle" for="field_jobGrade">Job Title</label>
+          <select
+            class="form-control"
+            id="field_director"
+            data-cy="jobTitle"
+            name="jobTitle"
+            formControlName="jobTitle"
+            [compareWith]="compareJobTitle"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="jobTitleOption" *ngFor="let jobTitleOption of jobTitlesSharedCollection">
+              {{ jobTitleOption.jobTitleName }}
+            </option>
+          </select>
+        </div>
+        
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.internalEmployee.experience" for="field_experience">Experience</label>
           <input
             type="text"

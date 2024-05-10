@@ -24,6 +24,26 @@ public class InternalEmployeeDTO implements Serializable {
 
     private String branch;
 
+    private JobGradeDTO jobGrade;
+
+    public JobGradeDTO getJobGrade() {
+        return jobGrade;
+    }
+
+    public void setJobGrade(JobGradeDTO jobGrade) {
+        this.jobGrade = jobGrade;
+    }
+
+    private JobTitleDTO jobTitle;
+    
+    public JobTitleDTO getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(JobTitleDTO jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
     public String getId() {
         return id;
     }
@@ -103,6 +123,8 @@ public class InternalEmployeeDTO implements Serializable {
             ", grade='" + getGrade() + "'" +
             ", experience='" + getExperience() + "'" +
             ", branch='" + getBranch() + "'" +
+            ", jobGrade='" + getJobGrade() + "'" +
+            ", jobTitle='" + getJobTitle() + "'" +
             "}";
     }
 }

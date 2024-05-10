@@ -26,7 +26,10 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { firebaseConfig } from  'app/firebase-config';
+import { initializeApp } from 'firebase/app';
+/* import { AngularFireModule } from '@angular/fire'; // Import AngularFireModule
+import { AngularFireMessagingModule } from '@angular/fire/messaging'; // Import AngularFireMessagingModule */
 
 @NgModule({
   imports: [
@@ -42,8 +45,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     TranslationModule,
     NgxDatatableModule,
     CommonModule,
-   /*  AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireMessagingModule, */
+/*     AngularFireModule.initializeApp(firebaseConfig), // Initialize Firebase
+    AngularFireMessagingModule, // Add AngularFireMessagingModule   */  
   ],
   providers: [
     Title,

@@ -68,6 +68,18 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="jobGrade">
+            <div class="d-flex">
+              <span jhiTranslate="fraudMgtApp.internalEmployee.jobGrade">Job Grade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="jobTitle">
+            <div class="d-flex">
+              <span jhiTranslate="fraudMgtApp.internalEmployee.jobTitle">Job Title</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -81,6 +93,16 @@
           <td>{{ internalEmployee.grade }}</td>
           <td>{{ internalEmployee.experience }}</td>
           <td>{{ internalEmployee.branch }}</td>
+          <td>
+            <div *ngIf="internalEmployee.jobGrade">
+            <a [routerLink]="['/job-grade', internalEmployee.jobGrade.id, 'view']">{{ internalEmployee.jobGrade.jobGradeName }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="internalEmployee.jobTitle">
+              <a [routerLink]="['/job-title', internalEmployee.jobTitle.id, 'view']">{{ internalEmployee.jobTitle.jobTitleName }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
