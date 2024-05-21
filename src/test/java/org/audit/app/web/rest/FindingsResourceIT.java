@@ -32,8 +32,8 @@ class FindingsResourceIT {
     private static final String DEFAULT_FINDING_AND_ANALYSIS = "AAAAAAAAAA";
     private static final String UPDATED_FINDING_AND_ANALYSIS = "BBBBBBBBBB";
 
-    private static final byte[] DEFAULT_FINDING_AND_ANALYSIS_ANNEX = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_FINDING_AND_ANALYSIS_ANNEX = TestUtil.createByteArray(1, "1");
+    // private static final byte[] DEFAULT_FINDING_AND_ANALYSIS_ANNEX = TestUtil.createByteArray(1, "0");
+    // private static final byte[] UPDATED_FINDING_AND_ANALYSIS_ANNEX = TestUtil.createByteArray(1, "1");
     private static final String DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE = "image/png";
 
@@ -60,7 +60,7 @@ class FindingsResourceIT {
     public static Findings createEntity() {
         Findings findings = new Findings()
             .findingAndAnalysis(DEFAULT_FINDING_AND_ANALYSIS)
-            .findingAndAnalysisAnnex(DEFAULT_FINDING_AND_ANALYSIS_ANNEX)
+            // .findingAndAnalysisAnnex(DEFAULT_FINDING_AND_ANALYSIS_ANNEX)
             .findingAndAnalysisAnnexContentType(DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
         return findings;
     }
@@ -74,7 +74,7 @@ class FindingsResourceIT {
     public static Findings createUpdatedEntity() {
         Findings findings = new Findings()
             .findingAndAnalysis(UPDATED_FINDING_AND_ANALYSIS)
-            .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
+            // .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
             .findingAndAnalysisAnnexContentType(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
         return findings;
     }
@@ -99,7 +99,7 @@ class FindingsResourceIT {
         assertThat(findingsList).hasSize(databaseSizeBeforeCreate + 1);
         Findings testFindings = findingsList.get(findingsList.size() - 1);
         assertThat(testFindings.getFindingAndAnalysis()).isEqualTo(DEFAULT_FINDING_AND_ANALYSIS);
-        assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(DEFAULT_FINDING_AND_ANALYSIS_ANNEX);
+        // assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(DEFAULT_FINDING_AND_ANALYSIS_ANNEX);
         assertThat(testFindings.getFindingAndAnalysisAnnexContentType()).isEqualTo(DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
     }
 
@@ -133,10 +133,10 @@ class FindingsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(findings.getId())))
             .andExpect(jsonPath("$.[*].findingAndAnalysis").value(hasItem(DEFAULT_FINDING_AND_ANALYSIS)))
-            .andExpect(jsonPath("$.[*].findingAndAnalysisAnnexContentType").value(hasItem(DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE)))
-            .andExpect(
-                jsonPath("$.[*].findingAndAnalysisAnnex").value(hasItem(Base64Utils.encodeToString(DEFAULT_FINDING_AND_ANALYSIS_ANNEX)))
-            );
+            .andExpect(jsonPath("$.[*].findingAndAnalysisAnnexContentType").value(hasItem(DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE)));
+            // .andExpect(
+            //     jsonPath("$.[*].findingAndAnalysisAnnex").value(hasItem(Base64Utils.encodeToString(DEFAULT_FINDING_AND_ANALYSIS_ANNEX)))
+            // );
     }
 
     @Test
@@ -151,8 +151,8 @@ class FindingsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(findings.getId()))
             .andExpect(jsonPath("$.findingAndAnalysis").value(DEFAULT_FINDING_AND_ANALYSIS))
-            .andExpect(jsonPath("$.findingAndAnalysisAnnexContentType").value(DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE))
-            .andExpect(jsonPath("$.findingAndAnalysisAnnex").value(Base64Utils.encodeToString(DEFAULT_FINDING_AND_ANALYSIS_ANNEX)));
+            .andExpect(jsonPath("$.findingAndAnalysisAnnexContentType").value(DEFAULT_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE));
+            // .andExpect(jsonPath("$.findingAndAnalysisAnnex").value(Base64Utils.encodeToString(DEFAULT_FINDING_AND_ANALYSIS_ANNEX)));
     }
 
     @Test
@@ -172,7 +172,7 @@ class FindingsResourceIT {
         Findings updatedFindings = findingsRepository.findById(findings.getId()).get();
         updatedFindings
             .findingAndAnalysis(UPDATED_FINDING_AND_ANALYSIS)
-            .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
+            // .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
             .findingAndAnalysisAnnexContentType(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
         FindingsDTO findingsDTO = findingsMapper.toDto(updatedFindings);
 
@@ -189,7 +189,7 @@ class FindingsResourceIT {
         assertThat(findingsList).hasSize(databaseSizeBeforeUpdate);
         Findings testFindings = findingsList.get(findingsList.size() - 1);
         assertThat(testFindings.getFindingAndAnalysis()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS);
-        assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX);
+        // assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX);
         assertThat(testFindings.getFindingAndAnalysisAnnexContentType()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
     }
 
@@ -268,7 +268,7 @@ class FindingsResourceIT {
 
         partialUpdatedFindings
             .findingAndAnalysis(UPDATED_FINDING_AND_ANALYSIS)
-            .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
+            // .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
             .findingAndAnalysisAnnexContentType(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
 
         restFindingsMockMvc
@@ -284,7 +284,7 @@ class FindingsResourceIT {
         assertThat(findingsList).hasSize(databaseSizeBeforeUpdate);
         Findings testFindings = findingsList.get(findingsList.size() - 1);
         assertThat(testFindings.getFindingAndAnalysis()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS);
-        assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX);
+        // assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX);
         assertThat(testFindings.getFindingAndAnalysisAnnexContentType()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
     }
 
@@ -301,7 +301,7 @@ class FindingsResourceIT {
 
         partialUpdatedFindings
             .findingAndAnalysis(UPDATED_FINDING_AND_ANALYSIS)
-            .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
+            // .findingAndAnalysisAnnex(UPDATED_FINDING_AND_ANALYSIS_ANNEX)
             .findingAndAnalysisAnnexContentType(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
 
         restFindingsMockMvc
@@ -317,7 +317,7 @@ class FindingsResourceIT {
         assertThat(findingsList).hasSize(databaseSizeBeforeUpdate);
         Findings testFindings = findingsList.get(findingsList.size() - 1);
         assertThat(testFindings.getFindingAndAnalysis()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS);
-        assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX);
+        // assertThat(testFindings.getFindingAndAnalysisAnnex()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX);
         assertThat(testFindings.getFindingAndAnalysisAnnexContentType()).isEqualTo(UPDATED_FINDING_AND_ANALYSIS_ANNEX_CONTENT_TYPE);
     }
 

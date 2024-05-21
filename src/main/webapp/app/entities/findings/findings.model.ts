@@ -5,7 +5,7 @@ export interface IFindings {
   findingAndAnalysis?: string | null;
   findingAndAnalysisAnnex?: string | null;
   findingAndAnalysisAnnexContentType?: string | null;
-  fraudInvestigationReport?: Pick<IFraudInvestigationReport, 'id'> | null;
+  fraudInvestigationReport?: Pick<IFraudInvestigationReport, 'id' | 'title'> | null;
 }
 
 export type NewFindings = Omit<IFindings, 'id'> & { id: null };

@@ -175,4 +175,11 @@ public class FindingsResource {
         findingsService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
+
+   /*  @PostMapping("/findings/{id}/attachments")
+    public ResponseEntity<FindingsDTO> addAttachment(@PathVariable String id, @RequestBody byte[] attachment) {
+        FindingsDTO result = findingsService.addAttachment(id, attachment);
+        return ResponseEntity.ok().body(result);
+    } */
+    
 }

@@ -55,4 +55,11 @@ public interface FindingsService {
      * @param id the id of the entity.
      */
     void delete(String id);
+
+    // public FindingsDTO addAttachment(String id, byte[] attachment) {
+    //     Findings findings = findingsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Findings not found"));
+    //     findings.addFindingAndAnalysisAnnex(attachment);
+    //     findings = findingsRepository.save(findings);
+    //     return findingsMapper.toDto(findings);
+    // }
 }

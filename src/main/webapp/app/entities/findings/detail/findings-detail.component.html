@@ -33,7 +33,7 @@
         <dd>
           <div *ngIf="findings.fraudInvestigationReport">
             <a [routerLink]="['/fraud-investigation-report', findings.fraudInvestigationReport.id, 'view']">{{
-              findings.fraudInvestigationReport.id
+              findings.fraudInvestigationReport.title
             }}</a>
           </div>
         </dd>

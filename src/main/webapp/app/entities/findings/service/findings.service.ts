@@ -43,6 +43,10 @@ export class FindingsService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  addAttachment(id: string, attachment: Blob): Observable<IFindings> {
+    return this.http.post<IFindings>(`${this.resourceUrl}/${id}/attachments`, attachment);
+}
+
   getFindingsIdentifier(findings: Pick<IFindings, 'id'>): string {
     return findings.id;
   }
