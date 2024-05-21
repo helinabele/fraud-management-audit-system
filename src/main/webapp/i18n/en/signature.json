@@ -1,0 +1,27 @@
+{
+    "fraudMgtApp": {
+      "signature": {
+        "home": {
+          "title": "Signature",
+          "refreshListLabel": "Refresh list",
+          "createLabel": "Create a new Signature",
+          "createOrEditLabel": "Create or edit a Signature",
+          "notFound": "No Signature found"
+        },
+        "created": "A new Signature is created with identifier {{ param }}",
+        "updated": "A Signature is updated with identifier {{ param }}",
+        "deleted": "A Signature is deleted with identifier {{ param }}",
+        "delete": {
+          "question": "Are you sure you want to delete Signature {{ id }}?"
+        },
+        "detail": {
+          "title": "Signature"
+        },
+        "id": "ID",
+        "signatureName": "Signature Name",
+        "signature": "Signature",
+        "description": "Description"
+      }
+    }
+  }
+  

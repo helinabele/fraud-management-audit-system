@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+        <div *ngIf="signature">
+            <h2 data-cy="signatureDetailsHeading"><span
+                    jhiTranslate="fraudMgtApp.signature.detail.title">Report Repository</span></h2>
+
+            <hr />
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <jhi-alert></jhi-alert>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="global.field.id">ID</span></dt>
+                <dd>
+                    <span>{{ signature.id }}</span>
+                </dd>
+                <dt><span jhiTranslate="fraudMgtApp.signature.signatureName">Report Repository Name</span>
+                </dt>
+                <dd>
+                    <span>{{ signature.signatureName }}</span>
+                </dd>
+                <dt><span jhiTranslate="fraudMgtApp.signature.signature">Signature</span></dt>
+                <dd>
+                    <div *ngIf="signature.signature">
+                        <a (click)="openFile(signature.signature, signature.signatureContentType)"
+                            jhiTranslate="entity.action.open">Open</a>
+                        {{ signature.signatureContentType }}, {{
+                        byteSize(signature.signature) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="fraudMgtApp.signature.description">Description</span></dt>
+                <dd>
+                    <span>{{signature.description}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button" [routerLink]="['/report-repository', signature.id, 'edit']"
+                class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
