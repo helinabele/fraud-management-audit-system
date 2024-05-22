@@ -330,8 +330,15 @@
           <td>{{ fraudInvestigationReport.publicationDate | formatMediumDatetime }}</td>
           <td>{{ fraudInvestigationReport.author }}</td>
           <td>
-            <div *ngIf="fraudInvestigationReport.employee">
-              <a [routerLink]="['/employee', fraudInvestigationReport.employee.id, 'view']">{{ fraudInvestigationReport.employee.name }}</a>
+            <div *ngIf="fraudInvestigationReport?.employee">
+              <span>Employees:</span>
+              <a *ngFor="let emp of fraudInvestigationReport.employee"
+                 [routerLink]="['/employee', emp?.id, 'view']">
+                {{ emp?.name }}
+              </a>
+            </div>
+            <div *ngIf="!fraudInvestigationReport?.employee || (fraudInvestigationReport.employee && fraudInvestigationReport.employee.length === 0)">
+              <span>No employees assigned</span>
             </div>
           </td>
           <td>

@@ -24,10 +24,13 @@ import { TeamService } from 'app/entities/team/service/team.service';
 export class FraudInvestigationReportUpdateComponent implements OnInit {
   isSaving = false;
   fraudInvestigationReport: IFraudInvestigationReport | null = null;
-
+  employee: IEmployee[] | undefined | null = [];
   employeesSharedCollection: IEmployee[] = [];
   tasksSharedCollection: ITask[] = [];
   teamsSharedCollection: ITeam[] = [];
+  selectedEmployees: IEmployee[] = [];
+  selectedItems: any[] = [];
+  dropdownSettings = {};
 
   editForm: FraudInvestigationReportFormGroup = this.fraudInvestigationReportFormService.createFraudInvestigationReportFormGroup();
 
@@ -58,9 +61,29 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
       }
 
       this.loadRelationshipsOptions();
+      this.loadEmployees();
+      this.setSelectedEmployees();
     });
   }
 
+  loadEmployees(): void {
+    this.employeeService
+      .query()
+      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
+      .subscribe((employees: IEmployee[]) => {
+        this.employee = employees;
+        this.setSelectedEmployees();
+      });
+  }
+
+  setSelectedEmployees(): void {
+    if (this.fraudInvestigationReport && this.employee) {
+      const selectedEmployeeIds = this.fraudInvestigationReport.employee?.map(employee => employee.id) ?? [];
+      this.selectedEmployees = this.employee.filter(employee => selectedEmployeeIds.includes(employee.id));
+      this.selectedItems = this.selectedEmployees.map(employee => employee.id);
+    }
+  }
+  
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
@@ -118,15 +141,15 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
   protected onSaveFinalize(): void {
     this.isSaving = false;
   }
-
+  onEmployeeChange(event: any): void {
+    const selectedEmployeeIds = Array.from(event.target.selectedOptions).map((option: any) => option.value);
+    // Now you have the array of selected employee IDs
+    console.log(selectedEmployeeIds);
+  }
   protected updateForm(fraudInvestigationReport: IFraudInvestigationReport): void {
     this.fraudInvestigationReport = fraudInvestigationReport;
     this.fraudInvestigationReportFormService.resetForm(this.editForm, fraudInvestigationReport);
 
-    this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(
-      this.employeesSharedCollection,
-      fraudInvestigationReport.employee
-    );
     this.tasksSharedCollection = this.taskService.addTaskToCollectionIfMissing<ITask>(
       this.tasksSharedCollection,
       fraudInvestigationReport.task
@@ -135,19 +158,28 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
       this.teamsSharedCollection,
       fraudInvestigationReport.team
     );
+
+    if (fraudInvestigationReport.employee) {
+      if (Array.isArray(fraudInvestigationReport.employee)) {
+        fraudInvestigationReport.employee.forEach(employee => {
+          this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(
+            this.employeesSharedCollection,
+            employee
+          );
+        });
+      } else {
+        this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(
+          this.employeesSharedCollection,
+          fraudInvestigationReport.employee
+        );
+      }
+    }
+  
+    this.selectedEmployees = fraudInvestigationReport.employee || [];
   }
 
   protected loadRelationshipsOptions(): void {
-    this.employeeService
-      .query()
-      .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
-      .pipe(
-        map((employees: IEmployee[]) =>
-          this.employeeService.addEmployeeToCollectionIfMissing<IEmployee>(employees, this.fraudInvestigationReport?.employee)
-        )
-      )
-      .subscribe((employees: IEmployee[]) => (this.employeesSharedCollection = employees));
-
+    
     this.taskService
       .query()
       .pipe(map((res: HttpResponse<ITask[]>) => res.body ?? []))

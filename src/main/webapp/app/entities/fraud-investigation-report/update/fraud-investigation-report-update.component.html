@@ -43,16 +43,16 @@
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.executiveSummary"
             for="field_executiveSummary">Executive Summary</label>
-          <input type="text" class="form-control" name="executiveSummary" id="field_executiveSummary"
-            data-cy="executiveSummary" formControlName="executiveSummary" />
+          <textarea class="form-control" name="executiveSummary" id="field_executiveSummary"
+            data-cy="executiveSummary" formControlName="executiveSummary"></textarea>
         </div>
 
         <div class="row mb-3" (click)="toggleSection('introduction')">
           <fa-icon [icon]="isSectionOpen('introduction') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introduction"
             for="field_introduction">Introduction</label>
-          <input *ngIf="isSectionOpen('introduction')" type="text" class="form-control" name="introduction"
-            id="field_introduction" data-cy="introduction" formControlName="introduction" />
+          <textarea *ngIf="isSectionOpen('introduction')" class="form-control" name="introduction"
+            id="field_introduction" data-cy="introduction" formControlName="introduction"></textarea>
           <div
             *ngIf="editForm.get('introduction')!.invalid && (editForm.get('introduction')!.dirty || editForm.get('introduction')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('introduction')?.errors?.required"
@@ -91,8 +91,8 @@
           <fa-icon [icon]="isSectionOpen('objective') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.objective"
             for="field_objective">Objective</label>
-          <input *ngIf="isSectionOpen('objective')" type="text" class="form-control" name="objective"
-            id="field_objective" data-cy="objective" formControlName="objective" />
+          <textarea *ngIf="isSectionOpen('objective')" class="form-control" name="objective"
+            id="field_objective" data-cy="objective" formControlName="objective"></textarea>
           <div
             *ngIf="editForm.get('objective')!.invalid && (editForm.get('objective')!.dirty || editForm.get('objective')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('objective')?.errors?.required"
@@ -131,8 +131,8 @@
           <fa-icon [icon]="isSectionOpen('scope') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.scope"
             for="field_scope">Scope</label>
-          <input *ngIf="isSectionOpen('scope')" type="text" class="form-control" name="scope" id="field_scope" data-cy="scope"
-            formControlName="scope" />
+          <textarea *ngIf="isSectionOpen('scope')" class="form-control" name="scope" id="field_scope" data-cy="scope"
+            formControlName="scope"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -164,8 +164,8 @@
           <fa-icon [icon]="isSectionOpen('limitation') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitation"
             for="field_limitation">Limitation</label>
-          <input *ngIf="isSectionOpen('limitation')" type="text" class="form-control" name="limitation" id="field_limitation" data-cy="limitation"
-            formControlName="limitation" />
+          <textarea *ngIf="isSectionOpen('limitation')" class="form-control" name="limitation" id="field_limitation" data-cy="limitation"
+            formControlName="limitation"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -197,8 +197,8 @@
           <fa-icon [icon]="isSectionOpen('methodology') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon> 
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodology"
             for="field_methodology">Methodology</label>
-          <input *ngIf="isSectionOpen('methodology')" type="text" class="form-control" name="methodology" id="field_methodology" data-cy="methodology"
-            formControlName="methodology" />
+          <textarea *ngIf="isSectionOpen('methodology')"class="form-control" name="methodology" id="field_methodology" data-cy="methodology"
+            formControlName="methodology"></textarea>
           <div
             *ngIf="editForm.get('methodology')!.invalid && (editForm.get('methodology')!.dirty || editForm.get('methodology')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('methodology')?.errors?.required"
@@ -237,8 +237,8 @@
           <fa-icon [icon]="isSectionOpen('findingAndAnalysis') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysis"
             for="field_findingAndAnalysis">Finding And Analysis</label>
-          <input *ngIf="isSectionOpen('findingAndAnalysis')" type="text" class="form-control" name="findingAndAnalysis" id="field_findingAndAnalysis"
-            data-cy="findingAndAnalysis" formControlName="findingAndAnalysis" />
+          <textarea *ngIf="isSectionOpen('findingAndAnalysis')" class="form-control" name="findingAndAnalysis" id="field_findingAndAnalysis"
+            data-cy="findingAndAnalysis" formControlName="findingAndAnalysis"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -270,8 +270,8 @@
           <fa-icon [icon]="isSectionOpen('conclusion') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusion"
             for="field_conclusion">Conclusion</label>
-          <input *ngIf="isSectionOpen('conclusion')" type="text" class="form-control" name="conclusion" id="field_conclusion" data-cy="conclusion"
-            formControlName="conclusion" />
+          <textarea *ngIf="isSectionOpen('conclusion')" class="form-control" name="conclusion" id="field_conclusion" data-cy="conclusion"
+            formControlName="conclusion"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -303,8 +303,8 @@
           <fa-icon [icon]="isSectionOpen('recommendation') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendation"
             for="field_recommendation">Recommendation</label>
-          <input type="text" class="form-control" name="recommendation" id="field_recommendation"
-            data-cy="recommendation" formControlName="recommendation" />
+          <textarea *ngIf="isSectionOpen('recommendation')" class="form-control" name="recommendation" id="field_recommendation" data-cy="recommendation" 
+          formControlName="recommendation"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -331,7 +331,15 @@
           <input type="hidden" class="form-control" name="recommendationAnnexContentType"
             id="field_recommendationAnnexContentType" formControlName="recommendationAnnexContentType" />
         </div>
-
+        <div class="form-group">
+          <label class="form-label" jhiTranslate="fraudMgtApp.team.employee" for="field_employees">Select
+            Employees:</label>
+          <select multiple class="form-control" name="employee" id="field_employees" data-cy="employee"
+            formControlName="employee" (change)="onEmployeeChange($event)">
+            <!-- <option *ngFor="let employee of employee" [value]="employee.id">{{ employee.name }}</option> -->
+            <option *ngFor="let emp of employee" [value]="emp.id">{{ emp.name }}</option>
+          </select>
+        </div>
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.nameOfMembers"
             for="field_nameOfMembers">Name Of Members</label>

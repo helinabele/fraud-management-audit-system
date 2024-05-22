@@ -37,7 +37,7 @@ export interface IFraudInvestigationReport {
   referencesContentType?: string | null;
   publicationDate?: dayjs.Dayjs | null;
   author?: string | null;
-  employee?: Pick<IEmployee, 'id' | 'name'> | null;
+  employee?: IEmployee[] | null | undefined;
   task?: Pick<ITask, 'id' | 'title'> | null;
   team?: Pick<ITeam, 'id' | 'teamName'> | null;
 }
