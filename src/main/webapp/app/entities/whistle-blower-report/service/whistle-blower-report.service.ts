@@ -88,7 +88,7 @@ export class WhistleBlowerReportService {
   //   return this.http.put(`${this.resourceUrl}/${id}/reject`, null, {observe: 'response'});
   // }
 
-  rejectReport(id: String) {
+  rejectReport(id: string): Observable<any> {
     return this.http.put(`${this.resourceUrl}/${id}/reject`, {});
   }
 

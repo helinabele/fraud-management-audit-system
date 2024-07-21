@@ -111,9 +111,6 @@ class FraudInvestigationReportResourceIT {
     private static final String DEFAULT_RECOMMENDATION_ANNEX_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE = "image/png";
 
-    private static final String DEFAULT_NAME_OF_MEMBERS = "AAAAAAAAAA";
-    private static final String UPDATED_NAME_OF_MEMBERS = "BBBBBBBBBB";
-
     private static final String DEFAULT_SIGNATURE = "AAAAAAAAAA";
     private static final String UPDATED_SIGNATURE = "BBBBBBBBBB";
 
@@ -182,7 +179,6 @@ class FraudInvestigationReportResourceIT {
             .recommendation(DEFAULT_RECOMMENDATION)
             .recommendationAnnex(DEFAULT_RECOMMENDATION_ANNEX)
             .recommendationAnnexContentType(DEFAULT_RECOMMENDATION_ANNEX_CONTENT_TYPE)
-            .nameOfMembers(DEFAULT_NAME_OF_MEMBERS)
             .signature(DEFAULT_SIGNATURE)
             .references(DEFAULT_REFERENCES)
             .referencesContentType(DEFAULT_REFERENCES_CONTENT_TYPE)
@@ -225,7 +221,6 @@ class FraudInvestigationReportResourceIT {
             .recommendation(UPDATED_RECOMMENDATION)
             .recommendationAnnex(UPDATED_RECOMMENDATION_ANNEX)
             .recommendationAnnexContentType(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE)
-            .nameOfMembers(UPDATED_NAME_OF_MEMBERS)
             .signature(UPDATED_SIGNATURE)
             .references(UPDATED_REFERENCES)
             .referencesContentType(UPDATED_REFERENCES_CONTENT_TYPE)
@@ -284,7 +279,6 @@ class FraudInvestigationReportResourceIT {
         assertThat(testFraudInvestigationReport.getRecommendation()).isEqualTo(DEFAULT_RECOMMENDATION);
         assertThat(testFraudInvestigationReport.getRecommendationAnnex()).isEqualTo(DEFAULT_RECOMMENDATION_ANNEX);
         assertThat(testFraudInvestigationReport.getRecommendationAnnexContentType()).isEqualTo(DEFAULT_RECOMMENDATION_ANNEX_CONTENT_TYPE);
-        assertThat(testFraudInvestigationReport.getNameOfMembers()).isEqualTo(DEFAULT_NAME_OF_MEMBERS);
         assertThat(testFraudInvestigationReport.getSignature()).isEqualTo(DEFAULT_SIGNATURE);
         assertThat(testFraudInvestigationReport.getReferences()).isEqualTo(DEFAULT_REFERENCES);
         assertThat(testFraudInvestigationReport.getReferencesContentType()).isEqualTo(DEFAULT_REFERENCES_CONTENT_TYPE);
@@ -437,7 +431,6 @@ class FraudInvestigationReportResourceIT {
             .andExpect(jsonPath("$.[*].recommendation").value(hasItem(DEFAULT_RECOMMENDATION)))
             .andExpect(jsonPath("$.[*].recommendationAnnexContentType").value(hasItem(DEFAULT_RECOMMENDATION_ANNEX_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].recommendationAnnex").value(hasItem(Base64Utils.encodeToString(DEFAULT_RECOMMENDATION_ANNEX))))
-            .andExpect(jsonPath("$.[*].nameOfMembers").value(hasItem(DEFAULT_NAME_OF_MEMBERS)))
             .andExpect(jsonPath("$.[*].signature").value(hasItem(DEFAULT_SIGNATURE)))
             .andExpect(jsonPath("$.[*].referencesContentType").value(hasItem(DEFAULT_REFERENCES_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].references").value(hasItem(Base64Utils.encodeToString(DEFAULT_REFERENCES))))
@@ -499,7 +492,6 @@ class FraudInvestigationReportResourceIT {
             .andExpect(jsonPath("$.recommendation").value(DEFAULT_RECOMMENDATION))
             .andExpect(jsonPath("$.recommendationAnnexContentType").value(DEFAULT_RECOMMENDATION_ANNEX_CONTENT_TYPE))
             .andExpect(jsonPath("$.recommendationAnnex").value(Base64Utils.encodeToString(DEFAULT_RECOMMENDATION_ANNEX)))
-            .andExpect(jsonPath("$.nameOfMembers").value(DEFAULT_NAME_OF_MEMBERS))
             .andExpect(jsonPath("$.signature").value(DEFAULT_SIGNATURE))
             .andExpect(jsonPath("$.referencesContentType").value(DEFAULT_REFERENCES_CONTENT_TYPE))
             .andExpect(jsonPath("$.references").value(Base64Utils.encodeToString(DEFAULT_REFERENCES)))
@@ -551,7 +543,6 @@ class FraudInvestigationReportResourceIT {
             .recommendation(UPDATED_RECOMMENDATION)
             .recommendationAnnex(UPDATED_RECOMMENDATION_ANNEX)
             .recommendationAnnexContentType(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE)
-            .nameOfMembers(UPDATED_NAME_OF_MEMBERS)
             .signature(UPDATED_SIGNATURE)
             .references(UPDATED_REFERENCES)
             .referencesContentType(UPDATED_REFERENCES_CONTENT_TYPE)
@@ -598,7 +589,6 @@ class FraudInvestigationReportResourceIT {
         assertThat(testFraudInvestigationReport.getRecommendation()).isEqualTo(UPDATED_RECOMMENDATION);
         assertThat(testFraudInvestigationReport.getRecommendationAnnex()).isEqualTo(UPDATED_RECOMMENDATION_ANNEX);
         assertThat(testFraudInvestigationReport.getRecommendationAnnexContentType()).isEqualTo(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE);
-        assertThat(testFraudInvestigationReport.getNameOfMembers()).isEqualTo(UPDATED_NAME_OF_MEMBERS);
         assertThat(testFraudInvestigationReport.getSignature()).isEqualTo(UPDATED_SIGNATURE);
         assertThat(testFraudInvestigationReport.getReferences()).isEqualTo(UPDATED_REFERENCES);
         assertThat(testFraudInvestigationReport.getReferencesContentType()).isEqualTo(UPDATED_REFERENCES_CONTENT_TYPE);
@@ -697,7 +687,6 @@ class FraudInvestigationReportResourceIT {
             .conclusionAnnexContentType(UPDATED_CONCLUSION_ANNEX_CONTENT_TYPE)
             .recommendationAnnex(UPDATED_RECOMMENDATION_ANNEX)
             .recommendationAnnexContentType(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE)
-            .nameOfMembers(UPDATED_NAME_OF_MEMBERS)
             .references(UPDATED_REFERENCES)
             .referencesContentType(UPDATED_REFERENCES_CONTENT_TYPE)
             .publicationDate(UPDATED_PUBLICATION_DATE)
@@ -742,7 +731,6 @@ class FraudInvestigationReportResourceIT {
         assertThat(testFraudInvestigationReport.getRecommendation()).isEqualTo(DEFAULT_RECOMMENDATION);
         assertThat(testFraudInvestigationReport.getRecommendationAnnex()).isEqualTo(UPDATED_RECOMMENDATION_ANNEX);
         assertThat(testFraudInvestigationReport.getRecommendationAnnexContentType()).isEqualTo(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE);
-        assertThat(testFraudInvestigationReport.getNameOfMembers()).isEqualTo(UPDATED_NAME_OF_MEMBERS);
         assertThat(testFraudInvestigationReport.getSignature()).isEqualTo(DEFAULT_SIGNATURE);
         assertThat(testFraudInvestigationReport.getReferences()).isEqualTo(UPDATED_REFERENCES);
         assertThat(testFraudInvestigationReport.getReferencesContentType()).isEqualTo(UPDATED_REFERENCES_CONTENT_TYPE);
@@ -788,7 +776,6 @@ class FraudInvestigationReportResourceIT {
             .recommendation(UPDATED_RECOMMENDATION)
             .recommendationAnnex(UPDATED_RECOMMENDATION_ANNEX)
             .recommendationAnnexContentType(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE)
-            .nameOfMembers(UPDATED_NAME_OF_MEMBERS)
             .signature(UPDATED_SIGNATURE)
             .references(UPDATED_REFERENCES)
             .referencesContentType(UPDATED_REFERENCES_CONTENT_TYPE)
@@ -834,7 +821,6 @@ class FraudInvestigationReportResourceIT {
         assertThat(testFraudInvestigationReport.getRecommendation()).isEqualTo(UPDATED_RECOMMENDATION);
         assertThat(testFraudInvestigationReport.getRecommendationAnnex()).isEqualTo(UPDATED_RECOMMENDATION_ANNEX);
         assertThat(testFraudInvestigationReport.getRecommendationAnnexContentType()).isEqualTo(UPDATED_RECOMMENDATION_ANNEX_CONTENT_TYPE);
-        assertThat(testFraudInvestigationReport.getNameOfMembers()).isEqualTo(UPDATED_NAME_OF_MEMBERS);
         assertThat(testFraudInvestigationReport.getSignature()).isEqualTo(UPDATED_SIGNATURE);
         assertThat(testFraudInvestigationReport.getReferences()).isEqualTo(UPDATED_REFERENCES);
         assertThat(testFraudInvestigationReport.getReferencesContentType()).isEqualTo(UPDATED_REFERENCES_CONTENT_TYPE);

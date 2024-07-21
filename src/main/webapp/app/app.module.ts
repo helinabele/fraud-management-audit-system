@@ -26,7 +26,8 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+/* import { AngularFireModule } from '@angular/fire'; // Import AngularFireModule
+import { AngularFireMessagingModule } from '@angular/fire/messaging'; // Import AngularFireMessagingModule */
 
 @NgModule({
   imports: [
@@ -42,22 +43,30 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     TranslationModule,
     NgxDatatableModule,
     CommonModule,
-    NgMultiSelectDropDownModule.forRoot(),
+/*     AngularFireModule.initializeApp(firebaseConfig), // Initialize Firebase
+    AngularFireMessagingModule, // Add AngularFireMessagingModule   */  
   ],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
+    /* FirebaseConfigurationService,
+    FirebaseMessagingService, */
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
 })
 export class AppModule {
-  constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig) {
+  constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary, dpConfig: NgbDatepickerConfig,
+    /* firebaseConfigurationService: FirebaseConfigurationService,
+    angularFireMessaging: AngularFireMessaging,
+    firebaseMessagingService: FirebaseMessagingService */
+  ) {
     applicationConfigService.setEndpointPrefix(SERVER_API_URL);
     registerLocaleData(locale);
     iconLibrary.addIcons(...fontAwesomeIcons);
     dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
+    // const app = initializeApp(firebaseConfigurationService.getConfig());
   }
 }

@@ -45,13 +45,19 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="employee">
+            <div class="d-flex">
+              <span jhiTranslate="fraudMgtApp.team.employee"></span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="description">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.team.description">Description</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="managerialId">
+          <!-- <th scope="col" jhiSortBy="managerialId">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.team.managerialId">Managerial Id</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -74,7 +80,7 @@
               <span jhiTranslate="fraudMgtApp.team.managers">Managers</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
@@ -84,8 +90,14 @@
             <a [routerLink]="['/team', team.id, 'view']">{{ team.id }}</a>
           </td> -->
           <td>{{ team.teamName }}</td>
+          <td>
+            <ng-container *ngFor="let employee of team.employee; let last = last">
+              {{ employee.name }}
+              <span *ngIf="!last">, </span>
+            </ng-container>
+          </td>
           <td>{{ team.description }}</td>
-          <td>{{ team.managerialId }}</td>
+          <!-- <td>{{ team.managerialId }}</td>
           <td>{{ team.isCreator }}</td>
           <td>
             <div *ngIf="team.teamLead">
@@ -96,7 +108,7 @@
             <div *ngIf="team.managers">
               <a [routerLink]="['/managerial', team.managers.id, 'view']">{{ team.managers.managerialName }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/team', team.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

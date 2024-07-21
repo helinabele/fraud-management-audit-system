@@ -22,7 +22,9 @@
       "position": "Position",
       "grade": "Grade",
       "experience": "Experience",
-      "branch": "Branch"
+      "branch": "Branch",
+      "jobGrade": "Job Grade",
+      "jobTitle": "Job Title"
     }
   }
 }

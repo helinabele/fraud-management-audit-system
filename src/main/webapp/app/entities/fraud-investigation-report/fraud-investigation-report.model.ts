@@ -10,6 +10,9 @@ export interface IFraudInvestigationReport {
   introductionAnnex?: string | null;
   introductionAnnexContentType?: string | null;
   introduction?: string | null;
+  comments?: string[] | null;
+  commentsIntroduction?: string[] | null;
+  objectiveComments?: string[] | null;
   objective?: string | null;
   objectiveAnnex?: string | null;
   objectiveAnnexContentType?: string | null;
@@ -37,7 +40,7 @@ export interface IFraudInvestigationReport {
   referencesContentType?: string | null;
   publicationDate?: dayjs.Dayjs | null;
   author?: string | null;
-  employee?: Pick<IEmployee, 'id' | 'name'> | null;
+  employee?: IEmployee[] | null | undefined;
   task?: Pick<ITask, 'id' | 'title'> | null;
   team?: Pick<ITeam, 'id' | 'teamName'> | null;
 }

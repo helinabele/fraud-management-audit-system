@@ -71,6 +71,12 @@ entity Findings{
     findingAndAnalysis String
 	findingAndAnalysisAnnex Blob
 }
+
+entity Attachment {
+    name String required
+    file Blob required
+}
+
 entity FraudKnowledgeManagement{
     reportNumber Integer required
 	fraudIncident FraudTypeByIncident required
@@ -231,6 +237,11 @@ relationship ManyToOne{
     WhistleBlowerReport{city(cityName)} to City{whistleBlowerReport}
     WhistleBlowerReport{subCity(subCityName)} to SubCity{whistleBlowerReport}
 }
+
+relationship OneToMany {
+    Findings{attachments} to Attachment{findings}
+}
+
 relationship OneToOne {
     Director{user(login)} to User{director(directorName)} with builtInEntity
     Managerial{user(login)} to User{manager(managerialName)} with builtInEntity

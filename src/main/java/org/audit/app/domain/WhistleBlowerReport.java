@@ -3,7 +3,6 @@ package org.audit.app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import org.audit.app.domain.enumeration.Gender;
-import org.audit.app.service.impl.ReportStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

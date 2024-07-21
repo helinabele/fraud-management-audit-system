@@ -15,7 +15,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.core.io.ClassPathResource;
+import java.io.InputStream;
 
 @Service
 public class NotificationService {
@@ -29,50 +32,27 @@ public class NotificationService {
     }
 
     @SuppressWarnings("deprecation")
+    
     private void initializeFirebase() {
         try {
-            // Load the Firebase service account credentials file
-
-            // Initialize Firebase options
-            /*
-             * FirebaseOptions options = FirebaseOptions.builder()
-             * .setCredentials(GoogleCredentials.fromStream(serviceAccount.getInputStream())
-             * )
-             * .build();
-             */
-
-            /*
-             * FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
-             * .setCredentialsFile(
-             * "./resources/fraudmgt-641a2-firebase-adminsdk-z6ols-0d728f0cbc.json")
-             * .setDatabaseUrl("https://your-project.firebaseio.com")
-             * .build();
-             * FirebaseApp.initializeApp(firebaseOptions);
-             */
-            //ClassPathResource serviceAccount = new ClassPathResource("path/to/firebase-service-account.json");
-
-            FileInputStream serviceAccount = new FileInputStream(
-                    "../fraudmgt-641a2-firebase-adminsdk-z6ols-0d728f0cbc.json");
-
+            // Use ClassPathResource to load the JSON file from resources
+            ClassPathResource resource = new ClassPathResource("fraudmgt-641a2-firebase-adminsdk-z6ols-0656ddc8cc.json");
+            InputStream serviceAccount = resource.getInputStream();
+    
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
-
-            FirebaseApp.initializeApp(options);
-
-            // FirebaseApp.initializeApp(firebaseOptions);
+    
             // Check if FirebaseApp with the name [DEFAULT] already exists
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
             }
-
+    
         } catch (Exception e) {
             // Handle initialization errors
             e.printStackTrace();
         }
-    }
-
-    public void sendTaskAssignmentNotification(AssignTaskDTO assignTaskDTO) {
+    }    public void sendTaskAssignmentNotification(AssignTaskDTO assignTaskDTO) {
         // Retrieve necessary information from the AssignTaskDTO
         TaskDTO task = assignTaskDTO.getTask();
         TeamDTO team = assignTaskDTO.getTeam();

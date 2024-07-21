@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { IReportRepository } from "../report-repository.model";
 import { ReportRepositoryService } from "../service/report-repository.service";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";

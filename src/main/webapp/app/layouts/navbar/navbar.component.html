@@ -173,6 +173,13 @@
               </a>
             </li>
             <li>
+              <a class="dropdown-item" routerLink="signature" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                <fa-icon [icon]="['fas', 'person']" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.signature">Signature</span>
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item" routerLink="job-grade" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                 <fa-icon [icon]="['fas', 'person']" [fixedWidth]="true"></fa-icon>

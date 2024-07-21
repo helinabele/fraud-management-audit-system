@@ -194,6 +194,11 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col">
+            <div class="d-flex">
+              <span>Status</span>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -330,8 +335,15 @@
           <td>{{ fraudInvestigationReport.publicationDate | formatMediumDatetime }}</td>
           <td>{{ fraudInvestigationReport.author }}</td>
           <td>
-            <div *ngIf="fraudInvestigationReport.employee">
-              <a [routerLink]="['/employee', fraudInvestigationReport.employee.id, 'view']">{{ fraudInvestigationReport.employee.name }}</a>
+            <div *ngIf="fraudInvestigationReport?.employee">
+              <span>Employees:</span>
+              <a *ngFor="let emp of fraudInvestigationReport.employee"
+                 [routerLink]="['/employee', emp?.id, 'view']">
+                {{ emp?.name }}
+              </a>
+            </div>
+            <div *ngIf="!fraudInvestigationReport?.employee || (fraudInvestigationReport.employee && fraudInvestigationReport.employee.length === 0)">
+              <span>No employees assigned</span>
             </div>
           </td>
           <td>
@@ -344,6 +356,7 @@
               <a [routerLink]="['/team', fraudInvestigationReport.team.id, 'view']">{{ fraudInvestigationReport.team.teamName }}</a>
             </div>
           </td>
+          <td></td>
           <td class="text-end">
             <div class="btn-group">
               <button

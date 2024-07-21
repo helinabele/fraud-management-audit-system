@@ -22,7 +22,14 @@
         <dd>
           <span>{{ team.description }}</span>
         </dd>
-        <dt><span jhiTranslate="fraudMgtApp.team.managerialId">Managerial Id</span></dt>
+        <dt><span jhiTranslate="fraudMgtApp.team.employee">Employee</span></dt>
+        <dd>
+          <ng-container *ngFor="let employee of team.employee; let last = last">
+            {{ employee.name }}
+            <span *ngIf="!last">, </span>
+          </ng-container>
+        </dd>
+        <!-- <dt><span jhiTranslate="fraudMgtApp.team.managerialId">Managerial Id</span></dt>
         <dd>
           <span>{{ team.managerialId }}</span>
         </dd>
@@ -41,7 +48,7 @@
           <div *ngIf="team.managers">
             <a [routerLink]="['/managerial', team.managers.id, 'view']">{{ team.managers.managerialName }}</a>
           </div>
-        </dd>
+        </dd> -->
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

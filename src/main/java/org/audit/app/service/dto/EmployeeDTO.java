@@ -39,12 +39,14 @@ public class EmployeeDTO implements Serializable {
 
     private TeamLeadDTO teamLead;
 
-    private TeamDTO team;
-
     public EmployeeDTO() {
-        // Initialize any fields if needed
+        // default constructor
     }
     
+    public EmployeeDTO(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -149,14 +151,6 @@ public class EmployeeDTO implements Serializable {
         this.teamLead = teamLead;
     }
 
-    public TeamDTO getTeam() {
-        return team;
-    }
-
-    public void setTeam(TeamDTO team) {
-        this.team = team;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -194,7 +188,6 @@ public class EmployeeDTO implements Serializable {
             ", director=" + getDirector() +
             ", manager=" + getManager() +
             ", teamLead=" + getTeamLead() +
-            ", team=" + getTeam() +
             "}";
     }
 }

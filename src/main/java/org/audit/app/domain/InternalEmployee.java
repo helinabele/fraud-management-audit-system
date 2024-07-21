@@ -3,8 +3,11 @@ package org.audit.app.domain;
 import java.io.Serializable;
 import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A InternalEmployee.
@@ -34,6 +37,12 @@ public class InternalEmployee implements Serializable {
 
     @Field("branch")
     private String branch;
+
+    @Field("job_grade")
+    private JobGrade jobGrade;
+
+    @Field("job_title")
+    private JobTitle jobTitle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -113,6 +122,32 @@ public class InternalEmployee implements Serializable {
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public JobGrade getJobGrade() {
+        return this.jobGrade;
+    }
+
+    public void setRegion(JobGrade jobGrade) {
+        this.jobGrade = jobGrade;
+    }
+
+    public InternalEmployee jobGrade(JobGrade jobGrade) {
+        this.setRegion(jobGrade);
+        return this;
+    }
+
+    public JobTitle getJobTitle() {
+        return this.jobTitle;
+    }
+
+    public void setRegion(JobTitle jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public InternalEmployee jobTitle(JobTitle jobTitle) {
+        this.setRegion(jobTitle);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

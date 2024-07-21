@@ -21,7 +21,7 @@ const bankAccountRoute: Routes = [
     path: ':id/view',
     component: JobGradeDetailComponent,
     resolve: {
-      bankAccount: JobGradeRoutingResolveService,
+      jobGrade: JobGradeRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -29,7 +29,7 @@ const bankAccountRoute: Routes = [
     path: 'new',
     component: JobGradeUpdateComponent,
     resolve: {
-      bankAccount: JobGradeRoutingResolveService,
+      jobGrade: JobGradeRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -37,7 +37,7 @@ const bankAccountRoute: Routes = [
     path: ':id/edit',
     component: JobGradeUpdateComponent,
     resolve: {
-      bankAccount: JobGradeRoutingResolveService,
+      jobGrade: JobGradeRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },

@@ -23,6 +23,8 @@ type InternalEmployeeFormGroupContent = {
   grade: FormControl<IInternalEmployee['grade']>;
   experience: FormControl<IInternalEmployee['experience']>;
   branch: FormControl<IInternalEmployee['branch']>;
+  jobGrade: FormControl<IInternalEmployee['jobGrade']>;
+  jobTitle: FormControl<IInternalEmployee['jobTitle']>;
 };
 
 export type InternalEmployeeFormGroup = FormGroup<InternalEmployeeFormGroupContent>;
@@ -51,6 +53,8 @@ export class InternalEmployeeFormService {
       grade: new FormControl(internalEmployeeRawValue.grade),
       experience: new FormControl(internalEmployeeRawValue.experience),
       branch: new FormControl(internalEmployeeRawValue.branch),
+      jobGrade: new FormControl(internalEmployeeRawValue.jobGrade),
+      jobTitle: new FormControl(internalEmployeeRawValue.jobTitle),
     });
   }
 

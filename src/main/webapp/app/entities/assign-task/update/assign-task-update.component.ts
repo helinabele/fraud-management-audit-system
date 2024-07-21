@@ -54,7 +54,7 @@ export class AssignTaskUpdateComponent implements OnInit {
   emailAddress?: string;
   message?: string;
   whistleBlowerProperty: any;
-  isChecked: boolean = false;
+  isChecked = false;
   role?: Authority;
   roleId?: string;
   account: any;

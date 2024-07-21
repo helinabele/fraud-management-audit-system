@@ -36,6 +36,18 @@
         <dd>
           <span>{{ internalEmployee.branch }}</span>
         </dd>
+        <dt><span jhiTranslate="fraudMgtApp.internalEmployee.jobGrade">Job Grade</span></dt>
+        <dd>
+          <div *ngIf="internalEmployee.jobGrade">
+            <a [routerLink]="['/job-grade', internalEmployee.jobGrade.id, 'view']">{{ internalEmployee.jobGrade.jobGradeName }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="fraudMgtApp.internalEmployee.jobTitle">Job Title</span></dt>
+        <dd>
+          <div *ngIf="internalEmployee.jobTitle">
+            <a [routerLink] = "['/job-title', internalEmployee.jobTitle.id, 'view']">{{ internalEmployee.jobTitle.jobTitleName }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

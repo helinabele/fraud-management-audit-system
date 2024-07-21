@@ -2,8 +2,9 @@ package org.audit.app.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import org.audit.app.domain.ReportStatus;
 import org.audit.app.domain.enumeration.Gender;
-import org.audit.app.service.impl.ReportStatus;
 
 /**
  * A DTO for the {@link org.audit.app.domain.WhistleBlowerReport} entity.
