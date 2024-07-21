@@ -27,7 +27,7 @@ type FraudInvestigationReportFormRawValue = FormValueOf<IFraudInvestigationRepor
 
 type NewFraudInvestigationReportFormRawValue = FormValueOf<NewFraudInvestigationReport>;
 
-type FraudInvestigationReportFormDefaults = Pick<NewFraudInvestigationReport, 'id' | 'publicationDate'>;
+type FraudInvestigationReportFormDefaults = Pick<NewFraudInvestigationReport, 'id' | 'publicationDate' | 'comments' | 'objectiveComments'>;
 
 type FraudInvestigationReportFormGroupContent = {
   id: FormControl<FraudInvestigationReportFormRawValue['id'] | NewFraudInvestigationReport['id']>;
@@ -36,9 +36,13 @@ type FraudInvestigationReportFormGroupContent = {
   introductionAnnex: FormControl<FraudInvestigationReportFormRawValue['introductionAnnex']>;
   introductionAnnexContentType: FormControl<FraudInvestigationReportFormRawValue['introductionAnnexContentType']>;
   introduction: FormControl<FraudInvestigationReportFormRawValue['introduction']>;
+  comments: FormControl<FraudInvestigationReportFormRawValue['comments']>;
+  newComment: FormControl<string | null>;
   objective: FormControl<FraudInvestigationReportFormRawValue['objective']>;
   objectiveAnnex: FormControl<FraudInvestigationReportFormRawValue['objectiveAnnex']>;
   objectiveAnnexContentType: FormControl<FraudInvestigationReportFormRawValue['objectiveAnnexContentType']>;
+  objectiveComments: FormControl<FraudInvestigationReportFormRawValue['objectiveComments']>;
+  newObjectiveComment: FormControl<string | null>;
   scope: FormControl<FraudInvestigationReportFormRawValue['scope']>;
   scopeAnnex: FormControl<FraudInvestigationReportFormRawValue['scopeAnnex']>;
   scopeAnnexContentType: FormControl<FraudInvestigationReportFormRawValue['scopeAnnexContentType']>;
@@ -66,6 +70,7 @@ type FraudInvestigationReportFormGroupContent = {
   employee: FormControl<FraudInvestigationReportFormRawValue['employee']>;
   task: FormControl<FraudInvestigationReportFormRawValue['task']>;
   team: FormControl<FraudInvestigationReportFormRawValue['team']>;
+  [key: string]: any;
 };
 
 export type FraudInvestigationReportFormGroup = FormGroup<FraudInvestigationReportFormGroupContent>;
@@ -96,11 +101,15 @@ export class FraudInvestigationReportFormService {
       introduction: new FormControl(fraudInvestigationReportRawValue.introduction, {
         validators: [Validators.required],
       }),
+      comments: new FormControl(fraudInvestigationReportRawValue.comments),
+      newComment: new FormControl(null),
       objective: new FormControl(fraudInvestigationReportRawValue.objective, {
         validators: [Validators.required],
       }),
       objectiveAnnex: new FormControl(fraudInvestigationReportRawValue.objectiveAnnex),
       objectiveAnnexContentType: new FormControl(fraudInvestigationReportRawValue.objectiveAnnexContentType),
+      objectiveComments: new FormControl(fraudInvestigationReportRawValue.objectiveComments),
+      newObjectiveComment: new FormControl(null),
       scope: new FormControl(fraudInvestigationReportRawValue.scope),
       scopeAnnex: new FormControl(fraudInvestigationReportRawValue.scopeAnnex),
       scopeAnnexContentType: new FormControl(fraudInvestigationReportRawValue.scopeAnnexContentType),
@@ -158,6 +167,7 @@ export class FraudInvestigationReportFormService {
     return {
       id: null,
       publicationDate: currentTime,
+      comments: [],
     };
   }
 

@@ -10,6 +10,9 @@ export interface IFraudInvestigationReport {
   introductionAnnex?: string | null;
   introductionAnnexContentType?: string | null;
   introduction?: string | null;
+  comments?: string[] | null;
+  commentsIntroduction?: string[] | null;
+  objectiveComments?: string[] | null;
   objective?: string | null;
   objectiveAnnex?: string | null;
   objectiveAnnexContentType?: string | null;

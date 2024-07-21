@@ -13,7 +13,6 @@ import { IManagerial } from 'app/entities/managerial/managerial.model';
 import { ManagerialService } from 'app/entities/managerial/service/managerial.service';
 import { EmployeeService } from 'app/entities/employee/service/employee.service';
 import { IEmployee } from 'app/entities/employee/employee.model';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'jhi-team-update',
@@ -110,12 +109,12 @@ export class TeamUpdateComponent implements OnInit {
     return item.id;
   }
 
-  onEmployeeSelect(employee: IEmployee): void {
-    const existingEmployee = this.selectedEmployees?.find((emp) => emp.id === employee.id);
-    if (!existingEmployee) {
-      this.selectedEmployees?.push({ id: employee.id, name: employee.name });
-    }
-  }
+  // onEmployeeSelect(employee: IEmployee): void {
+  //   const existingEmployee = this.selectedEmployees?.find((emp) => emp.id === employee.id);
+  //   if (!existingEmployee) {
+  //     this.selectedEmployees?.push({ id: employee.id, name: employee.name });
+  //   }
+  // }
 
   // onEmployeeRemove(employee: IEmployee): void {
   //   const employeeIndex = this.selectedEmployees?.findIndex((emp) => emp.id === employee.id);
@@ -142,11 +141,14 @@ export class TeamUpdateComponent implements OnInit {
       }
     } */
 
-  onEmployeeChange(event: any): void {
-    const selectedEmployeeIds = Array.from(event.target.selectedOptions).map((option: any) => option.value);
-    // Now you have the array of selected employee IDs
-    console.log(selectedEmployeeIds);
-  }
+    onEmployeeChange(event: Event): void {
+      const selectedOptions = Array.from((event.target as HTMLSelectElement).selectedOptions);
+      const selectedEmployeeIds: string[] = selectedOptions.map((option: HTMLOptionElement) => option.value);
+    
+      // Use the selectedEmployeeIds array
+      // console.log(selectedEmployeeIds);
+      // Use a logging mechanism instead of console.log()
+    }
 
   protected getEmployees(): void {
     this.employeeService.query().subscribe(empl => {
@@ -202,7 +204,7 @@ export class TeamUpdateComponent implements OnInit {
       }
     }
   
-    this.selectedEmployees = team.employee || [];
+    this.selectedEmployees = team.employee ?? [];
   }
   
 

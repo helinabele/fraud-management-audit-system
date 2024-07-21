@@ -1,6 +1,8 @@
 package org.audit.app.service.impl;
 
 import java.util.Optional;
+
+import org.audit.app.domain.ReportStatus;
 import org.audit.app.domain.WhistleBlowerReport;
 import org.audit.app.repository.WhistleBlowerReportRepository;
 import org.audit.app.service.WhistleBlowerReportService;

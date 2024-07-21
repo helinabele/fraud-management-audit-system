@@ -36,8 +36,8 @@ export class SignatureUpdateComponent implements OnInit {
         })
     }
 
-    byteSize(base64String: string) {
-        return this.dataUtils.byteSize(base64String);
+    byteSize(base64String: string): void {
+        this.dataUtils.byteSize(base64String);
     }
 
     openFile(base64String: string, contentType: string | null | undefined): void {
@@ -73,7 +73,7 @@ export class SignatureUpdateComponent implements OnInit {
         this.previousState();
     }
     protected onSaveError(): void {
-        //Api for inheritance.
+        // Api for inheritance.
     }
     protected onSaveFinalize(): void {
         this.isSaving = false;

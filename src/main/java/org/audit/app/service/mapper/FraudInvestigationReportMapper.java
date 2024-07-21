@@ -1,5 +1,7 @@
 package org.audit.app.service.mapper;
 
+import java.util.List;
+
 import org.audit.app.domain.Employee;
 import org.audit.app.domain.FraudInvestigationReport;
 import org.audit.app.domain.Task;
@@ -24,7 +26,7 @@ public interface FraudInvestigationReportMapper extends EntityMapper<FraudInvest
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
-    EmployeeDTO toDtoEmployeeName(Employee employee);
+    List<EmployeeDTO> toDtoEmployeeName(List<Employee> employee);
 
     @Named("taskTitle")
     @BeanMapping(ignoreByDefault = true)

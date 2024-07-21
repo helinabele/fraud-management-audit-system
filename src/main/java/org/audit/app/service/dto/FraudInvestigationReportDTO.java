@@ -2,8 +2,11 @@ package org.audit.app.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the {@link org.audit.app.domain.FraudInvestigationReport} entity.
@@ -24,6 +27,9 @@ public class FraudInvestigationReportDTO implements Serializable {
 
     @NotNull
     private String introduction;
+
+    private List<String> comments = new ArrayList<>();
+    private List<String> objectiveComments = new ArrayList<>();
 
     @NotNull
     private String objective;
@@ -63,7 +69,7 @@ public class FraudInvestigationReportDTO implements Serializable {
     private byte[] recommendationAnnex;
 
     private String recommendationAnnexContentType;
-    private String nameOfMembers;
+    private List<String> nameOfMembers;
 
     private String signature;
 
@@ -74,7 +80,7 @@ public class FraudInvestigationReportDTO implements Serializable {
 
     private String author;
 
-    private EmployeeDTO employee;
+    private List<EmployeeDTO> employee;
 
     private TaskDTO task;
 
@@ -296,11 +302,11 @@ public class FraudInvestigationReportDTO implements Serializable {
         this.recommendationAnnexContentType = recommendationAnnexContentType;
     }
 
-    public String getNameOfMembers() {
+    public List<String> getNameOfMembers() {
         return nameOfMembers;
     }
 
-    public void setNameOfMembers(String nameOfMembers) {
+    public void setNameOfMembers(List<String> nameOfMembers) {
         this.nameOfMembers = nameOfMembers;
     }
 
@@ -344,11 +350,11 @@ public class FraudInvestigationReportDTO implements Serializable {
         this.author = author;
     }
 
-    public EmployeeDTO getEmployee() {
+    public List<EmployeeDTO> getEmployee() {
         return employee;
     }
 
-    public void setEmployee(EmployeeDTO employee) {
+    public void setEmployee(List<EmployeeDTO> employee) {
         this.employee = employee;
     }
 
@@ -367,7 +373,22 @@ public class FraudInvestigationReportDTO implements Serializable {
     public void setTeam(TeamDTO team) {
         this.team = team;
     }
+    
+    public List<String> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+
+    public List<String> getObjectiveComments() {
+        return objectiveComments;
+    }
+
+    public void setObjectiveComments(List<String> objectiveComments) {
+        this.objectiveComments = objectiveComments;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -420,6 +441,9 @@ public class FraudInvestigationReportDTO implements Serializable {
             ", employee=" + getEmployee() +
             ", task=" + getTask() +
             ", team=" + getTeam() +
+            ", comments=" + getComments() +
+            ", objectiveComments=" + getObjectiveComments() +
             "}";
     }
+
 }

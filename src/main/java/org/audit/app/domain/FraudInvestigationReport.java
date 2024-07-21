@@ -1,15 +1,20 @@
 package org.audit.app.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A FraudInvestigationReport.
@@ -40,6 +45,12 @@ public class FraudInvestigationReport implements Serializable {
     @Field("introduction")
     private String introduction;
 
+    @Field("comments")
+    private List<String> comments = new ArrayList<>();
+    
+    @Field("objectiveComments")
+    private List<String> objectiveComments = new ArrayList<>();
+    
     @NotNull
     @Field("objective")
     private String objective;
@@ -106,7 +117,7 @@ public class FraudInvestigationReport implements Serializable {
     private String recommendationAnnexContentType;
 
     @Field("name_of_members")
-    private String nameOfMembers;
+    private List<String> nameOfMembers;
 
     @Field("signature")
     private String signature;
@@ -126,7 +137,7 @@ public class FraudInvestigationReport implements Serializable {
     @DBRef
     @Field("employee")
     @JsonIgnoreProperties(value = { "user", "director", "manager", "teamLead", "team" }, allowSetters = true)
-    private Employee employee;
+    private List<Employee> employee;
 
     @DBRef
     @Field("task")
@@ -496,16 +507,16 @@ public class FraudInvestigationReport implements Serializable {
         this.recommendationAnnexContentType = recommendationAnnexContentType;
     }
 
-    public String getNameOfMembers() {
+    public List<String> getNameOfMembers() {
         return this.nameOfMembers;
     }
 
-    public FraudInvestigationReport nameOfMembers(String nameOfMembers) {
+    public FraudInvestigationReport nameOfMembers(List<String> nameOfMembers) {
         this.setNameOfMembers(nameOfMembers);
         return this;
     }
 
-    public void setNameOfMembers(String nameOfMembers) {
+    public void setNameOfMembers(List<String> nameOfMembers) {
         this.nameOfMembers = nameOfMembers;
     }
 
@@ -574,15 +585,15 @@ public class FraudInvestigationReport implements Serializable {
         this.author = author;
     }
 
-    public Employee getEmployee() {
+    public List<Employee> getEmployee() {
         return this.employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(List<Employee> employee) {
         this.employee = employee;
     }
 
-    public FraudInvestigationReport employee(Employee employee) {
+    public FraudInvestigationReport employee(List<Employee> employee) {
         this.setEmployee(employee);
         return this;
     }
@@ -644,6 +655,21 @@ public class FraudInvestigationReport implements Serializable {
         return this;
     }
 
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
+    public List<String> getObjectiveComments() {
+        return objectiveComments;
+    }
+
+    public void setObjectiveComments(List<String> objectiveComments) {
+        this.objectiveComments = objectiveComments;
+    }
+    
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -702,4 +728,5 @@ public class FraudInvestigationReport implements Serializable {
             ", author='" + getAuthor() + "'" +
             "}";
     }
+
 }

@@ -194,6 +194,11 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col">
+            <div class="d-flex">
+              <span>Status</span>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -351,6 +356,7 @@
               <a [routerLink]="['/team', fraudInvestigationReport.team.id, 'view']">{{ fraudInvestigationReport.team.teamName }}</a>
             </div>
           </td>
+          <td></td>
           <td class="text-end">
             <div class="btn-group">
               <button

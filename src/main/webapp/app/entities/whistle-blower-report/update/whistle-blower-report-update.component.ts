@@ -27,7 +27,7 @@ import { SubCityService } from 'app/entities/sub-city/service/sub-city.service';
 @Component({
   selector: 'jhi-whistle-blower-report-update',
   templateUrl: './whistle-blower-report-update.component.html',
-  styleUrls: ['whistle-blower-report-update.component.scss']
+  styleUrls: ['./whistle-blower-report-update.component.scss']
 })
 export class WhistleBlowerReportUpdateComponent implements OnInit {
   isSaving = false;
@@ -88,7 +88,7 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
     });
   }
 
-  toggleDisabled() {
+  toggleDisabled(): void {
     this.ngZone.runOutsideAngular(() => {
       // Run the code that modifies the 'disabled' property outside of Angular's change detection cycle
       this.isDisabled = !this.isDisabled;

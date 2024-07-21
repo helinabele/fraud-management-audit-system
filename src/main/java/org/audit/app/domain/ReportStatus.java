@@ -1,4 +1,4 @@
-package org.audit.app.service.impl;
+package org.audit.app.domain;
 
 public enum ReportStatus {
     PENDING,

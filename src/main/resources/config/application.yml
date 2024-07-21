@@ -17,6 +17,10 @@
 ---
 # Conditionally disable springdoc on missing api-docs profile
 spring:
+  cors:
+    allowed-origins: "https://fraudmgt.cbe.com.et"
+    allowed-methods: "GET, POST, PUT, DELETE"
+    allowed-headers: "Content-Type, Authorization"
   config:
     activate:
       on-profile: "!api-docs"

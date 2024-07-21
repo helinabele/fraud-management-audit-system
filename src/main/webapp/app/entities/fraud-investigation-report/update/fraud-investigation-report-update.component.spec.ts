@@ -9,7 +9,6 @@ import { of, Subject, from } from 'rxjs';
 import { FraudInvestigationReportFormService } from './fraud-investigation-report-form.service';
 import { FraudInvestigationReportService } from '../service/fraud-investigation-report.service';
 import { IFraudInvestigationReport } from '../fraud-investigation-report.model';
-import { IEmployee } from 'app/entities/employee/employee.model';
 import { EmployeeService } from 'app/entities/employee/service/employee.service';
 import { ITask } from 'app/entities/task/task.model';
 import { TaskService } from 'app/entities/task/service/task.service';

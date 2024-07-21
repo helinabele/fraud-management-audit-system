@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save($event)" [formGroup]="editForm">
       <h2 id="jhi-fraud-investigation-report-heading" data-cy="FraudInvestigationReportCreateUpdateHeading"
         jhiTranslate="fraudMgtApp.fraudInvestigationReport.home.createOrEditLabel">
         Create or edit a Fraud Investigation Report
@@ -51,8 +51,15 @@
           <fa-icon [icon]="isSectionOpen('introduction') ? 'chevron-circle-up' : 'chevron-circle-down'"></fa-icon>
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introduction"
             for="field_introduction">Introduction</label>
-          <textarea *ngIf="isSectionOpen('introduction')" class="form-control" name="introduction"
-            id="field_introduction" data-cy="introduction" formControlName="introduction"></textarea>
+          <textarea 
+            *ngIf="isSectionOpen('introduction')" 
+            class="form-control" 
+            name="introduction"
+            id="field_introduction" 
+            data-cy="introduction" 
+            formControlName="introduction"
+            (click)="$event.stopPropagation()">
+          </textarea>
           <div
             *ngIf="editForm.get('introduction')!.invalid && (editForm.get('introduction')!.dirty || editForm.get('introduction')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('introduction')?.errors?.required"
@@ -61,7 +68,26 @@
             </small>
           </div>
         </div>
-
+        
+        <div class="row mb-3">
+          <label class="form-label" for="field_comments">Add a comment</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            id="field_comments" 
+            formControlName="newComment" 
+            placeholder="Add a comment..." />
+          <button type="button" class="btn btn-primary mt-2" (click)="addComment('comments')">Add Comment</button>
+        </div>
+        
+        <div *ngIf="comments.length > 0">
+          <h5>Comments</h5>
+          <ul>
+            <li *ngFor="let comment of comments">{{ comment }}</li>
+          </ul>
+        </div>
+        
+        
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.introductionAnnex"
             for="field_introductionAnnex">Introduction Annex</label>
@@ -92,7 +118,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.objective"
             for="field_objective">Objective</label>
           <textarea *ngIf="isSectionOpen('objective')" class="form-control" name="objective"
-            id="field_objective" data-cy="objective" formControlName="objective"></textarea>
+            id="field_objective" data-cy="objective" formControlName="objective" (click)="$event.stopPropagation()"></textarea>
           <div
             *ngIf="editForm.get('objective')!.invalid && (editForm.get('objective')!.dirty || editForm.get('objective')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('objective')?.errors?.required"
@@ -100,6 +126,23 @@
               This field is required.
             </small>
           </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_objectiveComments">Add a comment</label>
+          <input
+            type="text"
+            class="form-control"
+            id="field_objectiveComments"
+            formControlName="newObjectiveComment"
+            placeholder="Add a comment..."/>
+            <button type="button" class="btn btn-primary mt-2" (click)="addComment('objectiveComments')">Add Comment</button>
+        </div>
+        <div *ngIf="comments.length > 0">
+          <h5>Objective Comments</h5>
+          <ul>
+            <li *ngFor="let comment of objectiveComments">{{ comment }}</li>
+          </ul>
         </div>
 
         <div class="row mb-3">
@@ -132,7 +175,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.scope"
             for="field_scope">Scope</label>
           <textarea *ngIf="isSectionOpen('scope')" class="form-control" name="scope" id="field_scope" data-cy="scope"
-            formControlName="scope"></textarea>
+            formControlName="scope" (click)="$event.stopPropagation()"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -165,7 +208,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.limitation"
             for="field_limitation">Limitation</label>
           <textarea *ngIf="isSectionOpen('limitation')" class="form-control" name="limitation" id="field_limitation" data-cy="limitation"
-            formControlName="limitation"></textarea>
+            formControlName="limitation" (click)="$event.stopPropagation()"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -198,7 +241,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.methodology"
             for="field_methodology">Methodology</label>
           <textarea *ngIf="isSectionOpen('methodology')"class="form-control" name="methodology" id="field_methodology" data-cy="methodology"
-            formControlName="methodology"></textarea>
+            formControlName="methodology" (click)="$event.stopPropagation()"></textarea>
           <div
             *ngIf="editForm.get('methodology')!.invalid && (editForm.get('methodology')!.dirty || editForm.get('methodology')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('methodology')?.errors?.required"
@@ -238,7 +281,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.findingAndAnalysis"
             for="field_findingAndAnalysis">Finding And Analysis</label>
           <textarea *ngIf="isSectionOpen('findingAndAnalysis')" class="form-control" name="findingAndAnalysis" id="field_findingAndAnalysis"
-            data-cy="findingAndAnalysis" formControlName="findingAndAnalysis"></textarea>
+            data-cy="findingAndAnalysis" formControlName="findingAndAnalysis" (click)="$event.stopPropagation()"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -271,7 +314,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.conclusion"
             for="field_conclusion">Conclusion</label>
           <textarea *ngIf="isSectionOpen('conclusion')" class="form-control" name="conclusion" id="field_conclusion" data-cy="conclusion"
-            formControlName="conclusion"></textarea>
+            formControlName="conclusion" (click)="$event.stopPropagation()"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -304,7 +347,7 @@
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.recommendation"
             for="field_recommendation">Recommendation</label>
           <textarea *ngIf="isSectionOpen('recommendation')" class="form-control" name="recommendation" id="field_recommendation" data-cy="recommendation" 
-          formControlName="recommendation"></textarea>
+          formControlName="recommendation" (click)="$event.stopPropagation()"></textarea>
         </div>
 
         <div class="row mb-3">
@@ -331,27 +374,38 @@
           <input type="hidden" class="form-control" name="recommendationAnnexContentType"
             id="field_recommendationAnnexContentType" formControlName="recommendationAnnexContentType" />
         </div>
-        <div class="form-group">
+        <!-- <option *ngFor="let employee of employee" [value]="employee.id">{{ employee.name }}</option> -->
+        <!-- <div class="form-group">
           <label class="form-label" jhiTranslate="fraudMgtApp.team.employee" for="field_employees">Select
             Employees:</label>
           <select multiple class="form-control" name="employee" id="field_employees" data-cy="employee"
             formControlName="employee" (change)="onEmployeeChange($event)">
-            <!-- <option *ngFor="let employee of employee" [value]="employee.id">{{ employee.name }}</option> -->
+            
             <option *ngFor="let emp of employee" [value]="emp.id">{{ emp.name }}</option>
           </select>
-        </div>
+        </div> -->
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.nameOfMembers"
             for="field_nameOfMembers">Name Of Members</label>
-          <input type="text" class="form-control" name="nameOfMembers" id="field_nameOfMembers" data-cy="nameOfMembers"
-            formControlName="nameOfMembers" />
+          <!-- <input type="text" class="form-control" name="nameOfMembers" id="field_nameOfMembers" data-cy="nameOfMembers"
+            formControlName="nameOfMembers" /> -->
+            <select multiple class="form-control" name="nameOfMembers" id="field_nameOfMembers" data-cy="nameOfMembers"
+            formControlName="nameOfMembers">
+            <option *ngFor="let names of employee" [value]="names.id">{{ names.name}}</option>
+          </select>
         </div>
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.signature"
             for="field_signature">Signature</label>
-          <input type="text" class="form-control" name="signature" id="field_signature" data-cy="signature"
-            formControlName="signature" />
+          <!-- <input type="text" class="form-control" name="signature" id="field_signature" data-cy="signature"
+            formControlName="signature" /> -->
+            <select class="form-control" name="signature" id="field_signature" data-cy="signature"
+            formControlName="signature">
+              <option *ngFor="let signature of signature" [value]="signature.id">
+                {{ signature.signatureName }}
+              </option>
+            </select>
         </div>
 
         <div class="row mb-3">

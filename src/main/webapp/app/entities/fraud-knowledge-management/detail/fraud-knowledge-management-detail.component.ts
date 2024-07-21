@@ -27,15 +27,11 @@ export class FraudKnowledgeManagementDetailComponent implements OnInit {
     window.history.back();
   }
 
-  generatePdf() {
-    if (!this.reportContent) {
-      return; // Return gracefully if the reportContent is undefined
-    }
-
+  generatePdf(): void {
     const dlElement = this.reportContent.nativeElement.querySelector('dl');
-    const dtElements = Array.from(dlElement.querySelectorAll('dt')) as HTMLElement[];
-    const ddElements = Array.from(dlElement.querySelectorAll('dd')) as HTMLElement[];
-
+    const dtElements = Array.from(dlElement.querySelectorAll('dt') as NodeListOf<HTMLElement>);
+    const ddElements = Array.from(dlElement.querySelectorAll('dd') as NodeListOf<HTMLElement>);
+  
     const documentDefinition = {
       content: [
         { text: 'Fraud Knowledge Management', style: 'header' },
@@ -57,21 +53,21 @@ export class FraudKnowledgeManagementDetailComponent implements OnInit {
         }
       }
     };
-
+  
     dtElements.forEach((dtElement, index) => {
-      const dtText = dtElement.innerText;
-      const ddText = ddElements[index].innerText;
-
-      documentDefinition.content.push(
-        { text: dtText, style: 'dt' },
-        { text: ddText, style: 'dd' }
-      );
+      if (dtElement instanceof HTMLElement && ddElements[index] instanceof HTMLElement) {
+        const dtText = dtElement.innerText;
+        const ddText = ddElements[index].innerText;
+  
+        documentDefinition.content.push(
+          { text: dtText, style: 'dt' },
+          { text: ddText, style: 'dd' }
+        );
+      }
     });
-
-    // Set the fonts in pdfMake
+  
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    // Create the PDF using pdfMake
     pdfMake.createPdf(documentDefinition as any).download('fraud-knowledge-management.pdf');
   }
+  
 }

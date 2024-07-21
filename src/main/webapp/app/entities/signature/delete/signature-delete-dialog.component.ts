@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { ISignature } from "../signature.model";
 import { SignatureService } from "../service/signature.service";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
