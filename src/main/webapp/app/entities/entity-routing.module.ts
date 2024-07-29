@@ -146,6 +146,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'fraudMgtApp.signature.home.title' },
         loadChildren: () => import('./signature/signature.module').then(m => m.SignatureModule),
       },
+      {
+        path: 'status',
+        data: { pageTitle: 'fraudMgtApp.status.home.title'},
+        loadChildren: () => import('./status/status.module').then(m => m.StatusModule)
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

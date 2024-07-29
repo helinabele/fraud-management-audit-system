@@ -1,33 +1,218 @@
-<div class="container my-5">
+<!-- <div class="container my-5">
   <div class="row align-items-center">
     <div class="col-md-6">
       <h2 class="mb-4" jhiTranslate="home.header">Report Fraud and Protect Your Business</h2>
-      <p class="lead mb-5" jhiTranslate="home.body">Our secure and reliable platform allows you to report fraud and protect your business from
-        financial losses and reputational damage.</p>
-      <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a> -->
+      <p class="lead mb-5" jhiTranslate="home.body">Our secure and reliable platform allows you to report fraud and
+        protect your business from financial losses and reputational damage.</p>
     </div>
     <div class="col-md-6">
       <img class="img-fluid reflect" src="/content/images/cbe-blg1.png" alt="Fraud Prevention">
     </div>
   </div>
+</div> -->
+
+<!-- <div id="homeCarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#homeCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#homeCarousel" data-slide-to="1"></li>
+    <li data-target="#homeCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="/content/images/cbe-hq-inside1.jpg" alt="Fraud Prevention - Inside 1">
+      <div class="carousel-caption d-none d-md-block">
+        <h2 class="mb-4" jhiTranslate="home.header">Report Fraud and Protect Your Business</h2>
+        <p class="lead mb-5" jhiTranslate="home.body">Our secure and reliable platform allows you to report fraud and
+          protect your business from financial losses and reputational damage.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="/content/images/cbe-hq-inside2.jpg" alt="Fraud Prevention - Inside 2">
+      <div class="carousel-caption d-none d-md-block">
+        <h2 class="mb-4" jhiTranslate="home.header">Report Fraud and Protect Your Business</h2>
+        <p class="lead mb-5" jhiTranslate="home.body">Our secure and reliable platform allows you to report fraud and
+          protect your business from financial losses and reputational damage.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="/content/images/cbe-hq.jpg" alt="Fraud Prevention - HQ">
+      <div class="carousel-caption d-none d-md-block">
+        <h2 class="mb-4" jhiTranslate="home.header">Report Fraud and Protect Your Business</h2>
+        <p class="lead mb-5" jhiTranslate="home.body">Our secure and reliable platform allows you to report fraud and
+          protect your business from financial losses and reputational damage.</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+  <a class="carousel-control-prev" href="#homeCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#homeCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> -->
+<ngb-carousel>
+  <ng-template ngbSlide *ngFor="let image of images; let i = index">
+    <div class="carousel-item">
+      <img [src]="image.src" [alt]="image.alt">
+      <div class="carousel-caption d-none d-md-block">
+        <h2 class="mb-4" jhiTranslate="home.header">{{ image.header }}</h2>
+        <p class="lead mb-5" jhiTranslate="home.body">{{ image.body }}</p>
+        <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a> -->
+      </div>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<!-- <div data-test="container" class="container-fluid home-card-deck home-container">
+  <div data-test="card-group" class="row row-cols-1 row-cols-md-3 g-4 home-card">
+    <div data-test="card" id="new" class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3"
+            src="https://www.ethiopianpassportservices.gov.et/static/media/new%20passport%201-01.fb0e7fca.svg"
+            style="width: 50px;">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a class="card-title text-dark" href="/whistle-blower-report/new" [ngbTooltip]="getTooltipText()" placement="right">Start new Whistle Blowing</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            Do you want to report any suspicious behavior or activity anonymously and securely? Provide all
+            requested information and apply.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div data-test="card" id="previous" class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3"
+            src="https://www.ethiopianpassportservices.gov.et/static/media/new%20passport%201-01.fb0e7fca.svg"
+            style="width: 50px;">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a class="card-title text-dark">Check Status</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            What is the staus of my report? Provide all requested information and check status.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3"
+            src="https://www.ethiopianpassportservices.gov.et/static/media/new%20passport%201-01.fb0e7fca.svg"
+            style="width: 50px;">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a class="card-title text-dark" href="/task">Manage Tasks</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            Manage your tasks and monitor their progress with our easy-to-use interface.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3"
+            src="https://www.ethiopianpassportservices.gov.et/static/media/new%20passport%201-01.fb0e7fca.svg"
+            style="width: 50px;">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a class="card-title text-dark" href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf"
+              target="_blank">User Guide</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            Learn how to use our platform with our comprehensive user guide.
+          </p>
+          <div class="mt-3">
+            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" target="_blank"
+              jhiTranslate="home.openGuide">Open Guide</a>
+            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" download
+              jhiTranslate="home.downloadGuide">Download Guide</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div data-test="container" class="container-fluid home-card-deck home-container">
+  <div data-test="card-group" class="row row-cols-1 row-cols-md-3 g-4 home-card">
+    <div data-test="card" id="new" class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3"
+            src="/content/images/new-report.png">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a class="card-title text-dark" href="/whistle-blower-report/new" [ngbTooltip]="getTooltipText()"
+              placement="right">Start new Whistle Blowing</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            Do you want to report any suspicious behavior or activity anonymously and securely? Provide all
+            requested information and apply.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div data-test="card" id="previous" class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3"
+            src="/content/images/select-check-status-item-details.png">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a routerLink="/status" class="card-title text-dark">Check Status</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            What is the staus of my report? Provide all requested information and check status.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div data-test="card" id="next" class="col">
+      <div class="card h-100">
+        <div data-test="card-body" class="card-body">
+          <img class="mb-3" src="">
+          <h5 data-test="card-title" class="card-title mb-3">
+            <a class="card-title text-dark">User Guide</a>
+          </h5>
+          <p data-test="card-text" class="card-text">
+            Learn how to use our platform with our comprehensive user guide.
+          </p>
+          <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" target="_blank"
+            jhiTranslate="home.openGuide">Open Guide</a>
+          <span>&nbsp;</span>
+          <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" download
+            jhiTranslate="home.downloadGuide">Download Guide</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="bg-light">
+  <h1>News</h1>
   <div class="container py-5">
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <div class="col">
         <div class="card h-100">
           <div class="card-body">
-            <h3 class="card-title mb-4" jhiTranslate="fraudMgtApp.whistleBlowerReport.home.title">Whistle Blower</h3>
-            <p class="card-text mb-5" jhiTranslate="home.whistle">Report any suspicious behavior or activity anonymously and securely.</p>
-            <a id="fraudButton" routerLink="whistle-blower-report/new" [queryParams]="{ type: 'fraud' }" class="btn btn-primary"
-            [ngbTooltip]="getTooltipText()" placement="top" container="body" triggers="hover">
-            Fraud related 
-            </a>
-
-            <a id="complaintButton" routerLink="whistle-blower-report/new" [queryParams]="{ type: 'complaint' }" class="btn btn-primary"
+            <h3 class="card-title mb-4">1</h3>
+            <p class="card-text mb-5" jhiTranslate="home.whistle"></p>
+           <!--  <a id="fraudButton" routerLink="whistle-blower-report/new" [queryParams]="{ type: 'fraud' }"
+              class="btn btn-primary" [ngbTooltip]="getTooltipText()" placement="top" container="body" triggers="hover">
+              Fraud related
+            </a> -->
+            <!--    <a id="complaintButton" routerLink="whistle-blower-report/new" [queryParams]="{ type: 'complaint' }" class="btn btn-primary"
             [ngbTooltip]="getComplientText()" placement="top" container="body" triggers="hover">
             Other complaints
-            </a>
+            </a> -->
           </div>
 
         </div>
@@ -36,7 +221,8 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="card-title mb-4" jhiTranslate="fraudMgtApp.task.home.title">Tasks</h3>
-            <p class="card-text mb-5" jhiTranslate="home.taskDetail">Manage your tasks and monitor their progress with our easy-to-use interface.</p>
+            <p class="card-text mb-5" jhiTranslate="home.taskDetail">Manage your tasks and monitor their progress with
+              our easy-to-use interface.</p>
             <a href="/task" class="btn btn-primary">View Tasks</a>
           </div>
         </div>
@@ -45,12 +231,13 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="card-title mb-4" jhiTranslate="home.userGuide">User Guide</h3>
-            <p class="card-text mb-5" jhiTranslate="home.userGuideDetail">Learn how to use our platform with our comprehensive user guide.</p>
-            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary"
-              target="_blank" jhiTranslate="home.openGuide">Open Guide</a>
+            <p class="card-text mb-5" jhiTranslate="home.userGuideDetail">Learn how to use our platform with our
+              comprehensive user guide.</p>
+            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" target="_blank"
+              jhiTranslate="home.openGuide">Open Guide</a>
             <span>&nbsp;</span>
-            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary"
-              download jhiTranslate="home.downloadGuide">Download Guide</a>
+            <a href="../content/pdf/CBE_Fraud_Management_System_User_Guide.pdf" class="btn btn-primary" download
+              jhiTranslate="home.downloadGuide">Download Guide</a>
           </div>
         </div>
       </div>

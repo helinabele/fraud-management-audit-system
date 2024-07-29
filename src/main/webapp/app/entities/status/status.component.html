@@ -1,0 +1,31 @@
+<div class="container">
+    <div>
+      <h1>Check Application Status</h1>
+      <form (ngSubmit)="searchStatus()">
+        <label for="applicationNumber">Application Number:</label>
+        <input type="text" id="applicationNumber" [(ngModel)]="applicationNumber" name="applicationNumber" required>
+        <button type="submit">Search</button>
+      </form>
+      <p *ngIf="statusMessage" class="status-message">{{ statusMessage }}</p>
+  
+      <table *ngIf="applicationStatus" class="table table-striped mt-4">
+        <thead>
+          <tr>
+            <th scope="col">Full Name</th>
+            <th scope="col">Service Type</th>
+            <th scope="col">Requested Date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ applicationStatus.fullName }}</td>
+            <td>{{ applicationStatus.serviceType }}</td>
+            <td>{{ applicationStatus.requestedDate }}</td>
+            <td>{{ applicationStatus.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

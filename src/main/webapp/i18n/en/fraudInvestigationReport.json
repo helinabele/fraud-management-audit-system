@@ -17,6 +17,9 @@
       "detail": {
         "title": "Fraud Investigation Report"
       },
+      "confirm": {
+        "question":"Are you sure you want to confirm Fraud Investigation Report {{ id }}?"
+      },
       "id": "ID",
       "title": "Title",
       "executiveSummary": "Executive Summary",

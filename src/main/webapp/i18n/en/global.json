@@ -130,7 +130,8 @@
       "show": "Show {{otherEntity}}",
       "assign": "Assign",
       "reject": "Reject",
-      "comment": "Comment"
+      "comment": "Comment",
+      "confirm": "Confirm"
     },
     "detail": {
       "field": "Field",
@@ -141,6 +142,9 @@
     },
     "reject": {
       "title": "Confirm reject operation"
+    },
+    "confirm": {
+      "title": "Confirm operation"
     },
     "validation": {
       "required": "This field is required.",

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
 
@@ -8,6 +8,8 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IFraudInvestigationReport, NewFraudInvestigationReport } from '../fraud-investigation-report.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogComponent } from '../update/confirmation-dialog.component';
 
 export type PartialUpdateFraudInvestigationReport = Partial<IFraudInvestigationReport> & Pick<IFraudInvestigationReport, 'id'>;
 
@@ -28,7 +30,9 @@ export type EntityArrayResponseType = HttpResponse<IFraudInvestigationReport[]>;
 export class FraudInvestigationReportService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/fraud-investigation-reports');
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService,
+    private modalService: NgbModal
+  ) { }
 
   create(fraudInvestigationReport: NewFraudInvestigationReport): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(fraudInvestigationReport);
@@ -47,6 +51,17 @@ export class FraudInvestigationReportService {
       )
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
+
+  submitReport(fraudInvestigationReport: IFraudInvestigationReport): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(fraudInvestigationReport);
+    return this.http
+        .put<RestFraudInvestigationReport>(
+            `${this.resourceUrl}/${fraudInvestigationReport.id}`,
+            copy,
+            { observe: 'response' }
+        )
+        .pipe(map(res => this.convertResponseFromServer(res)));
+}
 
   partialUpdate(fraudInvestigationReport: PartialUpdateFraudInvestigationReport): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(fraudInvestigationReport);
@@ -74,6 +89,12 @@ export class FraudInvestigationReportService {
 
   delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  confirm(message: string): Observable<boolean> {
+    const modalRef = this.modalService.open(ConfirmationDialogComponent);
+    modalRef.componentInstance.message = message;
+    return from(modalRef.result);
   }
 
   getFraudInvestigationReportIdentifier(fraudInvestigationReport: Pick<IFraudInvestigationReport, 'id'>): string {
