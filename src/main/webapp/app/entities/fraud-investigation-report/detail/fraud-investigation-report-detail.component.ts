@@ -103,4 +103,9 @@ export class FraudInvestigationReportDetailComponent implements OnInit {
     // Create the PDF using pdfMake
     pdfMake.createPdf(documentDefinition as any).download('fraud-investigation-report.pdf');
   }
+
+
+  comment(): void{
+    
+  }
 }

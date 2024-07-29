@@ -2,6 +2,120 @@
 Main page styles
 ========================================================================== */
 
+/* Container styles */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --accent-color: #28a745;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.home-container {
+  padding: 2rem 0;
+}
+
+.home-card .card {
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 8px;
+  height: auto; /* Remove the fixed height */
+  padding: 1rem; /* Reduce the card padding */
+}
+
+.home-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  flex: 0 0 auto;
+}
+
+.home-card .card-title {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  align-self: center;
+}
+
+.home-card .card-text {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.home-card .card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.home-card .card-title a:hover,
+.home-card .card-title a:focus {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.home-card .btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+.home-card-deck {
+  margin-top: -150px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon styles */
+.home-card .mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.home-card img {
+  max-width: 50px;
+  align-self: center;
+}
+
+.carousel-item {
+  height: 400px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-item img {
+  width: 100%; /* Fixed width */
+  height: 100%; /* Fixed height */
+  object-fit: cover; /* Ensure the image covers the container */
+  display: block;
+}
+
+.carousel-caption {
+  bottom: 20%;
+  z-index: 10;
+  text-align: center;
+}
+
+.carousel-caption h2,
+.carousel-caption p,
+.carousel-caption .btn {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
 .hipster {
   display: inline-block;
   width: 347px;
@@ -9,6 +123,7 @@ Main page styles
   background: url('../../content/images/cbe-blg1.png') no-repeat center top;
   background-size: contain;
 }
+
 .reflect {
   -webkit-box-reflect: right;
 }
@@ -20,14 +135,32 @@ Main page styles
   border-radius: 6px;
   padding: 8px 12px;
 }
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
+only screen and (-moz-min-device-pixel-ratio: 2),
+only screen and (-o-min-device-pixel-ratio: 2/1),
+only screen and (min-resolution: 192dpi),
+only screen and (min-resolution: 2dppx) {
   .hipster {
     background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
     background-size: contain;
+  }
+}
+@media (max-width: 767.98px) {
+  .card {
+    margin-bottom: 0.75rem;
+
+    .card-body {
+      padding: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+    }
+
+    .card-text {
+      font-size: 0.8125rem;
+    }
   }
 }

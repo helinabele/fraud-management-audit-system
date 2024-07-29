@@ -18,17 +18,38 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
-  
-  tooltipText: string = fraudTooltip.fraudMgtApp.whistleBlowerReport.fraudTooltip;
-    private readonly destroy$ = new Subject<void>();
 
-  constructor(private accountService: AccountService, 
+  tooltipText: string = fraudTooltip.fraudMgtApp.whistleBlowerReport.fraudTooltip;
+  private readonly destroy$ = new Subject<void>();
+
+  images = [
+    {
+      src: '/content/images/cbe-hq-inside1.jpg',
+      alt: 'Fraud Prevention - Inside 1',
+      header: 'Report Fraud and Protect Your Business',
+      body: 'Our secure and reliable platform allows you to report fraud and protect your business from financial losses and reputational damage.'
+    },
+    {
+      src: '/content/images/cbe-hq-inside2.jpg',
+      alt: 'Fraud Prevention - Inside 2',
+      header: 'Report Fraud and Protect Your Business',
+      body: 'Our secure and reliable platform allows you to report fraud and protect your business from financial losses and reputational damage.'
+    },
+    {
+      src: '/content/images/cbe-hq.jpg',
+      alt: 'Fraud Prevention - HQ',
+      header: 'Report Fraud and Protect Your Business',
+      body: 'Our secure and reliable platform allows you to report fraud and protect your business from financial losses and reputational damage.'
+    }
+  ];
+  
+  constructor(private accountService: AccountService,
     private router: Router,
     private tooltipConfig: NgbTooltipConfig,
     private translateService: TranslateService) {
-      this.translateService.setDefaultLang('en');
-      tooltipConfig.container = 'body';
-    }
+    this.translateService.setDefaultLang('en');
+    tooltipConfig.container = 'body';
+  }
 
   ngOnInit(): void {
     this.accountService

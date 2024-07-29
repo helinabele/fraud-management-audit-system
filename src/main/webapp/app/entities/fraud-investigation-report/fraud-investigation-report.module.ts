@@ -5,6 +5,7 @@ import { FraudInvestigationReportDetailComponent } from './detail/fraud-investig
 import { FraudInvestigationReportUpdateComponent } from './update/fraud-investigation-report-update.component';
 import { FraudInvestigationReportDeleteDialogComponent } from './delete/fraud-investigation-report-delete-dialog.component';
 import { FraudInvestigationReportRoutingModule } from './route/fraud-investigation-report-routing.module';
+import { ConfirmationDialogComponent } from './update/confirmation-dialog.component';
 
 @NgModule({
   imports: [SharedModule, FraudInvestigationReportRoutingModule],
@@ -13,6 +14,7 @@ import { FraudInvestigationReportRoutingModule } from './route/fraud-investigati
     FraudInvestigationReportDetailComponent,
     FraudInvestigationReportUpdateComponent,
     FraudInvestigationReportDeleteDialogComponent,
+    ConfirmationDialogComponent 
   ],
 })
 export class FraudInvestigationReportModule {}

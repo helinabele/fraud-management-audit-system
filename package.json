@@ -71,6 +71,7 @@
     "packaging": "jar"
   },
   "dependencies": {
+    "@angular/cdk": "^14.2.0",
     "@angular/common": "14.2.0",
     "@angular/compiler": "14.2.0",
     "@angular/core": "14.2.0",
@@ -93,6 +94,7 @@
     "dayjs": "1.11.5",
     "firebase": "^9.23.0",
     "html2canvas": "^1.4.1",
+    "jquery": "^3.7.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.1",
     "ng-multiselect-dropdown": "^1.0.0",
@@ -113,6 +115,7 @@
     "@angular/compiler-cli": "14.2.0",
     "@angular/service-worker": "14.2.0",
     "@types/jest": "28.1.8",
+    "@types/jquery": "^3.5.30",
     "@types/node": "16.11.56",
     "@types/pdfmake": "^0.2.9",
     "@typescript-eslint/eslint-plugin": "5.36.1",

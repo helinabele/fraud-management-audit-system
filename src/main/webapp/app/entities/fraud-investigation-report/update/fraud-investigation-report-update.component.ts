@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import { FraudInvestigationReportFormService, FraudInvestigationReportFormGroup } from './fraud-investigation-report-form.service';
 import { IFraudInvestigationReport } from '../fraud-investigation-report.model';
 import { FraudInvestigationReportService } from '../service/fraud-investigation-report.service';
@@ -19,6 +19,9 @@ import { TeamService } from 'app/entities/team/service/team.service';
 import { ISignature } from 'app/entities/signature/signature.model';
 import { SignatureService } from 'app/entities/signature/service/signature.service';
 import { User } from 'app/entities/user/user.model';
+import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ITEM_CONFIRMED_EVENT } from 'app/config/navigation.constants';
 
 @Component({
   selector: 'jhi-fraud-investigation-report-update',
@@ -64,6 +67,7 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected signatureService: SignatureService,
     private fb: FormBuilder,
+    private modalService: NgbModal
   ) { }
 
   compareEmployee = (o1: IEmployee | null, o2: IEmployee | null): boolean => this.employeeService.compareEmployee(o1, o2);
@@ -146,32 +150,33 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     addComment(commentType: 'comments' | 'objectiveComments'): void {
       const newCommentControl = this.editForm.get(commentType === 'comments' ? 'newComment' : 'newObjectiveComment');
       const newComment = newCommentControl!.value?.trim();
-  
+
       if (newComment && this.currentUser) {
         const newCommentWithAuthor = `${newComment} - ${this.currentUser.login}`;
-  
+
         if (commentType === 'comments') {
           this.comments.push(newCommentWithAuthor);
         } else {
           this.objectiveComments.push(newCommentWithAuthor);
         }
-  
+
         console.log('Updated Comments:', commentType === 'comments' ? this.comments : this.objectiveComments);
         newCommentControl!.reset();
       }
     }
     
+
   /*   addDynamicControls(fields: string[]): void {
       fields.forEach(field => {
         this.editForm.addControl(`newComment${field}`, new FormControl<string | null>(null));
         this.editForm.addControl(`comments${field}`, new FormControl<string[]>([]));
       });
     }
-  
+
     addComment(field: string): void {
       const newCommentControl = this.editForm.get(`newComment${this.capitalize(field)}`) as FormControl<string | null>;
       const commentsControl = this.editForm.get(`comments${this.capitalize(field)}`) as FormControl<string[]>;
-  
+
       if (newCommentControl && commentsControl) {
         const newComment = (newCommentControl.value ?? '').trim();
         if (newComment) {
@@ -182,11 +187,11 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
         }
       }
     }
-  
+
     capitalize(str: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1);
     } */
-  
+
   loadEmployees(): void {
     this.employeeService
       .query()
@@ -246,7 +251,34 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.fraudInvestigationReportService.create(fraudInvestigationReport));
     }
   }
-  
+  confirm(event: Event): void {
+    event.preventDefault();
+    const modalRef = this.modalService.open(ConfirmationDialogComponent);
+    modalRef.componentInstance.message = 'Are you sure you want to submit?';
+
+    modalRef.result.then((result) => {
+        if (result === ITEM_CONFIRMED_EVENT) {
+            this.save(event);
+        }
+    }, (reason) => {
+        // Handle dismiss
+    });
+}
+
+//   showConfirmationPopup(event: Event) {
+//     event.preventDefault();
+//
+//     const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+//       width: '300px',
+//       data: { message: 'Are you sure you want to submit?' },
+//     });
+//
+//     dialogRef.afterClosed().subscribe((result) => {
+//       if (result) {
+//         this.save(event);
+//       }
+//     });
+//   }
   onEmployeeChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const selectedOptions = Array.from(target.selectedOptions);
