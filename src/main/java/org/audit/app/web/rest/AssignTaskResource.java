@@ -70,7 +70,7 @@ public class AssignTaskResource {
             throw new BadRequestAlertException("A new assignTask cannot already have an ID", ENTITY_NAME, "idexists");
         }
         AssignTaskDTO result = assignTaskService.save(assignTaskDTO);
-        notificationService.sendTaskAssignmentNotification(assignTaskDTO);
+       // notificationService.sendTaskAssignmentNotification(assignTaskDTO);
         return ResponseEntity
                 .created(new URI("/api/assign-tasks/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))

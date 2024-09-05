@@ -2,15 +2,9 @@ package org.audit.app.service;
 
 import org.springframework.stereotype.Service;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-
-import com.google.firebase.messaging.Notification;
-import com.google.firebase.messaging.Message;
-
 @Service
 public class PushNotification {
-
+/* 
     public void sendPushNotification(String recipientToken, String title, String body) {
             // Create the push notification message
             Notification notification = Notification.builder()
@@ -29,5 +23,5 @@ public class PushNotification {
             // Handle the exception
             e.printStackTrace();
         }
-    }
+    } */
 }
