@@ -10,9 +10,6 @@ import org.audit.app.service.dto.TaskDTO;
 import org.audit.app.service.dto.TeamDTO;
 import org.springframework.stereotype.Service;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +19,7 @@ import java.io.InputStream;
 
 @Service
 public class NotificationService {
-
+/* 
     private final PushNotification pushNotification;
 
     @Autowired
@@ -93,5 +90,5 @@ public class NotificationService {
         // source
         // For demonstration purposes, returning a mock token
         return "mockRecipientToken";
-    }
+    } */
 }
