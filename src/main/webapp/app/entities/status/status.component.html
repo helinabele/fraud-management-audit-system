@@ -1,11 +1,46 @@
 <div class="container">
     <div>
       <h1>Check Application Status</h1>
-      <form (ngSubmit)="searchStatus()">
+
+
+
+      <!-- <form (ngSubmit)="searchStatus()">
         <label for="applicationNumber">Application Number:</label>
         <input type="text" id="applicationNumber" [(ngModel)]="applicationNumber" name="applicationNumber" required>
         <button type="submit">Search</button>
-      </form>
+      </form> -->
+      <!-- //................................check Status..............................// -->
+      <div class="card h-100">
+        <div class="card-body">
+          <h3 class="card-title mb-4">Check Status</h3>
+          <p class="card-text mb-5">Enter application Number to check the status of the investigation</p>
+          <form *ngIf="whistleBlowerForm" [formGroup]="whistleBlowerForm">
+            <div class="input-group mb-3">
+              
+              <input type="text" id="id" formControlName="id" class="form-control" placeholder="Enter application Number" aria-label="ID" aria-describedby="button-addon2">
+              
+              <!-- <a href="/whistle-blower-report/668d30f75965b817b1f9bd49/view/" class="btn btn-primary">View Status</a> -->
+            </div>
+            <div>
+              <label for="fullName">Full Name:</label>
+              <input type="text" id="fullName" formControlName="fullName">
+            </div>
+            <div>
+              <label for="description">Description:</label>
+              <textarea id="description" formControlName="description"></textarea>
+            </div>
+            <div>
+              <label for="gender">Gender:</label>
+              <input type="text" id="gender" formControlName="gender">
+            </div>
+            <!-- <button type="submit">Save</button> -->
+          </form>
+          <!-- <div id="statusContent"></div> -->
+        </div>
+      </div>
+
+     
+
       <p *ngIf="statusMessage" class="status-message">{{ statusMessage }}</p>
   
       <table *ngIf="applicationStatus" class="table table-striped mt-4">
