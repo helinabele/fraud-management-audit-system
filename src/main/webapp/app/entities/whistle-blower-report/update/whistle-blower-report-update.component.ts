@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -23,6 +23,9 @@ import { BranchService } from 'app/entities/branch/service/branch.service';
 import { RegionService } from 'app/entities/region/service/region.service';
 import { CityService } from 'app/entities/city/service/city.service';
 import { SubCityService } from 'app/entities/sub-city/service/sub-city.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TrackingNumberModalComponent } from '../tracking-number-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-whistle-blower-report-update',
@@ -41,6 +44,7 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
   subCitiesSharedCollection: ISubCity[] = [];
   // attachments: File[] = [];
   isDisabled = false;
+  trackingNumber: string | null | undefined;
 
   showDiv = {
     known: false,
@@ -62,7 +66,9 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
     protected regionService: RegionService,
     protected cityService: CityService,
     protected subCityService: SubCityService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private modalService: MatDialog,
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   compareDivision = (o1: IDivision | null, o2: IDivision | null): boolean => this.divisionService.compareDivision(o1, o2);
@@ -94,7 +100,7 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
       this.isDisabled = !this.isDisabled;
     });
   }
-  
+
   onChangeDivision(): void {
     this.editForm.controls.branch.setValue(null);
     this.getDepartment(this.editForm.controls.division.value?.id);
@@ -158,21 +164,60 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IWhistleBlowerReport>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: (res: HttpResponse<IWhistleBlowerReport>) => {
+        const trackingNumber = res.body?.trackingNumber ?? undefined;  // Convert null to undefined
+        this.onSaveSuccess(trackingNumber);
+      },
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  //   protected onSaveSuccess(trackingNumber?: string): void {
+  //     if (trackingNumber) {
+  //         const userConfirmed = window.confirm(
+  //             `Report saved successfully! Your tracking number is: ${trackingNumber}\nPress OK to go back.`
+  //         );
+  //         if (userConfirmed) {
+  //             this.previousState();
+  //         }
+  //     }
+  // }
+  /* protected onSaveSuccess(whistleBlowerReport: IWhistleBlowerReport): void {
+    this.trackingNumber = whistleBlowerReport.trackingNumber;  // Set the tracking number to display it in the template
+    this.previousState();  // Optionally navigate back
   }
-
+   */
+  
+  protected onSaveSuccess(trackingNumber?: string | null): void {
+    this.openTrackingNumberModal(trackingNumber);
+    // this.previousState();  // Go back to the previous page
+  }
   protected onSaveError(): void {
     // Api for inheritance.
   }
 
+/*   private openTrackingNumberModal(trackingNumber?: string | null): void {
+    // Open the Material Dialog and pass the data through MAT_DIALOG_DATA
+    console.log('Opening modal with trackingNumber:', trackingNumber);  // Add this for debugging
+    this.modalService.open(TrackingNumberModalComponent, {
+      data: { trackingNumber: trackingNumber ?? undefined }
+    });
+  } */
+
+  private openTrackingNumberModal(trackingNumber?: string | null): void {
+    const dialogRef = this.modalService.open(TrackingNumberModalComponent, {
+      data: { trackingNumber: trackingNumber ?? undefined }
+    });
+  
+    // Optionally handle modal close event
+    dialogRef.afterClosed().subscribe(() => {
+      this.previousState();  // Only navigate back after the modal is closed
+    });
+  }
+  
   protected onSaveFinalize(): void {
     this.isSaving = false;
+    this.changeDetectorRef.detectChanges();
   }
 
   protected updateForm(whistleBlowerReport: IWhistleBlowerReport): void {

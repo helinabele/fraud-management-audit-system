@@ -27,6 +27,7 @@ date?: any;
   city?: Pick<ICity, 'id' | 'cityName'> | null;
   subCity?: Pick<ISubCity, 'id' | 'subCityName'> | null;
   reportStatus?: string | null;
+  trackingNumber?: string | null;
 }
 
 export type NewWhistleBlowerReport = Omit<IWhistleBlowerReport, 'id'> & { id: null };

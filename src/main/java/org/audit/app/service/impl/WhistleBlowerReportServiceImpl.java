@@ -13,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 /**
  * Service Implementation for managing {@link WhistleBlowerReport}.
@@ -42,9 +44,29 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
     @Override
     public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
         log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
+
+        //convert dto to entity
         WhistleBlowerReport whistleBlowerReport = whistleBlowerReportMapper.toEntity(whistleBlowerReportDTO);
+
+        //generate tracking number if it's not already set
+        if (whistleBlowerReport.getTrackingNumber() == null || whistleBlowerReport.getTrackingNumber().isEmpty()) {
+            whistleBlowerReport.setTrackingNumber(generateTrackingNumber());
+        }
+
+        //save the entity
         whistleBlowerReport = whistleBlowerReportRepository.save(whistleBlowerReport);
+
+        //convert entity back to DTO and return
         return whistleBlowerReportMapper.toDto(whistleBlowerReport);
+    }
+    /**
+     * Helper method to generate a unique tracking number.
+     * Format example: WB-20230918-UUID
+     */
+    private String generateTrackingNumber() {
+        String datePart = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String uuidPart = UUID.randomUUID().toString().substring(0, 8); // First 8 characters of UUID
+        return "WB-" + datePart + "-" + uuidPart;
     }
 
     @Override
@@ -105,7 +127,7 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
     public boolean rejectReport(String id) {
         // Logic to reject the report and update its status in the database
         // ...
-    
+
         // Example: Update the report's status to "Rejected"
         Optional<WhistleBlowerReport> optionalReport = reportRepository.findById(id);
         if (optionalReport.isPresent()) {
@@ -123,13 +145,13 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
     // @Override
     // public Optional<WhistleBlowerReportDTO> findByReportStatus(String status) {
     //     /**
-    //      * Write the logic which fecthes the report status with not rejected 
+    //      * Write the logic which fecthes the report status with not rejected
     //      */
     //     if(status != ReportStatus.REJECTED.toString()){
     //         return (Optional<WhistleBlowerReportDTO>) reportRepository.findByReportStatus(status);
     //     }
     //     throw new UnsupportedOperationException("Unimplemented method 'findByReportStatus'");
     // }
-    
-    
+
+
 }

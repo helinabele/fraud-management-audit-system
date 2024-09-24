@@ -86,6 +86,9 @@ public class WhistleBlowerReport implements Serializable {
     @Field("reportStatus")
     private ReportStatus reportStatus;
 
+    @Field("tracking_number")
+    private String trackingNumber;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -369,5 +372,13 @@ public class WhistleBlowerReport implements Serializable {
                 ", description='" + getDescription() + "'" +
                 ", reportStatus='" + getReportStatus() + "'" +
                 "}";
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
     }
 }

@@ -7,16 +7,23 @@ import { WhistleBlowerReportDeleteDialogComponent } from './delete/whistle-blowe
 import { WhistleBlowerReportRoutingModule } from './route/whistle-blower-report-routing.module';
 import { AssignTaskUpdateComponent } from '../assign-task/update/assign-task-update.component';
 import { WhistleBlowerReportRejectDialogComponent } from './reject/whistle-blower-report-reject-dialog.component';
+import { TrackingNumberModalComponent } from './tracking-number-modal.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
+import { MatButtonModule } from '@angular/material/button'; // If you use buttons
+import { MatTooltipModule } from '@angular/material/tooltip'; // If you use tooltips
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
-  imports: [SharedModule, WhistleBlowerReportRoutingModule],
+  imports: [SharedModule, WhistleBlowerReportRoutingModule, MatIconModule, MatCardModule, MatButtonModule, MatTooltipModule, OverlayModule ],
   declarations: [
     WhistleBlowerReportComponent,
     WhistleBlowerReportDetailComponent,
     WhistleBlowerReportUpdateComponent,
     WhistleBlowerReportDeleteDialogComponent,
     WhistleBlowerReportRejectDialogComponent,
-    AssignTaskUpdateComponent
+    AssignTaskUpdateComponent,
+    TrackingNumberModalComponent
   ],
 })
 export class WhistleBlowerReportModule {}

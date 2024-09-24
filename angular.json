@@ -39,7 +39,10 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js"
             ],
-            "allowedCommonJsDependencies": ["rxjs-compat"]
+            "allowedCommonJsDependencies": ["rxjs-compat",
+            "pdfmake",
+            "dayjs"
+          ]
           },
           "configurations": {
             "production": {

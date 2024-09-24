@@ -36,7 +36,8 @@
         "reportRepository": "Report Repository",
         "jobGrade": "Job Grade",
         "jobTitle": "Job Title",
-        "signature": "Signature"
+        "signature": "Signature",
+        "status": "Status"
       },
       "account": {
         "main": "Account",

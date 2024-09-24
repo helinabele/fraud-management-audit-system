@@ -49,6 +49,8 @@ public class WhistleBlowerReportDTO implements Serializable {
 
     private ReportStatus reportStatus;
 
+    private String trackingNumber;
+
     public ReportStatus getReportStatus() {
         return reportStatus;
     }
@@ -201,6 +203,10 @@ public class WhistleBlowerReportDTO implements Serializable {
         this.subCity = subCity;
     }
 
+    public String getTrackingNumber() { return trackingNumber; }
+
+    public void setTrackingNumber(String trackingNumber) { this.trackingNumber = trackingNumber; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -244,6 +250,7 @@ public class WhistleBlowerReportDTO implements Serializable {
             ", city=" + getCity() +
             ", subCity=" + getSubCity() +
             ", reportStatus=" + getReportStatus() +
+
             "}";
     }
 }

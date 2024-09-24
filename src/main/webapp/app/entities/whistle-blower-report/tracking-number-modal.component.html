@@ -1,0 +1,47 @@
+<!-- <h1 mat-dialog-title>Report Saved</h1>
+<div mat-dialog-content class="dialog-content">
+  <p *ngIf="data.trackingNumber">
+    Your tracking number is:
+    <strong>{{ data.trackingNumber }}</strong>
+    <button mat-icon-button (click)="copyToClipboard(data.trackingNumber)" aria-label="Copy tracking number">
+      {{ isCopied ? 'Copied!' : 'Copy' }} 
+    </button>
+  </p>
+  <p *ngIf="!data.trackingNumber">
+    Report saved successfully, but no tracking number was generated.
+  </p>
+  <p class="additional-info">
+    You can track the status of your report using the tracking number above. If you have any questions, feel free to
+    reach out to our support team.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()" color="primary">Close</button>
+</div> -->
+<h1 mat-dialog-title class="dialog-title">Report Saved</h1>
+<div mat-dialog-content class="dialog-content">
+  <mat-card class="tracking-card">
+    <mat-card-header>
+      <mat-card-title>Your Tracking Number</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="data.trackingNumber">
+        Your tracking number is:
+        <strong>{{ data.trackingNumber }}</strong>
+        <button mat-icon-button (click)="copyToClipboard(data.trackingNumber)" aria-label="Copy tracking number">
+          {{ isCopied ? 'Copied!' : 'Copy' }} 
+        </button>
+      </p>
+      <p *ngIf="!data.trackingNumber">
+        Report saved successfully, but no tracking number was generated.
+      </p>
+      <p class="additional-info">
+        You can track the status of your report using the tracking number above. If you have any questions, feel free to
+        reach out to our support team.
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()" color="primary">Close</button>
+</div>

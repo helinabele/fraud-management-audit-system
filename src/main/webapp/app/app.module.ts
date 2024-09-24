@@ -26,13 +26,22 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { StatusComponent } from './entities/status/status.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
+import { OverlayModule } from '@angular/cdk/overlay';
 /* import { AngularFireModule } from '@angular/fire'; // Import AngularFireModule
 import { AngularFireMessagingModule } from '@angular/fire/messaging'; // Import AngularFireMessagingModule */
 
 @NgModule({
   imports: [
     BrowserModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatSnackBarModule,
+    OverlayModule,
     SharedModule,
     HomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
