@@ -7,7 +7,7 @@ import { ISubCity } from 'app/entities/sub-city/sub-city.model';
 import { Gender } from 'app/entities/enumerations/gender.model';
 
 export interface IWhistleBlowerReport {
-date?: any;
+  date?: any;
   id: string;
   fullName?: string | null;
   genderType?: Gender | null;
@@ -28,6 +28,7 @@ date?: any;
   subCity?: Pick<ISubCity, 'id' | 'subCityName'> | null;
   reportStatus?: string | null;
   trackingNumber?: string | null;
+  status?: string | null;
 }
 
 export type NewWhistleBlowerReport = Omit<IWhistleBlowerReport, 'id'> & { id: null };

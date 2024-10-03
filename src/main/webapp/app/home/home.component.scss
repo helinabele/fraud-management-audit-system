@@ -35,8 +35,10 @@ h6 {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 8px;
-  height: auto; /* Remove the fixed height */
-  padding: 1rem; /* Reduce the card padding */
+  height: auto;
+  /* Remove the fixed height */
+  padding: 1rem;
+  /* Reduce the card padding */
 }
 
 .home-card .card-body {
@@ -98,9 +100,12 @@ h6 {
 }
 
 .carousel-item img {
-  width: 100%; /* Fixed width */
-  height: 100%; /* Fixed height */
-  object-fit: cover; /* Ensure the image covers the container */
+  width: 100%;
+  /* Fixed width */
+  height: 100%;
+  /* Fixed height */
+  object-fit: cover;
+  /* Ensure the image covers the container */
   display: block;
 }
 
@@ -147,6 +152,37 @@ only screen and (min-resolution: 2dppx) {
     background-size: contain;
   }
 }
+
+.bg-light {
+  background-color: #f8f9fa;
+}
+
+h1 {
+  color: #343a40; // Darker text color for the heading
+}
+
+.card {
+  border: none; // Remove default card border
+  transition: transform 0.2s; // Smooth transition for hover effect
+
+  &:hover {
+    transform: scale(1.05); // Scale up on hover
+  }
+}
+
+.card-text {
+  color: #6c757d; // Lighter text color for descriptions
+}
+
+.link-primary {
+  color: #007bff; // Bootstrap primary link color
+  text-decoration: none; // Remove underline
+
+  &:hover {
+    text-decoration: underline; // Underline on hover
+  }
+}
+
 @media (max-width: 767.98px) {
   .card {
     margin-bottom: 0.75rem;

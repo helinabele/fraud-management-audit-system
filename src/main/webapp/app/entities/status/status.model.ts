@@ -2,5 +2,5 @@ export interface IStatus {
     fullName: string;
     serviceType: string;
     requestedDate: string;
-    status: string;
+    reportStatus: string; // Add this line
 }

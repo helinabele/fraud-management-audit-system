@@ -3,7 +3,7 @@ package org.audit.app.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.audit.app.domain.ReportStatus;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.domain.WhistleBlowerReport;
 import org.audit.app.service.dto.WhistleBlowerReportDTO;
 import org.springframework.data.domain.Page;

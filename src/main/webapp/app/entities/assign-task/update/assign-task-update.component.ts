@@ -225,7 +225,12 @@ getId:any;
   previousState(): void {
     window.history.back();
   }
-
+  onTeamSaved(team: ITeam): void {
+    if (team) {
+      this.teamsSharedCollection.push(team);
+      this.editForm.get('team')?.setValue(team); // Optionally set the saved team as the selected value
+    }
+  }
   protected onAssignTask(assignTask: IAssignTask[]): IAssignTask[] {
     switch (this.role) {
       case Authority.DIRECTOR:

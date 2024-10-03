@@ -1,6 +1,8 @@
 package org.audit.app.service;
 
 import java.util.Optional;
+
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.service.dto.WhistleBlowerReportDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +44,7 @@ public interface WhistleBlowerReportService {
      */
     Page<Object> findAll(Pageable pageable);
     // Optional<WhistleBlowerReportDTO> findByReportStatus(String status);
-    
+
 
     /**
      * Get all the whistleBlowerReports with eager load of many-to-many relationships.
@@ -71,4 +73,7 @@ public interface WhistleBlowerReportService {
     boolean rejectReport(String id);
     // list<String> findByReportStatus();
 
+    // New method to update only the status
+
+    WhistleBlowerReportDTO updateStatus(String id, ReportStatus newStatus);
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,7 +19,12 @@ import { IEmployee } from 'app/entities/employee/employee.model';
   templateUrl: './team-update.component.html',
 })
 export class TeamUpdateComponent implements OnInit {
+  @Input() navigateOnSave = true;
+  @Input() showCancelButton = true;
+  @Output() teamSaved = new EventEmitter<ITeam>();
+  
   isSaving = false;
+  isSaved = false;
   team: ITeam | null = null;
   employee: IEmployee[] | undefined | null = [];
   teamLeadsSharedCollection: ITeamLead[] = [];
@@ -155,16 +160,29 @@ export class TeamUpdateComponent implements OnInit {
       this.employee = empl.body;
     })
   }
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ITeam>>): void {
+/*   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITeam>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
       error: () => this.onSaveError(),
     });
+  } */
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ITeam>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
+      next: (res: HttpResponse<ITeam>) => this.onSaveSuccess(res.body!), // Pass the saved team
+      error: () => this.onSaveError(),
+    });
   }
-
-  protected onSaveSuccess(): void {
-    this.previousState();
+  
+  protected onSaveSuccess(team: ITeam): void {
+    if (this.navigateOnSave) {
+      this.previousState();
+    } else {
+      this.isSaving = false;
+      this.isSaved = true;
+      this.teamSaved.emit(team); // Emit the newly saved team
+    }
   }
+  
 
   protected onSaveError(): void {
     // Api for inheritance.

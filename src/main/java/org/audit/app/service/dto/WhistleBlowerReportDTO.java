@@ -3,7 +3,7 @@ package org.audit.app.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.audit.app.domain.ReportStatus;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.domain.enumeration.Gender;
 
 /**

@@ -27,7 +27,7 @@
   <div class="alert alert-warning" id="no-result" *ngIf="regions?.length === 0">
     <span jhiTranslate="fraudMgtApp.region.home.notFound">No Regions found</span>
   </div>
-  <input type="text" [(ngModel)]="searchQuery" placeholder="Search...">
+  <!-- <input type="text" [(ngModel)]="searchQuery" placeholder="Search..."> -->
   <div class="table-responsive table-entities" id="entities" *ngIf="regions && regions.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>

@@ -12,6 +12,7 @@ import { EntityArrayResponseType, WhistleBlowerReportService } from '../service/
 import { WhistleBlowerReportDeleteDialogComponent } from '../delete/whistle-blower-report-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { WhistleBlowerReportRejectDialogComponent } from '../reject/whistle-blower-report-reject-dialog.component';
+import { ReportStatus } from 'app/entities/enumerations/report-status';
 
 @Component({
   selector: 'jhi-whistle-blower-report',
@@ -40,7 +41,8 @@ export class WhistleBlowerReportComponent implements OnInit {
   emailFilter = '';
   phoneFilter = '';
   organizationFilter = '';
-
+  ReportStatus = ReportStatus;
+  
   constructor(
     protected whistleBlowerReportService: WhistleBlowerReportService,
     protected activatedRoute: ActivatedRoute,
@@ -123,6 +125,20 @@ export class WhistleBlowerReportComponent implements OnInit {
       }
     });
   } */
+
+     // Method to update the report status
+  updateReportStatus(reportId: string, newStatus: ReportStatus) {
+    this.whistleBlowerReportService.updateStatus(reportId, newStatus).subscribe(
+      response => {
+        // Handle successful response
+        console.log('Report status updated successfully:', response);
+      },
+      error => {
+        // Handle error
+        console.error('Error updating report status:', error);
+      }
+    );
+  }
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);

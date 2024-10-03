@@ -229,11 +229,9 @@
               </ng-template>
             </td>
             <div *ngIf="isAssigned">
-              <!-- Report has been assigned previously -->
               <p>This report has been assigned.</p>
             </div>
             <div *ngIf="!isAssigned">
-              <!-- Report has not been assigned previously -->
               <p>This report has not been assigned.</p>
             </div>
             <td class="text-end">
@@ -261,6 +259,7 @@
                   <fa-icon icon="times"></fa-icon>
                   <span class="d-none d-md-inline">Reject</span>
                 </button>
+                <button (click)="updateReportStatus(whistleBlowerReport.id, ReportStatus.REJECTED)">Reject Report</button>
                 <!-- <button type="submit" (click)="delete(whistleBlowerReport)" class="btn btn-danger btn-sm"
                   data-cy="entityDeleteButton">
                   <fa-icon icon="times"></fa-icon>

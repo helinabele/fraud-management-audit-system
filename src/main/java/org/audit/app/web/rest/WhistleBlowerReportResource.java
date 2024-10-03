@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.repository.WhistleBlowerReportRepository;
 import org.audit.app.service.WhistleBlowerReportService;
 import org.audit.app.service.dto.WhistleBlowerReportDTO;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+import org.audit.app.domain.WhistleBlowerReport;
 
 /**
  * REST controller for managing {@link org.audit.app.domain.WhistleBlowerReport}.
@@ -135,6 +138,14 @@ public class WhistleBlowerReportResource {
             // Return a 404 Not Found response with a message indicating that the report was not found
         }
     }
+/*
+ @PutMapping("/whistle-blower-reports/{id}/status")
+    public ResponseEntity<WhistleBlowerReport> updateStatus(@PathVariable String id, @RequestBody ReportStatus newStatus) {
+        WhistleBlowerReport updatedReport = whistleBlowerReportService.updateStatus(id, newStatus);
+        return ResponseEntity.ok(updatedReport);
+    }
+*/
+
 
    /*  @RejectMapping("/whistle-blower-reports/{id}/reject")
     public ResponseEntity<Void> rejectWhistleBlowerReport(@PathVariable String id) {
@@ -194,7 +205,7 @@ public class WhistleBlowerReportResource {
         Page<WhistleBlowerReportDTO> page;
         // if (eagerload) {
             page = whistleBlowerReportService.findAllWithEagerRelationships(pageable);
-        // } 
+        // }
         // else {
         //     page = whistleBlowerReportService.findAll(pageable);
         // }
@@ -227,6 +238,6 @@ public class WhistleBlowerReportResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
 
-  
+
 
 }

@@ -24,28 +24,32 @@ export class WhistleBlowerReportService {
     protected applicationConfigService: ApplicationConfigService
   ) { }
 
-
+  findByTrackingNumber(trackingNumber: string): Observable<IWhistleBlowerReport> {
+    return this.http.get<IWhistleBlowerReport>(`${this.resourceUrl}/tracking/${trackingNumber}`);
+  }
   setSelectedReport(report: IWhistleBlowerReport): void {
     this.selectedReportSubject.next(report);
   }
+
   // setSelectedReport(report: IWhistleBlowerReport): void {
   //   this.selectedReport = report;
   // }
+
   assignReport(reportId: string): Observable<any> {
     const url = `${this.resourceUrl}/${reportId}/assign`; // Adjust the API endpoint for assigning a report
     return this.http.put(url, null); // Adjust the HTTP method and payload as per your API
   }
+
   getSelectedReport(): IWhistleBlowerReport | null {
     return this.selectedReport;
   }
+
   /*   updateIsAssigned(whistleBlowerReport: IWhistleBlowerReport, isAssigned: boolean): Observable<IWhistleBlowerReport> {
       const url = `${this.resourceUrl}/${this.getWhistleBlowerReportIdentifier(whistleBlowerReport)}`;
       const updatedReport: Partial<IWhistleBlowerReport> = { isAssigned }; // Create a partial object with only the isAssigned property
     
       return this.http.put<IWhistleBlowerReport>(url, updatedReport);
     } */
-
-
 
   getwhistleBlowerReports(): Observable<IWhistleBlowerReport[]> {
     return this.http.get<IWhistleBlowerReport[]>(this.resourceUrl);
@@ -63,6 +67,10 @@ export class WhistleBlowerReportService {
     );
   }
 
+  updateStatus(id: string, newStatus: string): Observable<IWhistleBlowerReport> {
+    return this.http.put<IWhistleBlowerReport>(`${this.resourceUrl}/${id}/status`, newStatus);
+  }
+  
   partialUpdate(whistleBlowerReport: PartialUpdateWhistleBlowerReport): Observable<EntityResponseType> {
     return this.http.patch<IWhistleBlowerReport>(
       `${this.resourceUrl}/${this.getWhistleBlowerReportIdentifier(whistleBlowerReport)}`,

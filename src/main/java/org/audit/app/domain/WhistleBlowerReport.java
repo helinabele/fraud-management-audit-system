@@ -3,6 +3,7 @@ package org.audit.app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import org.audit.app.domain.enumeration.Gender;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -333,6 +334,14 @@ public class WhistleBlowerReport implements Serializable {
         return this;
     }
 
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
     // setters here
 
@@ -371,14 +380,7 @@ public class WhistleBlowerReport implements Serializable {
                 ", zone='" + getZone() + "'" +
                 ", description='" + getDescription() + "'" +
                 ", reportStatus='" + getReportStatus() + "'" +
+                ", trackingNumber='" + getTrackingNumber() + "'" +
                 "}";
-    }
-
-    public String getTrackingNumber() {
-        return trackingNumber;
-    }
-
-    public void setTrackingNumber(String trackingNumber) {
-        this.trackingNumber = trackingNumber;
     }
 }

@@ -133,12 +133,14 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
   //   this.attachments[index] = file;
   // }
   // }
+
   setFileData(event: Event, field: string, isImage: boolean): void {
     this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
       error: (err: FileLoadError) =>
         this.eventManager.broadcast(new EventWithContent<AlertError>('fraudMgtApp.error', { ...err, key: 'error.file.' + err.key })),
     });
   }
+
   // addAttachment(): void {
   //   const attachment: { file: File | undefined, contentType: string | null } = { file: undefined, contentType: null };
   //   // this.attachments.push(this.editForm.get('attachment'));
@@ -192,6 +194,7 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
     this.openTrackingNumberModal(trackingNumber);
     // this.previousState();  // Go back to the previous page
   }
+
   protected onSaveError(): void {
     // Api for inheritance.
   }
@@ -277,6 +280,7 @@ export class WhistleBlowerReportUpdateComponent implements OnInit {
       )
       .subscribe((departments: IDepartment[]) => (this.departmentsSharedCollection = departments));
   }
+  
   private getBranch(departmentId: string | undefined): void {
     this.branchService
       .query()

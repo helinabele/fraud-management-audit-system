@@ -2,7 +2,7 @@ package org.audit.app.service.impl;
 
 import java.util.Optional;
 
-import org.audit.app.domain.ReportStatus;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.domain.WhistleBlowerReport;
 import org.audit.app.repository.WhistleBlowerReportRepository;
 import org.audit.app.service.WhistleBlowerReportService;
@@ -41,24 +41,30 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
         this.reportRepository = reportRepository;
     }
 
-    @Override
-    public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
-        log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
+   @Override
+public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
+    log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
 
-        //convert dto to entity
-        WhistleBlowerReport whistleBlowerReport = whistleBlowerReportMapper.toEntity(whistleBlowerReportDTO);
+    // Convert DTO to entity
+    WhistleBlowerReport whistleBlowerReport = whistleBlowerReportMapper.toEntity(whistleBlowerReportDTO);
 
-        //generate tracking number if it's not already set
-        if (whistleBlowerReport.getTrackingNumber() == null || whistleBlowerReport.getTrackingNumber().isEmpty()) {
-            whistleBlowerReport.setTrackingNumber(generateTrackingNumber());
-        }
-
-        //save the entity
-        whistleBlowerReport = whistleBlowerReportRepository.save(whistleBlowerReport);
-
-        //convert entity back to DTO and return
-        return whistleBlowerReportMapper.toDto(whistleBlowerReport);
+    // Generate tracking number if it's not already set
+    if (whistleBlowerReport.getTrackingNumber() == null || whistleBlowerReport.getTrackingNumber().isEmpty()) {
+        whistleBlowerReport.setTrackingNumber(generateTrackingNumber());
     }
+
+    // Set initial status to "Initiated" if not already set
+    if (whistleBlowerReport.getReportStatus() == null) {
+        whistleBlowerReport.setReportStatus(ReportStatus.INITIATED); // Assuming you have an enum for statuses
+    }
+
+    // Save the entity
+    whistleBlowerReport = whistleBlowerReportRepository.save(whistleBlowerReport);
+
+    // Convert entity back to DTO and return
+    return whistleBlowerReportMapper.toDto(whistleBlowerReport);
+}
+
     /**
      * Helper method to generate a unique tracking number.
      * Format example: WB-20230918-UUID
@@ -123,7 +129,23 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
         whistleBlowerReportRepository.deleteById(id);
     }
 
-    @Override
+@Override
+public boolean rejectReport(String id) {
+    log.debug("Request to reject WhistleBlowerReport with id: {}", id);
+
+    // Logic to reject the report and update its status in the database
+    Optional<WhistleBlowerReport> optionalReport = whistleBlowerReportRepository.findById(id);
+    if (optionalReport.isPresent()) {
+        WhistleBlowerReport report = optionalReport.get();
+        report.setReportStatus(ReportStatus.REJECTED); // Set status to "Rejected"
+        whistleBlowerReportRepository.save(report); // Save the updated report
+        return true; // Return true indicating success
+    } else {
+        // Handle the case when the report with the given ID is not found
+        throw new RuntimeException("WhistleBlowerReport not found with id: " + id);
+    }
+}
+    /* @Override
     public boolean rejectReport(String id) {
         // Logic to reject the report and update its status in the database
         // ...
@@ -140,7 +162,7 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
             // or any other appropriate exception/error handling
         }
         return false;
-    }
+    } */
 
     // @Override
     // public Optional<WhistleBlowerReportDTO> findByReportStatus(String status) {
@@ -152,6 +174,26 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
     //     }
     //     throw new UnsupportedOperationException("Unimplemented method 'findByReportStatus'");
     // }
+
+    @Override
+    public WhistleBlowerReportDTO updateStatus(String id, ReportStatus newStatus) {
+        WhistleBlowerReport report = findById(id);
+        report.setReportStatus(newStatus);
+        return update(convertToDTO(report));
+    }
+
+    public WhistleBlowerReport findById(String id) {
+        return whistleBlowerReportRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Report not found"));
+    }
+
+    private WhistleBlowerReportDTO convertToDTO(WhistleBlowerReport report) {
+        WhistleBlowerReportDTO dto = new WhistleBlowerReportDTO();
+        dto.setId(report.getId());
+        dto.setReportStatus(report.getReportStatus());
+        // Add other fields as necessary
+        return dto;
+    }
 
 
 }
