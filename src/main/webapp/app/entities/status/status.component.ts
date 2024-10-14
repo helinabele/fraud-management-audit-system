@@ -3,6 +3,16 @@ import { IWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle
 import { WhistleBlowerReportService } from 'app/entities/whistle-blower-report/service/whistle-blower-report.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+
+import { Router } from '@angular/router';
+
+import { Account } from 'app/core/auth/account.model';
+//import { IWhistleBlowerReport } from app/entities/whistle-blower-report/whistle-blower-report.model
+import { NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { IWhistleBlowerReport, NewWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle-blower-report.model';
+import { WhistleBlowerReportService } from 'app/entities/whistle-blower-report/service/whistle-blower-report.service';
+//import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'jhi-status',
   templateUrl: './status.component.html',
@@ -24,6 +34,45 @@ export class StatusComponent implements OnInit {
       trackingNumber: ['', Validators.required]
     });
   }
+
+  //..................check status.................................
+
+
+  initWhistleBlowerForm(): void {
+    this.whistleBlowerForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      fullName: [''],
+      description: [''],
+      gender: ['']
+    });
+
+    this.whistleBlowerForm.get('id')?.valueChanges.subscribe((id) => {
+      this.getWhistleBlowerByID(id);
+    });
+  }
+
+  getWhistleBlowerByID(id: string): void {
+    this.whistleBlowerService.find(id).subscribe(
+      (response) => {
+        this.whistleBlower = response.body;
+        this.populateWhistleBlowerForm();
+      },
+      (error: any) => {
+        console.error(`Error fetching whistle blower report:`, error);
+      }
+    );
+  }
+  populateWhistleBlowerForm(): void {
+    if (this.whistleBlower && this.whistleBlowerForm) {
+      this.whistleBlowerForm.patchValue({
+        fullName: this.whistleBlower.fullName,
+        description: this.whistleBlower.description,
+        gender: this.whistleBlower.genderType
+      });
+    }
+  }
+
+//........................................................
 
   searchStatus(): void {
     if (this.whistleBlowerForm?.valid) {
