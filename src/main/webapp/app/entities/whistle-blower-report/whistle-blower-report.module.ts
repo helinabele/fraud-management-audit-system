@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 import { MatButtonModule } from '@angular/material/button'; // If you use buttons
 import { MatTooltipModule } from '@angular/material/tooltip'; // If you use tooltips
 import { OverlayModule } from '@angular/cdk/overlay';
+import { RejectedReportComponent } from './rejected-report/rejected-report.component';
 
 @NgModule({
   imports: [SharedModule, WhistleBlowerReportRoutingModule, MatIconModule, MatCardModule, MatButtonModule, MatTooltipModule, OverlayModule ],
@@ -23,7 +24,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     WhistleBlowerReportDeleteDialogComponent,
     WhistleBlowerReportRejectDialogComponent,
     AssignTaskUpdateComponent,
-    TrackingNumberModalComponent
+    TrackingNumberModalComponent,
+    RejectedReportComponent
   ],
 })
 export class WhistleBlowerReportModule {}

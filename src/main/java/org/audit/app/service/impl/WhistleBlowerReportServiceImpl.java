@@ -1,5 +1,6 @@
 package org.audit.app.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.audit.app.domain.enumeration.ReportStatus;
@@ -13,9 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link WhistleBlowerReport}.
@@ -29,41 +32,37 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
 
     private final WhistleBlowerReportMapper whistleBlowerReportMapper;
 
-    private final WhistleBlowerReportRepository reportRepository;
-
     public WhistleBlowerReportServiceImpl(
         WhistleBlowerReportRepository whistleBlowerReportRepository,
-        WhistleBlowerReportMapper whistleBlowerReportMapper,
-        WhistleBlowerReportRepository reportRepository
+        WhistleBlowerReportMapper whistleBlowerReportMapper
     ) {
         this.whistleBlowerReportRepository = whistleBlowerReportRepository;
         this.whistleBlowerReportMapper = whistleBlowerReportMapper;
-        this.reportRepository = reportRepository;
     }
 
-   @Override
-public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
-    log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
+    @Override
+    public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
+        log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
 
-    // Convert DTO to entity
-    WhistleBlowerReport whistleBlowerReport = whistleBlowerReportMapper.toEntity(whistleBlowerReportDTO);
+        // Convert DTO to entity
+        WhistleBlowerReport whistleBlowerReport = whistleBlowerReportMapper.toEntity(whistleBlowerReportDTO);
 
-    // Generate tracking number if it's not already set
-    if (whistleBlowerReport.getTrackingNumber() == null || whistleBlowerReport.getTrackingNumber().isEmpty()) {
-        whistleBlowerReport.setTrackingNumber(generateTrackingNumber());
+        // Generate tracking number if it's not already set
+        if (whistleBlowerReport.getTrackingNumber() == null || whistleBlowerReport.getTrackingNumber().isEmpty()) {
+            whistleBlowerReport.setTrackingNumber(generateTrackingNumber());
+        }
+
+        // Set initial status to "Initiated" if not already set
+        if (whistleBlowerReport.getReportStatus() == null) {
+            whistleBlowerReport.setReportStatus(ReportStatus.INITIATED); // Assuming you have an enum for statuses
+        }
+
+        // Save the entity
+        whistleBlowerReport = whistleBlowerReportRepository.save(whistleBlowerReport);
+
+        // Convert entity back to DTO and return
+        return whistleBlowerReportMapper.toDto(whistleBlowerReport);
     }
-
-    // Set initial status to "Initiated" if not already set
-    if (whistleBlowerReport.getReportStatus() == null) {
-        whistleBlowerReport.setReportStatus(ReportStatus.INITIATED); // Assuming you have an enum for statuses
-    }
-
-    // Save the entity
-    whistleBlowerReport = whistleBlowerReportRepository.save(whistleBlowerReport);
-
-    // Convert entity back to DTO and return
-    return whistleBlowerReportMapper.toDto(whistleBlowerReport);
-}
 
     /**
      * Helper method to generate a unique tracking number.
@@ -99,10 +98,11 @@ public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO
     }
 
     @Override
-    public Page<Object> findAll(Pageable pageable) {
+    public Page<WhistleBlowerReportDTO> findAll(Pageable pageable) {
         log.debug("Request to get all WhistleBlowerReports");
-        return whistleBlowerReportRepository.findAll(pageable).map(whistleBlowerReportMapper::toDto)
-        .map(status->status.getReportStatus() != ReportStatus.REJECTED);
+        return whistleBlowerReportRepository.findAll(pageable)
+            .map(whistleBlowerReportMapper::toDto);
+            // .map(status -> status.getReportStatus() != ReportStatus.REJECTED);
     }
 
     @Override
@@ -111,10 +111,10 @@ public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO
         return whistleBlowerReportRepository.findAll(pageable).map(whistleBlowerReportMapper::toDto);
     }
 
-
+    @Override
     public Page<WhistleBlowerReportDTO> findAllWithEagerRelationships(Pageable pageable) {
         return whistleBlowerReportRepository.findAllWithEagerRelationships(pageable)
-        .map(whistleBlowerReportMapper::toDto);
+            .map(whistleBlowerReportMapper::toDto);
     }
 
     @Override
@@ -129,51 +129,23 @@ public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO
         whistleBlowerReportRepository.deleteById(id);
     }
 
-@Override
-public boolean rejectReport(String id) {
-    log.debug("Request to reject WhistleBlowerReport with id: {}", id);
-
-    // Logic to reject the report and update its status in the database
-    Optional<WhistleBlowerReport> optionalReport = whistleBlowerReportRepository.findById(id);
-    if (optionalReport.isPresent()) {
-        WhistleBlowerReport report = optionalReport.get();
-        report.setReportStatus(ReportStatus.REJECTED); // Set status to "Rejected"
-        whistleBlowerReportRepository.save(report); // Save the updated report
-        return true; // Return true indicating success
-    } else {
-        // Handle the case when the report with the given ID is not found
-        throw new RuntimeException("WhistleBlowerReport not found with id: " + id);
-    }
-}
-    /* @Override
+    @Override
     public boolean rejectReport(String id) {
-        // Logic to reject the report and update its status in the database
-        // ...
+        log.debug("Request to reject WhistleBlowerReport with id: {}", id);
 
-        // Example: Update the report's status to "Rejected"
-        Optional<WhistleBlowerReport> optionalReport = reportRepository.findById(id);
+        // Logic to reject the report and update its status in the database
+        Optional<WhistleBlowerReport> optionalReport = whistleBlowerReportRepository.findById(id);
         if (optionalReport.isPresent()) {
             WhistleBlowerReport report = optionalReport.get();
-            report.setReportStatus(ReportStatus.REJECTED);
-            reportRepository.save(report);
+            report.setReportStatus(ReportStatus.REJECTED); // Set status to "Rejected"
+            whistleBlowerReportRepository.save(report); // Save the updated report
+            return true; // Return true indicating success
         } else {
             // Handle the case when the report with the given ID is not found
             throw new RuntimeException("WhistleBlowerReport not found with id: " + id);
-            // or any other appropriate exception/error handling
         }
-        return false;
-    } */
+    }
 
-    // @Override
-    // public Optional<WhistleBlowerReportDTO> findByReportStatus(String status) {
-    //     /**
-    //      * Write the logic which fecthes the report status with not rejected
-    //      */
-    //     if(status != ReportStatus.REJECTED.toString()){
-    //         return (Optional<WhistleBlowerReportDTO>) reportRepository.findByReportStatus(status);
-    //     }
-    //     throw new UnsupportedOperationException("Unimplemented method 'findByReportStatus'");
-    // }
 
     @Override
     public WhistleBlowerReportDTO updateStatus(String id, ReportStatus newStatus) {
@@ -191,9 +163,26 @@ public boolean rejectReport(String id) {
         WhistleBlowerReportDTO dto = new WhistleBlowerReportDTO();
         dto.setId(report.getId());
         dto.setReportStatus(report.getReportStatus());
-        // Add other fields as necessary
         return dto;
     }
 
+    @Override
+    public List<WhistleBlowerReportDTO> findRejectedReports() {
+        List<WhistleBlowerReport> rejectedReports = whistleBlowerReportRepository.findByReportStatus("REJECTED");
+        return rejectedReports.stream()
+            .map(whistleBlowerReportMapper::toDto)
+            .collect(Collectors.toList());
+    }
 
+/*     @Override
+    public Optional<WhistleBlowerReportDTO> findByTrackingNumber(String trackingNumber) {
+        log.debug("Request to get WhistleBlowerReport : {}", trackingNumber);
+        return whistleBlowerReportRepository.findByTrackingNumber(trackingNumber)
+        .map(whistleBlowerReportMapper::toDto);
+    } */
+    @Override
+    public Optional<WhistleBlowerReportDTO> findByTrackingNumber(String trackingNumber) {
+        return whistleBlowerReportRepository.findByTrackingNumber(trackingNumber)
+            .map(whistleBlowerReportMapper::toDto);
+    }
 }

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.domain.WhistleBlowerReport;
-import org.audit.app.service.dto.WhistleBlowerReportDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -25,8 +24,11 @@ public interface WhistleBlowerReportRepository extends MongoRepository<WhistleBl
 
     @Query("{'id': ?0}")
     Optional<WhistleBlowerReport> findOneWithEagerRelationships(String id);
+    
+    Optional<WhistleBlowerReport> findByTrackingNumber(String trackingNumber);
 
-    // Optional<WhistleBlowerReportDTO> findByReportStatus(String reportStatus);
     List<WhistleBlowerReport> findByReportStatus(ReportStatus reportStatus);
-
+    
+    List<WhistleBlowerReport> findByReportStatus(String status);
+    
 }

@@ -8,6 +8,7 @@ import { WhistleBlowerReportUpdateComponent } from '../update/whistle-blower-rep
 import { WhistleBlowerReportRoutingResolveService } from './whistle-blower-report-routing-resolve.service';
 import { ASC } from 'app/config/navigation.constants';
 import { AssignTaskUpdateComponent } from 'app/entities/assign-task/update/assign-task-update.component';
+import { RejectedReportComponent } from '../rejected-report/rejected-report.component';
 
 const whistleBlowerReportRoute: Routes = [
   {
@@ -46,6 +47,14 @@ const whistleBlowerReportRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+  {
+    path: 'rejected-reports',
+    component: RejectedReportComponent,
+    resolve: {
+      task: WhistleBlowerReportRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  }
 ];
 
 @NgModule({

@@ -1,10 +1,11 @@
 package org.audit.app.service.dto;
 
+import org.audit.app.domain.enumeration.ReportStatus;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import org.audit.app.domain.enumeration.StatusEnum;
 
 /**
  * A DTO for the {@link org.audit.app.domain.Task} entity.
@@ -24,12 +25,12 @@ public class TaskDTO implements Serializable {
     private byte[] attachment;
 
     private String attachmentContentType;
-    private StatusEnum status;
+    private ReportStatus status;
 
     public TaskDTO() {
         // default constructor
     }
-    
+
     public TaskDTO(String id) {
         this.id = id;
     }
@@ -82,11 +83,11 @@ public class TaskDTO implements Serializable {
         this.attachmentContentType = attachmentContentType;
     }
 
-    public StatusEnum getStatus() {
+    public ReportStatus getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(ReportStatus status) {
         this.status = status;
     }
 

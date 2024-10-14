@@ -6,7 +6,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.*;
-import org.audit.app.domain.enumeration.StatusEnum;
+
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -41,12 +42,15 @@ public class Task implements Serializable {
     private String attachmentContentType;
 
     @Field("status")
-    private StatusEnum status;
+    private ReportStatus status;
 
     @DBRef
     @Field("assignedTask")
     @JsonIgnoreProperties(value = { "director", "manager", "teamLead", "employee", "task", "team" }, allowSetters = true)
     private Set<AssignTask> assignedTasks = new HashSet<>();
+
+    @Field("whistleBlower")
+    private Set<AssignTask> whistleBlower = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -128,16 +132,16 @@ public class Task implements Serializable {
         this.attachmentContentType = attachmentContentType;
     }
 
-    public StatusEnum getStatus() {
+    public ReportStatus getStatus() {
         return this.status;
     }
 
-    public Task status(StatusEnum status) {
+    public Task status(ReportStatus status) {
         this.setStatus(status);
         return this;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(ReportStatus status) {
         this.status = status;
     }
 
@@ -202,6 +206,15 @@ public class Task implements Serializable {
             ", attachment='" + getAttachment() + "'" +
             ", attachmentContentType='" + getAttachmentContentType() + "'" +
             ", status='" + getStatus() + "'" +
+            ", whistleBlower='" + getWhistleBlower() + "'" +
             "}";
+    }
+
+    public Set<AssignTask> getWhistleBlower() {
+        return whistleBlower;
+    }
+
+    public void setWhistleBlower(Set<AssignTask> whistleBlower) {
+        this.whistleBlower = whistleBlower;
     }
 }

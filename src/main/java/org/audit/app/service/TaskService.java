@@ -1,6 +1,9 @@
 package org.audit.app.service;
 
 import java.util.Optional;
+
+import org.audit.app.domain.Task;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.service.dto.TaskDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,4 +58,6 @@ public interface TaskService {
      * @param id the id of the entity.
      */
     void delete(String id);
+
+    Task updateTaskStatus(Long taskId, ReportStatus newStatus);
 }

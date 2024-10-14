@@ -70,19 +70,19 @@ public class WhistleBlowerReportResource {
             throw new BadRequestAlertException("A new whistleBlowerReport cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-    //    String smsUrl = "http://172.30.6.15:8890/message?from=CBE&to=";
-    //    String text = "Dear" + '/' + "Sir " + whistleBlowerReportDTO.getFullName() +
-    //            ", we are grateful for you taking the time and effort to bring this matter to our attention and we would like to assure you that your concerns will be handled shortly. Please provide us further details if you could through email --------- "
-    //            + '&' + "telephone ------------.";
-    //    String restURL = "&text=" + text +
-    //            "&user=FRAUD&pass=Fraudpwd@123&id&dlrreq=0";
+        //    String smsUrl = "http://172.30.6.15:8890/message?from=CBE&to=";
+        //    String text = "Dear" + '/' + "Sir " + whistleBlowerReportDTO.getFullName() +
+        //            ", we are grateful for you taking the time and effort to bring this matter to our attention and we would like to assure you that your concerns will be handled shortly. Please provide us further details if you could through email --------- "
+        //            + '&' + "telephone ------------.";
+        //    String restURL = "&text=" + text +
+        //            "&user=FRAUD&pass=Fraudpwd@123&id&dlrreq=0";
 
-    //    String urlSMS2 = smsUrl + whistleBlowerReportDTO.getPhone() + restURL;
-    //    HttpHeaders headers = new HttpHeaders();
-    //    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-    //    RestTemplate restTemplate = new RestTemplate();
-    //    HttpEntity<String> request = new HttpEntity<>(urlSMS2, headers);
-    //    restTemplate.postForObject(urlSMS2, request, String.class);
+        //    String urlSMS2 = smsUrl + whistleBlowerReportDTO.getPhone() + restURL;
+        //    HttpHeaders headers = new HttpHeaders();
+        //    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        //    RestTemplate restTemplate = new RestTemplate();
+        //    HttpEntity<String> request = new HttpEntity<>(urlSMS2, headers);
+        //    restTemplate.postForObject(urlSMS2, request, String.class);
 
         WhistleBlowerReportDTO result = whistleBlowerReportService.save(whistleBlowerReportDTO);
         return ResponseEntity
@@ -94,7 +94,7 @@ public class WhistleBlowerReportResource {
     /**
      * {@code PUT  /whistle-blower-reports/:id} : Updates an existing whistleBlowerReport.
      *
-     * @param id the id of the whistleBlowerReportDTO to save.
+     * @param id                     the id of the whistleBlowerReportDTO to save.
      * @param whistleBlowerReportDTO the whistleBlowerReportDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated whistleBlowerReportDTO,
      * or with status {@code 400 (Bad Request)} if the whistleBlowerReportDTO is not valid,
@@ -138,6 +138,14 @@ public class WhistleBlowerReportResource {
             // Return a 404 Not Found response with a message indicating that the report was not found
         }
     }
+
+    @GetMapping("/whistle-blower-reports/rejected-reports")
+    public ResponseEntity<List<WhistleBlowerReportDTO>> getRejectedReports() {
+        log.debug("REST request to get WhistleBlowerReport Rejected list");
+        List<WhistleBlowerReportDTO> rejectedReports = whistleBlowerReportService.findRejectedReports();
+        return ResponseEntity.ok(rejectedReports);
+    }
+
 /*
  @PutMapping("/whistle-blower-reports/{id}/status")
     public ResponseEntity<WhistleBlowerReport> updateStatus(@PathVariable String id, @RequestBody ReportStatus newStatus) {
@@ -153,10 +161,11 @@ public class WhistleBlowerReportResource {
         whistleBlowerReportService.rejectReport(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     } */
+
     /**
      * {@code PATCH  /whistle-blower-reports/:id} : Partial updates given fields of an existing whistleBlowerReport, field will ignore if it is null
      *
-     * @param id the id of the whistleBlowerReportDTO to save.
+     * @param id                     the id of the whistleBlowerReportDTO to save.
      * @param whistleBlowerReportDTO the whistleBlowerReportDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated whistleBlowerReportDTO,
      * or with status {@code 400 (Bad Request)} if the whistleBlowerReportDTO is not valid,
@@ -164,7 +173,7 @@ public class WhistleBlowerReportResource {
      * or with status {@code 500 (Internal Server Error)} if the whistleBlowerReportDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/whistle-blower-reports/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/whistle-blower-reports/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<WhistleBlowerReportDTO> partialUpdateWhistleBlowerReport(
         @PathVariable(value = "id", required = false) final String id,
         @RequestBody WhistleBlowerReportDTO whistleBlowerReportDTO
@@ -192,7 +201,7 @@ public class WhistleBlowerReportResource {
     /**
      * {@code GET  /whistle-blower-reports} : get all the whistleBlowerReports.
      *
-     * @param pageable the pagination information.
+     * @param pageable  the pagination information.
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of whistleBlowerReports in body.
      */
@@ -204,7 +213,7 @@ public class WhistleBlowerReportResource {
         log.debug("REST request to get a page of WhistleBlowerReports");
         Page<WhistleBlowerReportDTO> page;
         // if (eagerload) {
-            page = whistleBlowerReportService.findAllWithEagerRelationships(pageable);
+        page = whistleBlowerReportService.findAllWithEagerRelationships(pageable);
         // }
         // else {
         //     page = whistleBlowerReportService.findAll(pageable);
@@ -212,6 +221,7 @@ public class WhistleBlowerReportResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
     /**
      * {@code GET  /whistle-blower-reports/:id} : get the "id" whistleBlowerReport.
      *
@@ -225,6 +235,41 @@ public class WhistleBlowerReportResource {
         return ResponseUtil.wrapOrNotFound(whistleBlowerReportDTO);
     }
 
+/* @GetMapping("/tracking/{trackingNumber}")
+public ResponseEntity<WhistleBlowerReportDTO> getTrackingNumber (@PathVariable String trackingNumber) {
+    try {
+        log.debug("Searching for report with tracking number: {}", trackingNumber);
+        Optional<WhistleBlowerReport> report = whistleBlowerReportRepository.findByTrackingNumber(trackingNumber);
+        log.debug("Report found: {}", report);
+
+        // Convert to DTO if found
+        return report.map(this::convertToDto) // Implement convertToDto to map entity to DTO
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    } catch (Exception e) {
+        log.error("Error while fetching report: ", e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+} */
+
+  /*  @GetMapping("/tracking/{trackingNumber}")
+    public ResponseEntity<WhistleBlowerReportDTO> getByTrackingNumber(@PathVariable String trackingNumber) {
+        Optional<WhistleBlowerReportDTO> reportDTO = whistleBlowerReportService.findByTrackingNumber(trackingNumber);
+        return reportDTO.map(ResponseEntity::ok)
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)); // Return 404 if not found
+    }*/
+
+  @GetMapping("/whistle-blower-reports/tracking/{trackingNumber}")
+  public ResponseEntity<WhistleBlowerReportDTO> findByTrackingNumber(@PathVariable String trackingNumber) {
+      Optional<WhistleBlowerReportDTO> report = whistleBlowerReportService.findByTrackingNumber(trackingNumber);
+
+      if (report.isPresent()) {
+          return ResponseEntity.ok(report.get()); // Return 200 with a JSON body
+      } else {
+          return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if not found
+      }
+  }
+
     /**
      * {@code DELETE  /whistle-blower-reports/:id} : delete the "id" whistleBlowerReport.
      *
@@ -237,7 +282,6 @@ public class WhistleBlowerReportResource {
         whistleBlowerReportService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }
-
 
 
 }

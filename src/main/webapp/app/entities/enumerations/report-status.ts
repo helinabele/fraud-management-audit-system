@@ -4,5 +4,5 @@ export enum ReportStatus {
     ON_PROGRESS = 'On Progress',
     IMPLEMENTED = 'Implemented',
     CLOSED = 'Closed',
-    REJECTED = 'rejected'
+    REJECTED = 'Rejected'
   }

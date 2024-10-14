@@ -1,5 +1,6 @@
 package org.audit.app.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.audit.app.domain.enumeration.ReportStatus;
@@ -42,7 +43,7 @@ public interface WhistleBlowerReportService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Object> findAll(Pageable pageable);
+    Page<WhistleBlowerReportDTO> findAll(Pageable pageable);
     // Optional<WhistleBlowerReportDTO> findByReportStatus(String status);
 
 
@@ -53,6 +54,7 @@ public interface WhistleBlowerReportService {
      * @return the list of entities.
      */
     Page<WhistleBlowerReportDTO> findAllWithEagerRelationships(Pageable pageable);
+    
     Page<WhistleBlowerReportDTO> findByReportStatus(Pageable pageable);
 
     /**
@@ -71,9 +73,11 @@ public interface WhistleBlowerReportService {
     void delete(String id);
 
     boolean rejectReport(String id);
-    // list<String> findByReportStatus();
-
-    // New method to update only the status
 
     WhistleBlowerReportDTO updateStatus(String id, ReportStatus newStatus);
+
+    List<WhistleBlowerReportDTO> findRejectedReports();
+
+    Optional<WhistleBlowerReportDTO> findByTrackingNumber(String trackingNumber);
+
 }

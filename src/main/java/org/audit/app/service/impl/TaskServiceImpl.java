@@ -1,8 +1,12 @@
 package org.audit.app.service.impl;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.audit.app.domain.Task;
+import org.audit.app.domain.WhistleBlowerReport;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.repository.TaskRepository;
+import org.audit.app.repository.WhistleBlowerReportRepository;
 import org.audit.app.service.TaskService;
 import org.audit.app.service.dto.TaskDTO;
 import org.audit.app.service.mapper.TaskMapper;
@@ -13,10 +17,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
- * Service Implementation for managing {@link Task}.
- */
-@Service
-public class TaskServiceImpl implements TaskService {
+     * Service Implementation for managing {@link Task}.
+     */
+    @Service
+    public class TaskServiceImpl implements TaskService {
 
     private final Logger log = LoggerFactory.getLogger(TaskServiceImpl.class);
 
@@ -24,9 +28,12 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskMapper taskMapper;
 
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper) {
+    private final WhistleBlowerReportRepository whistleBlowerReportRepository;
+
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper,  WhistleBlowerReportRepository whistleBlowerReportRepository) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.whistleBlowerReportRepository = whistleBlowerReportRepository;
     }
 
     @Override
@@ -77,4 +84,38 @@ public class TaskServiceImpl implements TaskService {
         log.debug("Request to delete Task : {}", id);
         taskRepository.deleteById(id);
     }
+
+    @Override
+    public Task updateTaskStatus(Long taskId, ReportStatus newStatus) {
+        Task task = taskRepository.findById(String.valueOf(taskId))
+            .orElseThrow(() -> new NoSuchElementException("Task not found"));
+
+        task.setStatus(newStatus);
+        taskRepository.save(task);
+
+        // Update the related whistleblower report status
+        WhistleBlowerReport report = (WhistleBlowerReport) task.getWhistleBlower();
+        if (report != null) {
+            report.setReportStatus(mapTaskStatusToReportStatus(newStatus));
+            whistleBlowerReportRepository.save(report);
+        }
+
+        return task;
+    }
+
+    private ReportStatus mapTaskStatusToReportStatus(ReportStatus taskStatus) {
+        switch (taskStatus) {
+            case STARTED:
+                return ReportStatus.STARTED;
+            case ON_PROGRESS:
+                return ReportStatus.ON_PROGRESS;
+            case CLOSED:
+                return ReportStatus.IMPLEMENTED;
+            case REJECTED:
+                return ReportStatus.REJECTED;
+            default:
+                return ReportStatus.INITIATED;
+        }
+    }
+
 }

@@ -1,12 +1,9 @@
-<div *ngIf="selectedReport">
-  <jhi-assign-task-update [reports]="whistleBlowerReports"></jhi-assign-task-update>
-</div>
 <div>
   <h2 id="page-heading" data-cy="WhistleBlowerReportHeading">
     <span jhiTranslate="fraudMgtApp.whistleBlowerReport.home.title">Whistle Blower Reports</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <button class="btn btn-info me-2" (click)="loadRejectedReports()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span jhiTranslate="fraudMgtApp.whistleBlowerReport.home.refreshListLabel">Refresh list</span>
       </button>
@@ -46,8 +43,7 @@
       <span jhiTranslate="fraudMgtApp.whistleBlowerReport.home.notFound">No Whistle Blower Reports found</span>
     </div>
 
-    <div class="table-responsive table-entities" id="entities"
-      *ngIf="whistleBlowerReports && whistleBlowerReports.length > 0">
+    <div class="table-responsive table-entities" id="entities" *ngIf="whistleBlowerReports && whistleBlowerReports.length > 0">
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending"
@@ -160,123 +156,109 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let whistleBlowerReport of filteredNameList; trackBy: trackId">
-          <tr data-cy="entityTable" *ngIf="whistleBlowerReport.reportStatus !== 'REJECTED'">
-            <!-- <span *ngIf="whistleBlowerReport.reportStatus !== 'IN_PROGRESS'" /> -->
-            <!-- <td>
+          <ng-container *ngFor="let whistleBlowerReport of whistleBlowerReports; trackBy: trackId">
+            <tr data-cy="entityTable">
+              <!-- <span *ngIf="whistleBlowerReport.reportStatus !== 'IN_PROGRESS'" /> -->
+              <!-- <td>
               <a [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'view']">{{ whistleBlowerReport.id
                 }}</a>
             </td> -->
-            <td>{{ whistleBlowerReport.fullName }}</td>
-            <td jhiTranslate="{{ 'fraudMgtApp.Gender.' + whistleBlowerReport.genderType }}">{{
-              whistleBlowerReport.genderType }}</td>
-            <td>{{ whistleBlowerReport.emailAdress }}</td>
-            <td>{{ whistleBlowerReport.phone }}</td>
-            <td>{{ whistleBlowerReport.organization }}</td>
-            <td>{{ whistleBlowerReport.message }}</td>
-            <td>
-              <a *ngIf="whistleBlowerReport.attachment"
-                (click)="openFile(whistleBlowerReport.attachment, whistleBlowerReport.attachmentContentType)"
-                jhiTranslate="entity.action.open">Open</a>
-              <span *ngIf="whistleBlowerReport.attachment">{{ whistleBlowerReport.attachmentContentType }}, {{
-                byteSize(whistleBlowerReport.attachment) }}</span>
-            </td>
-            <td>{{ whistleBlowerReport.position }}</td>
-            <td>{{ whistleBlowerReport.zone }}</td>
-            <td>{{ whistleBlowerReport.description }}</td>
-            <td>
-              <div *ngIf="whistleBlowerReport.division">
-                <a [routerLink]="['/division', whistleBlowerReport.division.id, 'view']">{{
-                  whistleBlowerReport.division.divisionName }}</a>
-              </div>
-            </td>
-            <td>
-              <div *ngIf="whistleBlowerReport.department">
-                <a [routerLink]="['/department', whistleBlowerReport.department.id, 'view']">{{
-                  whistleBlowerReport.department.departmentName }}</a>
-              </div>
-            </td>
-            <td>
-              <div *ngIf="whistleBlowerReport.branch">
-                <a [routerLink]="['/branch', whistleBlowerReport.branch.id, 'view']">{{
-                  whistleBlowerReport.branch.branchName }}</a>
-              </div>
-            </td>
-            <td>
-              <div *ngIf="whistleBlowerReport.region">
-                <a [routerLink]="['/region', whistleBlowerReport.region.id, 'view']">{{
-                  whistleBlowerReport.region.regionName }}</a>
-              </div>
-            </td>
-            <td>
-              <div *ngIf="whistleBlowerReport.city">
-                <a [routerLink]="['/city', whistleBlowerReport.city.id, 'view']">{{ whistleBlowerReport.city.cityName
-                  }}</a>
-              </div>
-            </td>
-            <td>
-              <div *ngIf="whistleBlowerReport.subCity">
-                <a [routerLink]="['/sub-city', whistleBlowerReport.subCity.id, 'view']">{{
-                  whistleBlowerReport.subCity.subCityName }}</a>
-              </div>
-            </td>
-            <td>
-              <div *ngIf="whistleBlowerReport.reportStatus">{{whistleBlowerReport.reportStatus }}
-              </div>
-            </td>
-            <!-- <td>
-              <ng-container *ngIf="isAssigned; else notAssigned">
-                Assigned
-              </ng-container>
-              <ng-template #notAssigned>
-                Not Assigned
-              </ng-template>
-            </td>
-            <div *ngIf="isAssigned">
-              <p>This report has been assigned.</p>
-            </div>
-            <div *ngIf="!isAssigned">
-              <p>This report has not been assigned.</p>
-            </div> -->
-            <td class="text-end">
-              <div class="btn-group">
-                <button type="submit" [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'view']"
-                  class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                  <fa-icon icon="eye"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                </button>
+              <td>{{ whistleBlowerReport.fullName }}</td>
+              <td jhiTranslate="{{ 'fraudMgtApp.Gender.' + whistleBlowerReport.genderType }}">{{
+                whistleBlowerReport.genderType }}</td>
+              <td>{{ whistleBlowerReport.emailAdress }}</td>
+              <td>{{ whistleBlowerReport.phone }}</td>
+              <td>{{ whistleBlowerReport.organization }}</td>
+              <td>{{ whistleBlowerReport.message }}</td>
+              <td>
+                <a *ngIf="whistleBlowerReport.attachment"
+                  (click)="openFile(whistleBlowerReport.attachment, whistleBlowerReport.attachmentContentType)"
+                  jhiTranslate="entity.action.open">Open</a>
+                <span *ngIf="whistleBlowerReport.attachment">{{ whistleBlowerReport.attachmentContentType }}, {{
+                  byteSize(whistleBlowerReport.attachment) }}</span>
+              </td>
+              <td>{{ whistleBlowerReport.position }}</td>
+              <td>{{ whistleBlowerReport.zone }}</td>
+              <td>{{ whistleBlowerReport.description }}</td>
+              <td>
+                <div *ngIf="whistleBlowerReport.division">
+                  <a [routerLink]="['/division', whistleBlowerReport.division.id, 'view']">{{
+                    whistleBlowerReport.division.divisionName }}</a>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="whistleBlowerReport.department">
+                  <a [routerLink]="['/department', whistleBlowerReport.department.id, 'view']">{{
+                    whistleBlowerReport.department.departmentName }}</a>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="whistleBlowerReport.branch">
+                  <a [routerLink]="['/branch', whistleBlowerReport.branch.id, 'view']">{{
+                    whistleBlowerReport.branch.branchName }}</a>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="whistleBlowerReport.region">
+                  <a [routerLink]="['/region', whistleBlowerReport.region.id, 'view']">{{
+                    whistleBlowerReport.region.regionName }}</a>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="whistleBlowerReport.city">
+                  <a [routerLink]="['/city', whistleBlowerReport.city.id, 'view']">{{ whistleBlowerReport.city.cityName
+                    }}</a>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="whistleBlowerReport.subCity">
+                  <a [routerLink]="['/sub-city', whistleBlowerReport.subCity.id, 'view']">{{
+                    whistleBlowerReport.subCity.subCityName }}</a>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="whistleBlowerReport.reportStatus">{{whistleBlowerReport.reportStatus }}
+                </div>
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button type="submit" [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'view']"
+                    class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </button>
 
-                <button *jhiHasAnyAuthority="['ROLE_ADMIN']" type="submit"
-                  [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'edit']"
-                  class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                  <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                </button>
-                <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
+                  <button *jhiHasAnyAuthority="['ROLE_ADMIN']" type="submit"
+                    [routerLink]="['/whistle-blower-report', whistleBlowerReport.id, 'edit']"
+                    class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </button>
+                  <!-- <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
                   (click)="onAssignButtonClick(whistleBlowerReport)" class="btn btn-info btn-sm"
                   data-cy="entityAssignButton">
                   <fa-icon icon="pencil-alt"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
-                </button>
-                <button type="submit" (click)="rejectWhistleBlower(whistleBlowerReport)" class="btn btn-danger btn-sm"
+                </button> -->
+                  <!-- <button type="submit" (click)="rejectWhistleBlower(whistleBlowerReport)" class="btn btn-danger btn-sm"
                   data-cy="entityRejectButton">
                   <fa-icon icon="times"></fa-icon>
                   <span class="d-none d-md-inline">Reject</span>
-                </button>
-                <button (click)="updateReportStatus(whistleBlowerReport.id, ReportStatus.REJECTED)">Reject Report</button>
-                <!-- <button type="submit" (click)="delete(whistleBlowerReport)" class="btn btn-danger btn-sm"
+                </button> -->
+                  <!-- <button (click)="updateReportStatus(whistleBlowerReport.id, ReportStatus.REJECTED)">Reject Report</button> -->
+                  <!-- <button type="submit" (click)="delete(whistleBlowerReport)" class="btn btn-danger btn-sm"
                   data-cy="entityDeleteButton">
                   <fa-icon icon="times"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                 </button> -->
-              </div>
-            </td>
-          <!-- </div> -->
-          </tr>
-        </ng-container>
+                </div>
+              </td>
+              <!-- </div> -->
+            </tr>
+          </ng-container>
         </tbody>
       </table>
-      <a [routerLink]="['/whistle-blower-report/rejected-reports']">View Rejected Reports</a>
+      <a (click)="back()">Back</a>
     </div>
 
     <div *ngIf="whistleBlowerReports && whistleBlowerReports.length > 0">

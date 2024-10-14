@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import org.audit.app.IntegrationTest;
 import org.audit.app.domain.Task;
-import org.audit.app.domain.enumeration.StatusEnum;
+import org.audit.app.domain.enumeration.ReportStatus;
 import org.audit.app.repository.TaskRepository;
 import org.audit.app.service.dto.TaskDTO;
 import org.audit.app.service.mapper.TaskMapper;
@@ -46,8 +46,8 @@ class TaskResourceIT {
     private static final String DEFAULT_ATTACHMENT_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_ATTACHMENT_CONTENT_TYPE = "image/png";
 
-    private static final StatusEnum DEFAULT_STATUS = StatusEnum.NEW;
-    private static final StatusEnum UPDATED_STATUS = StatusEnum.IN_PROGRESS;
+    private static final ReportStatus DEFAULT_STATUS = ReportStatus.INITIATED;
+    private static final ReportStatus UPDATED_STATUS = ReportStatus.ON_PROGRESS;
 
     private static final String ENTITY_API_URL = "/api/tasks";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

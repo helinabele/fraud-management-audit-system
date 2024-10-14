@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
@@ -25,8 +25,27 @@ export class WhistleBlowerReportService {
   ) { }
 
   findByTrackingNumber(trackingNumber: string): Observable<IWhistleBlowerReport> {
+    return this.http.get<IWhistleBlowerReport>(`${this.resourceUrl}/tracking/${trackingNumber}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('API Error:', error);
+        return throwError(() => new Error('Error fetching whistleblower data'));
+      })
+    );
+  }
+
+/*   findByTrackingNumber(trackingNumber: string): Observable<IWhistleBlowerReport> {
     return this.http.get<IWhistleBlowerReport>(`${this.resourceUrl}/tracking/${trackingNumber}`);
   }
+ */
+ /*    findByTrackingNumber(trackingNumber: string): Observable<IWhistleBlowerReport> {
+      return this.http.get<IWhistleBlowerReport>(`${this.resourceUrl}/tracking/${trackingNumber}`, { responseType: 'json' }).pipe(
+          catchError((error: HttpErrorResponse) => {
+              console.error('API Error:', error);
+              return throwError(() => new Error('Error fetching whistleblower data'));
+          })
+      );
+  } */
+  
   setSelectedReport(report: IWhistleBlowerReport): void {
     this.selectedReportSubject.next(report);
   }
@@ -70,7 +89,7 @@ export class WhistleBlowerReportService {
   updateStatus(id: string, newStatus: string): Observable<IWhistleBlowerReport> {
     return this.http.put<IWhistleBlowerReport>(`${this.resourceUrl}/${id}/status`, newStatus);
   }
-  
+
   partialUpdate(whistleBlowerReport: PartialUpdateWhistleBlowerReport): Observable<EntityResponseType> {
     return this.http.patch<IWhistleBlowerReport>(
       `${this.resourceUrl}/${this.getWhistleBlowerReportIdentifier(whistleBlowerReport)}`,
@@ -98,6 +117,13 @@ export class WhistleBlowerReportService {
 
   rejectReport(id: string): Observable<any> {
     return this.http.put(`${this.resourceUrl}/${id}/reject`, {});
+  }
+
+  /*   getRejectedReports(): Observable<any[]> {
+      return this.http.get<any[]>(`${this.resourceUrl}/rejected-reports`);
+    } */
+  getRejectedReports(): Observable<EntityArrayResponseType> {
+    return this.http.get<IWhistleBlowerReport[]>(`${this.resourceUrl}/rejected-reports`, { observe: 'response' });
   }
 
   getWhistleBlowerReportIdentifier(whistleBlowerReport: Pick<IWhistleBlowerReport, 'id'>): string {
