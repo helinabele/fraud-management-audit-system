@@ -49,8 +49,8 @@ public class Task implements Serializable {
     @JsonIgnoreProperties(value = { "director", "manager", "teamLead", "employee", "task", "team" }, allowSetters = true)
     private Set<AssignTask> assignedTasks = new HashSet<>();
 
-    @Field("whistleBlower")
-    private Set<AssignTask> whistleBlower = new HashSet<>();
+    @Field("whistleBlowerReport")
+    private Set<AssignTask> whistleBlowerReport = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -206,15 +206,15 @@ public class Task implements Serializable {
             ", attachment='" + getAttachment() + "'" +
             ", attachmentContentType='" + getAttachmentContentType() + "'" +
             ", status='" + getStatus() + "'" +
-            ", whistleBlower='" + getWhistleBlower() + "'" +
+            ", whistleBlowerReport='" + getWhistleBlowerReport() + "'" +
             "}";
     }
 
-    public Set<AssignTask> getWhistleBlower() {
-        return whistleBlower;
+    public Set<AssignTask> getWhistleBlowerReport() {
+        return whistleBlowerReport;
     }
 
-    public void setWhistleBlower(Set<AssignTask> whistleBlower) {
-        this.whistleBlower = whistleBlower;
+    public void setWhistleBlowerReport(Set<AssignTask> whistleBlowerReport) {
+        this.whistleBlowerReport = whistleBlowerReport;
     }
 }

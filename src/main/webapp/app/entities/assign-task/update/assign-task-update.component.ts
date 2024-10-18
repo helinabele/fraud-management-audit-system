@@ -29,6 +29,7 @@ import { Authority } from 'app/config/authority.constants';
 import { User } from 'app/admin/user-management/user-management.model';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'jhi-assign-task-update',
@@ -46,7 +47,8 @@ export class AssignTaskUpdateComponent implements OnInit {
   teamsSharedCollection: ITeam[] = [];
 
   editForm: AssignTaskFormGroup = this.assignTaskFormService.createAssignTaskFormGroup();
-  whistleBlowerReportId: string | undefined;
+  whistleBlowerReportId: string | null = null; // Change this line
+
   fullName?: string;
   genderType?: string;
   attachmentContentType?: string;
@@ -66,8 +68,8 @@ export class AssignTaskUpdateComponent implements OnInit {
   selectedReport?: IWhistleBlowerReport | null;
   user?: User
   account1: Account | null = null;
-getTitle: any;
-getId:any;
+  getTitle: any;
+  getId: any;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -84,7 +86,8 @@ getId:any;
     private whistleBlowerReportService: WhistleBlowerReportService,
     private accountService: AccountService,
     private cdRef: ChangeDetectorRef,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   compareDirector = (o1: IDirector | null, o2: IDirector | null): boolean => this.directorService.compareDirector(o1, o2);
@@ -111,8 +114,8 @@ getId:any;
   //     this.loadRelationshipsOptions();
   //   });
   // }
+
   ngOnInit(): void {
- 
     this.activatedRoute.data.subscribe(({ assignTask }) => {
       this.assignTask = assignTask;
       if (assignTask) {
@@ -120,20 +123,38 @@ getId:any;
         this.loadMoreInfo(assignTask);
       }
       this.loadRelationshipsOptions(() => {
-        this.loadPreviousTask();
-        this.retrieveSelectedReport();
+        this.loadPreviousTask(); // Ensure this function can work without needing the report ID
+        this.retrieveSelectedReport(); // This function will be modified next
       });
     });
-
-    this.activatedRoute.queryParams.subscribe(params => {
-      const title = params['title'];
-      if (title) {
-        // Set the value of the 'task' form control to the title obtained from the route parameter
-        this.editForm.patchValue({
-          task: title
+  
+    // Using route parameters instead of query parameters
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.whistleBlowerReportId = params.get('id'); // Assuming the route is defined with `:id`
+      
+      // Fetch the selected report based on the retrieved ID
+      if (this.whistleBlowerReportId) {
+        this.whistleBlowerReportService.find(this.whistleBlowerReportId).subscribe(report => {
+          this.selectedReport = report.body;
+          if (this.selectedReport) {
+            this.preFillWhistleBlowerData(this.selectedReport);
+            
+            // Patch the form with whistleBlowerReport data
+            this.editForm.patchValue({
+              whistleBlowerReport: this.selectedReport
+            });
+          }
         });
       }
     });
+  }
+  
+  preFillWhistleBlowerData(report: IWhistleBlowerReport): void {
+    if (report) {
+      this.editForm.patchValue({
+        whistleBlowerReport: { id: report.id },  // Ensure you pass an object with the 'id' property
+      });
+    }
   }
 
   loadMoreInfo(assignTask: any): void {
@@ -162,16 +183,25 @@ getId:any;
     const notification = { employeeId, message };
     this.http.post('/api/notifications', notification).subscribe;
   }
-
   save(): void {
     this.isSaving = true;
     const assignTask = this.assignTaskFormService.getAssignTask(this.editForm);
+    
+    // Log the selectedReport and the assignTask
+    console.log("Selected WhistleBlowerReport: ", this.selectedReport);
+    console.log("AssignTask before save: ", assignTask);
+    
+    // Explicitly assign whistleBlowerReport to assignTask
+    assignTask.whistleBlowerReport = this.selectedReport;
+
     if (assignTask.id !== null) {
-      this.subscribeToSaveResponse(this.assignTaskService.update(assignTask));
+        this.subscribeToSaveResponse(this.assignTaskService.update(assignTask));
     } else {
-      this.subscribeToSaveResponse(this.assignTaskService.create(assignTask));
+        this.subscribeToSaveResponse(this.assignTaskService.create(assignTask));
     }
-  }
+}
+
+  
 
   // identifyUserRole(): void {
   //   this.account = JSON.parse(localStorage.getItem('user') ?? '{}');

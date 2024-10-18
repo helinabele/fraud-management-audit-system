@@ -93,29 +93,31 @@ import org.springframework.stereotype.Service;
         task.setStatus(newStatus);
         taskRepository.save(task);
 
-        // Update the related whistleblower report status
-        WhistleBlowerReport report = (WhistleBlowerReport) task.getWhistleBlower();
+        // Update the related whistleBlowerReport report status
+/*         WhistleBlowerReport report = (WhistleBlowerReport) task.getWhistleBlowerReport();
         if (report != null) {
             report.setReportStatus(mapTaskStatusToReportStatus(newStatus));
             whistleBlowerReportRepository.save(report);
-        }
+        } */
 
         return task;
     }
 
-    private ReportStatus mapTaskStatusToReportStatus(ReportStatus taskStatus) {
+/*     private ReportStatus mapTaskStatusToReportStatus(ReportStatus taskStatus) {
         switch (taskStatus) {
             case STARTED:
                 return ReportStatus.STARTED;
             case ON_PROGRESS:
                 return ReportStatus.ON_PROGRESS;
-            case CLOSED:
+            case IMPLEMENTED:
                 return ReportStatus.IMPLEMENTED;
+            case CLOSED:
+                return ReportStatus.CLOSED;
             case REJECTED:
                 return ReportStatus.REJECTED;
             default:
                 return ReportStatus.INITIATED;
         }
-    }
+    } */
 
 }

@@ -8,6 +8,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IAssignTask, NewAssignTask } from '../assign-task.model';
+import { IWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle-blower-report.model';
 
 export type PartialUpdateAssignTask = Partial<IAssignTask> & Pick<IAssignTask, 'id'>;
 
@@ -15,6 +16,7 @@ type RestOf<T extends IAssignTask | NewAssignTask> = Omit<T, 'taskAssignmentDate
   taskAssignmentDate?: string | null;
   taskStartDate?: string | null;
   taskEndDate?: string | null;
+  whistleBlowerReport?: IWhistleBlowerReport | null;
 };
 
 export type RestAssignTask = RestOf<IAssignTask>;
@@ -104,6 +106,7 @@ export class AssignTaskService {
       taskAssignmentDate: assignTask.taskAssignmentDate?.toJSON() ?? null,
       taskStartDate: assignTask.taskStartDate?.toJSON() ?? null,
       taskEndDate: assignTask.taskEndDate?.toJSON() ?? null,
+      whistleBlowerReport: assignTask.whistleBlowerReport, 
     };
   }
 
@@ -113,6 +116,7 @@ export class AssignTaskService {
       taskAssignmentDate: restAssignTask.taskAssignmentDate ? dayjs(restAssignTask.taskAssignmentDate) : undefined,
       taskStartDate: restAssignTask.taskStartDate ? dayjs(restAssignTask.taskStartDate) : undefined,
       taskEndDate: restAssignTask.taskEndDate ? dayjs(restAssignTask.taskEndDate) : undefined,
+      whistleBlowerReport: restAssignTask.whistleBlowerReport,
     };
   }
 

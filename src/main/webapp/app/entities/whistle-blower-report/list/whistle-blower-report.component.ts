@@ -21,6 +21,7 @@ import { ReportStatus } from 'app/entities/enumerations/report-status';
 })
 export class WhistleBlowerReportComponent implements OnInit {
   whistleBlowerReports?: IWhistleBlowerReport[];
+  whistleBlowerReport?: IWhistleBlowerReport;
   isLoading = false;
   rejectedReports?: IWhistleBlowerReport[] = [];
   predicate = 'id';
@@ -56,12 +57,28 @@ export class WhistleBlowerReportComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.load();
+
+       // Retrieve the state with the selected whistleBlowerReport
+       const navigation = this.router.getCurrentNavigation();
+       const state = navigation?.extras?.state as { whistleBlowerReport: IWhistleBlowerReport };
+   
+       // Assign the selected report to the new whistleBlowerReport variable
+       if (state?.whistleBlowerReport) {
+         this.whistleBlowerReport = state.whistleBlowerReport;
+       }
   }
 
   onAssignButtonClick(whistleBlowerReport: IWhistleBlowerReport): void {
+   /*  this.whistleBlowerReportService.setSelectedReport(whistleBlowerReport);
+    // this.router.navigate(['/whistle-blower-report', whistleBlowerReport.id, 'assign']);
+    // Navigate to the 'assign task' page with report data in state
+    this.router.navigate(['/whistle-blower-report', whistleBlowerReport.id, 'assign'], {
+      state: { whistleBlowerReport }
+    }); */
     this.whistleBlowerReportService.setSelectedReport(whistleBlowerReport);
-    this.router.navigate(['/whistle-blower-report', whistleBlowerReport.id, 'assign']);
-
+    this.router.navigate(['/whistle-blower-report', whistleBlowerReport.id, 'assign'], {
+      state: { whistleBlowerReport }
+    });
     // this.whistleBlowerReportService.assignReport(whistleBlowerReport.id).subscribe(
     //   () => {
     //     this.isAssigned = true;
@@ -86,7 +103,7 @@ export class WhistleBlowerReportComponent implements OnInit {
   // }
 
   // rejectWhistleBlower(whistleBlowerReport: IWhistleBlowerReport): void {
-  //   const confirmed = confirm('Are you sure you want to reject this whistleblower report?');
+  //   const confirmed = confirm('Are you sure you want to reject this whistleBlowerReport report?');
   //   if (confirmed) {
   //     // Remove the item from the list
   //     if (this.whistleBlowerReports) {

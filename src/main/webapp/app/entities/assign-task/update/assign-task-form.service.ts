@@ -45,6 +45,7 @@ type AssignTaskFormGroupContent = {
   employee: FormControl<AssignTaskFormRawValue['employee']>;
   task: FormControl<AssignTaskFormRawValue['task']>;
   team: FormControl<AssignTaskFormRawValue['team']>;
+  whistleBlowerReport: FormControl<AssignTaskFormRawValue['whistleBlowerReport']>;
 };
 
 export type AssignTaskFormGroup = FormGroup<AssignTaskFormGroupContent>;
@@ -76,6 +77,7 @@ export class AssignTaskFormService {
       employee: new FormControl(assignTaskRawValue.employee),
       task: new FormControl(assignTaskRawValue.task),
       team: new FormControl(assignTaskRawValue.team),
+      whistleBlowerReport: new FormControl(assignTaskRawValue.whistleBlowerReport),
     });
   }
 

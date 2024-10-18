@@ -1,19 +1,7 @@
 package org.audit.app.service.mapper;
 
-import org.audit.app.domain.AssignTask;
-import org.audit.app.domain.Director;
-import org.audit.app.domain.Employee;
-import org.audit.app.domain.Managerial;
-import org.audit.app.domain.Task;
-import org.audit.app.domain.Team;
-import org.audit.app.domain.TeamLead;
-import org.audit.app.service.dto.AssignTaskDTO;
-import org.audit.app.service.dto.DirectorDTO;
-import org.audit.app.service.dto.EmployeeDTO;
-import org.audit.app.service.dto.ManagerialDTO;
-import org.audit.app.service.dto.TaskDTO;
-import org.audit.app.service.dto.TeamDTO;
-import org.audit.app.service.dto.TeamLeadDTO;
+import org.audit.app.domain.*;
+import org.audit.app.service.dto.*;
 import org.mapstruct.*;
 
 /**
@@ -27,7 +15,9 @@ public interface AssignTaskMapper extends EntityMapper<AssignTaskDTO, AssignTask
     @Mapping(target = "employee", source = "employee", qualifiedByName = "employeeName")
     @Mapping(target = "task", source = "task", qualifiedByName = "taskTitle")
     @Mapping(target = "team", source = "team", qualifiedByName = "teamTeamName")
-    AssignTaskDTO toDto(AssignTask s);
+    @Mapping(target = "whistleBlowerReport", source = "whistleBlowerReport")
+    AssignTaskDTO toDto(AssignTask assignTask);
+
 
     @Named("directorDirectorName")
     @BeanMapping(ignoreByDefault = true)

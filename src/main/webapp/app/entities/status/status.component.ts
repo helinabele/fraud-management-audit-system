@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class StatusComponent implements OnInit {
   whistleBlowerForm: FormGroup | undefined;
   statusMessage?: string;
-  whistleBlower: IWhistleBlowerReport | null | undefined = null;
+  whistleBlowerReport: IWhistleBlowerReport | null | undefined = null;
 
   constructor(private formBuilder: FormBuilder, private whistleBlowerService: WhistleBlowerReportService) {}
 
@@ -41,7 +41,7 @@ export class StatusComponent implements OnInit {
   getWhistleBlowerByID(id: string): void {
     this.whistleBlowerService.find(id).subscribe(
       (response) => {
-        this.whistleBlower = response.body;
+        this.whistleBlowerReport = response.body;
         this.populateWhistleBlowerForm();
       },
       (error: any) => {
@@ -50,11 +50,11 @@ export class StatusComponent implements OnInit {
     );
   }
   populateWhistleBlowerForm(): void {
-    if (this.whistleBlower && this.whistleBlowerForm) {
+    if (this.whistleBlowerReport && this.whistleBlowerForm) {
       this.whistleBlowerForm.patchValue({
-        fullName: this.whistleBlower.fullName,
-        description: this.whistleBlower.description,
-        gender: this.whistleBlower.genderType
+        fullName: this.whistleBlowerReport.fullName,
+        description: this.whistleBlowerReport.description,
+        gender: this.whistleBlowerReport.genderType
       });
     }
   }
@@ -68,18 +68,18 @@ export class StatusComponent implements OnInit {
         this.whistleBlowerService.findByTrackingNumber(trackingNumber).subscribe(
             (response: IWhistleBlowerReport) => {
                 console.log('API Response:', response);
-                this.whistleBlower = response; // Populate the whistleBlower object
+                this.whistleBlowerReport = response; // Populate the whistleBlowerReport object
                 this.statusMessage = undefined; // Clear status message if application found
             },
             (error: any) => {
                 console.error('API Error:', error);
                 this.statusMessage = 'No application found with that tracking number.';
-                this.whistleBlower = undefined; // Clear whistleblower data if not found
+                this.whistleBlowerReport = undefined; // Clear whistleBlowerReport data if not found
             }
         );
     } else {
         this.statusMessage = 'Please enter a valid tracking number';
-        this.whistleBlower = undefined; // Clear whistleblower data if input is empty or invalid
+        this.whistleBlowerReport = undefined; // Clear whistleBlowerReport data if input is empty or invalid
     }
 }
 

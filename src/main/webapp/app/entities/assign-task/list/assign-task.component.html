@@ -8,7 +8,7 @@
         <span jhiTranslate="fraudMgtApp.assignTask.home.refreshListLabel">Refresh list</span>
       </button>
 
-      <button
+<!--       <button
       *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']"
         id="jh-create-entity"
         data-cy="entityCreateButton"
@@ -17,7 +17,7 @@
       >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="fraudMgtApp.assignTask.home.createLabel"> Create a new Assign Task </span>
-      </button>
+      </button> -->
     </div>
   </h2>
 
@@ -39,6 +39,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th> -->
+          
           <th scope="col" jhiSortBy="taskAssignmentDate">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.assignTask.taskAssignmentDate">Task Assignment Date</span>
@@ -189,7 +190,7 @@
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
               </button>
-              <button type="submit"
+              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_AUDITOR']" type="submit"
               [routerLink]="['/assign-task', assignTask.id, 'startInvestigation']" class="btn btn-info btn-sm" data-cy="entityAssignButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" >	Start Investigation</span>

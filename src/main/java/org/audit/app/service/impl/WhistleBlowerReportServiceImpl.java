@@ -39,7 +39,7 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
         this.whistleBlowerReportRepository = whistleBlowerReportRepository;
         this.whistleBlowerReportMapper = whistleBlowerReportMapper;
     }
-
+/* 
     @Override
     public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
         log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
@@ -62,7 +62,22 @@ public class WhistleBlowerReportServiceImpl implements WhistleBlowerReportServic
 
         // Convert entity back to DTO and return
         return whistleBlowerReportMapper.toDto(whistleBlowerReport);
+    } */
+   
+@Override
+public WhistleBlowerReportDTO save(WhistleBlowerReportDTO whistleBlowerReportDTO) {
+    log.debug("Request to save WhistleBlowerReport : {}", whistleBlowerReportDTO);
+    WhistleBlowerReport whistleBlowerReport = whistleBlowerReportMapper.toEntity(whistleBlowerReportDTO);
+    if (whistleBlowerReport.getTrackingNumber() == null || whistleBlowerReport.getTrackingNumber().isEmpty()) {
+        whistleBlowerReport.setTrackingNumber(generateTrackingNumber());
     }
+    if (whistleBlowerReport.getReportStatus() == null) {
+        whistleBlowerReport.setReportStatus(ReportStatus.INITIATED);
+    }
+    whistleBlowerReport = whistleBlowerReportRepository.save(whistleBlowerReport);
+    return whistleBlowerReportMapper.toDto(whistleBlowerReport);
+}
+
 
     /**
      * Helper method to generate a unique tracking number.

@@ -11,7 +11,6 @@ import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/co
 import { ASC, DESC, SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA, ITEM_REJECTED_EVENT } from 'app/config/navigation.constants';
 import { EntityArrayResponseType } from '../service/whistle-blower-report.service';
 import { DataUtils } from 'app/core/util/data-util.service';
-import { ReportStatus } from 'app/entities/enumerations/report-status';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -39,7 +38,7 @@ export class RejectedReportComponent implements OnInit {
   emailFilter = '';
   phoneFilter = '';
   organizationFilter = '';
-  ReportStatus = ReportStatus;
+ 
 
   constructor(
     protected whistleBlowerReportService: WhistleBlowerReportService,

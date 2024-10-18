@@ -68,6 +68,10 @@ public class AssignTask implements Serializable {
     @JsonIgnoreProperties(value = { "teamLead", "managers", "employee", "assignTasks" }, allowSetters = true)
     private Team team;
 
+    @DBRef
+    @Field("whistle_blower_report")
+    private WhistleBlowerReport whistleBlowerReport;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public String getId() {
@@ -239,6 +243,18 @@ public class AssignTask implements Serializable {
         return this;
     }
 
+    public WhistleBlowerReport getWhistleBlowerReport() {
+        return whistleBlowerReport;
+    }
+
+    public void setWhistleBlowerReport(WhistleBlowerReport whistleBlowerReport) {
+        this.whistleBlowerReport = whistleBlowerReport;
+    }
+
+    public AssignTask whistleBlowerReport(WhistleBlowerReport whistleBlowerReport) {
+        this.setWhistleBlowerReport(whistleBlowerReport);
+        return this;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -271,4 +287,5 @@ public class AssignTask implements Serializable {
             ", description='" + getDescription() + "'" +
             "}";
     }
+
 }

@@ -20,6 +20,7 @@ import { IDirector } from 'app/entities/director/director.model';
 import { IManagerial } from 'app/entities/managerial/managerial.model';
 import { ITeamLead } from 'app/entities/team-lead/team-lead.model';
 import { IEmployee } from 'app/entities/employee/employee.model';
+import { IWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle-blower-report.model';
 
 @Component({
   selector: 'jhi-assign-task',
@@ -39,7 +40,8 @@ export class AssignTaskComponent implements OnInit {
   account: any;
   role?: Authority;
   roleId?: string;
-
+  whistleBlowerReport?: IWhistleBlowerReport;
+  
   constructor(
     protected assignTaskService: AssignTaskService,
     protected activatedRoute: ActivatedRoute,
@@ -55,6 +57,11 @@ export class AssignTaskComponent implements OnInit {
   trackId = (_index: number, item: IAssignTask): string => this.assignTaskService.getAssignTaskIdentifier(item);
 
   ngOnInit(): void {
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      this.whistleBlowerReport = navigation.extras.state.whistleBlowerReport;
+    }
+    console.log('WhistleBlowerReport ID:', this.whistleBlowerReport?.id);
     this.identifyUserRole();
     this.load();
   }

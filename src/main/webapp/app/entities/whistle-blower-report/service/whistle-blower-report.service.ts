@@ -28,7 +28,7 @@ export class WhistleBlowerReportService {
     return this.http.get<IWhistleBlowerReport>(`${this.resourceUrl}/tracking/${trackingNumber}`).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('API Error:', error);
-        return throwError(() => new Error('Error fetching whistleblower data'));
+        return throwError(() => new Error('Error fetching whistle blower data'));
       })
     );
   }
@@ -41,7 +41,7 @@ export class WhistleBlowerReportService {
       return this.http.get<IWhistleBlowerReport>(`${this.resourceUrl}/tracking/${trackingNumber}`, { responseType: 'json' }).pipe(
           catchError((error: HttpErrorResponse) => {
               console.error('API Error:', error);
-              return throwError(() => new Error('Error fetching whistleblower data'));
+              return throwError(() => new Error('Error fetching whistleBlowerReport data'));
           })
       );
   } */

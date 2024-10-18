@@ -35,6 +35,8 @@ public class AssignTaskDTO implements Serializable {
 
     private TeamDTO team;
 
+    private WhistleBlowerReportDTO whistleBlowerReport;
+
     public String getId() {
         return id;
     }
@@ -139,6 +141,14 @@ public class AssignTaskDTO implements Serializable {
         this.team = team;
     }
 
+    public WhistleBlowerReportDTO getWhistleBlowerReport() {
+        return whistleBlowerReport;
+    }
+
+    public void setWhistleBlowerReport(WhistleBlowerReportDTO whistleBlowerReport) {
+        this.whistleBlowerReport = whistleBlowerReport;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -176,6 +186,8 @@ public class AssignTaskDTO implements Serializable {
             ", employee=" + getEmployee() +
             ", task=" + getTask() +
             ", team=" + getTeam() +
+            ", team=" + getWhistleBlowerReport() +
             "}";
     }
+
 }

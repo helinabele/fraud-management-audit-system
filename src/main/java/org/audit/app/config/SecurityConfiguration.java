@@ -81,6 +81,7 @@ public class SecurityConfiguration {
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/whistle-blower-reports").permitAll()
+            .antMatchers("/api/whistle-blower-reports/tracking/**").permitAll()
             .antMatchers("/api/divisions").permitAll()
             .antMatchers("/api/departments").permitAll()
             .antMatchers("/api/branches").permitAll()

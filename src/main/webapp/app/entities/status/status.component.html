@@ -7,8 +7,8 @@
     <button type="submit" class="btn btn-primary">Check Status</button>
     <p *ngIf="statusMessage" class="text-danger">{{ statusMessage }}</p>
     
-    <!-- Conditionally show table if whistleBlower data is available -->
-    <table *ngIf="whistleBlower" class="table table-striped mt-4">
+    <!-- Conditionally show table if whistleBlowerReport data is available -->
+    <table *ngIf="whistleBlowerReport" class="table table-striped mt-4">
         <thead>
           <tr>
             <th scope="col">Full Name</th>
@@ -19,10 +19,10 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{ whistleBlower.fullName }}</td>
-            <td>{{ whistleBlower.message }}</td> <!-- Assuming 'message' is the description -->
-            <td>{{ whistleBlower.genderType }}</td>
-            <td>{{ whistleBlower.reportStatus }}</td>
+            <td>{{ whistleBlowerReport.fullName }}</td>
+            <td>{{ whistleBlowerReport.message }}</td> <!-- Assuming 'message' is the description -->
+            <td>{{ whistleBlowerReport.genderType }}</td>
+            <td>{{ whistleBlowerReport.reportStatus }}</td>
           </tr>
         </tbody>
       </table>
