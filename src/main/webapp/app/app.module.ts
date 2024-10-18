@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
 import { OverlayModule } from '@angular/cdk/overlay';
+import { DashboardModule } from './dashboard/dashboard.module';
 /* import { AngularFireModule } from '@angular/fire'; // Import AngularFireModule
 import { AngularFireMessagingModule } from '@angular/fire/messaging'; // Import AngularFireMessagingModule */
 
@@ -44,6 +45,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging'; // Import 
     OverlayModule,
     SharedModule,
     HomeModule,
+    DashboardModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     AppRoutingModule,
     // Set this to true to enable service worker (PWA)
