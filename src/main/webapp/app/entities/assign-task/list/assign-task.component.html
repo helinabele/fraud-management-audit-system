@@ -8,7 +8,7 @@
         <span jhiTranslate="fraudMgtApp.assignTask.home.refreshListLabel">Refresh list</span>
       </button>
 
-<!--       <button
+      <!--       <button
       *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']"
         id="jh-create-entity"
         data-cy="entityCreateButton"
@@ -39,7 +39,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th> -->
-          
+          <th scope="col" jhiSortBy="task.title">
+            <div class="d-flex">
+              <span jhiTranslate="fraudMgtApp.assignTask.task">Task</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="taskAssignmentDate">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.assignTask.taskAssignmentDate">Task Assignment Date</span>
@@ -82,24 +87,19 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="teamLead.teamLeadName">
+          <!--           <th scope="col" jhiSortBy="teamLead.teamLeadName">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.assignTask.teamLead">Team Lead</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" jhiSortBy="employee.name">
+          </th> -->
+          <!--  <th scope="col" jhiSortBy="employee.name">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.assignTask.employee">Employee</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" jhiSortBy="task.title">
-            <div class="d-flex">
-              <span jhiTranslate="fraudMgtApp.assignTask.task">Task</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          </th> -->
+
           <th scope="col" jhiSortBy="team.teamName">
             <div class="d-flex">
               <span jhiTranslate="fraudMgtApp.assignTask.team">Team</span>
@@ -114,17 +114,19 @@
           <!-- <td>
             <a [routerLink]="['/assign-task', assignTask.id, 'view']">{{ assignTask.id }}</a>
           </td> -->
+          <td>
+            <div *ngIf="assignTask.task">
+              <a [routerLink]="['/task', assignTask.task.id, 'view']">{{ assignTask.task.title }}</a>
+            </div>
+          </td>
           <td>{{ assignTask.taskAssignmentDate | formatMediumDatetime }}</td>
           <td>{{ assignTask.taskStartDate | formatMediumDatetime }}</td>
           <td>{{ assignTask.taskEndDate | formatMediumDatetime }}</td>
           <td>
-            <a
-              *ngIf="assignTask.attachment"
-              (click)="openFile(assignTask.attachment, assignTask.attachmentContentType)"
-              jhiTranslate="entity.action.open"
-              >Open</a
-            >
-            <span *ngIf="assignTask.attachment">{{ assignTask.attachmentContentType }}, {{ byteSize(assignTask.attachment) }}</span>
+            <a *ngIf="assignTask.attachment" (click)="openFile(assignTask.attachment, assignTask.attachmentContentType)"
+              jhiTranslate="entity.action.open">Open</a>
+            <span *ngIf="assignTask.attachment">{{ assignTask.attachmentContentType }}, {{
+              byteSize(assignTask.attachment) }}</span>
           </td>
           <td>{{ assignTask.description }}</td>
           <td>
@@ -134,24 +136,21 @@
           </td>
           <td>
             <div *ngIf="assignTask.manager">
-              <a [routerLink]="['/managerial', assignTask.manager.id, 'view']">{{ assignTask.manager.managerialName }}</a>
+              <a [routerLink]="['/managerial', assignTask.manager.id, 'view']">{{ assignTask.manager.managerialName
+                }}</a>
             </div>
           </td>
-          <td>
+          <!--           <td>
             <div *ngIf="assignTask.teamLead">
-              <a [routerLink]="['/team-lead', assignTask.teamLead.id, 'view']">{{ assignTask.teamLead.teamLeadName }}</a>
+              <a [routerLink]="['/team-lead', assignTask.teamLead.id, 'view']">{{ assignTask.teamLead.teamLeadName
+                }}</a>
             </div>
-          </td>
-          <td>
+          </td> -->
+          <!--           <td>
             <div *ngIf="assignTask.employee">
               <a [routerLink]="['/employee', assignTask.employee.id, 'view']">{{ assignTask.employee.name }}</a>
             </div>
-          </td>
-          <td>
-            <div *ngIf="assignTask.task">
-              <a [routerLink]="['/task', assignTask.task.id, 'view']">{{ assignTask.task.title }}</a>
-            </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="assignTask.team">
               <a [routerLink]="['/team', assignTask.team.id, 'view']">{{ assignTask.team.teamName }}</a>
@@ -159,41 +158,49 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/assign-task', assignTask.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
+              <button type="submit" [routerLink]="['/assign-task', assignTask.id, 'view']" class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
-
               <button
-              *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT', 'ROLE_DIRECTOR', 'ROLE_MANAGER']"
-                type="submit"
-                [routerLink]="['/assign-task', assignTask.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT', 'ROLE_DIRECTOR', 'ROLE_MANAGER']"
+                type="submit" [routerLink]="['/assign-task', assignTask.id, 'edit']" class="btn btn-primary btn-sm"
+                data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
-
-              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT']" type="submit" (click)="delete(assignTask)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT']" type="submit" (click)="delete(assignTask)"
+                class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
-
-              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
-              [routerLink]="['/assign-task', assignTask.id, 'assign']" class="btn btn-info btn-sm" data-cy="entityAssignButton">
+             <!--  <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT']" type="submit"
+              [routerLink]="['/assign-task', assignTask.id, 'assign']"
+              [queryParams]="{ whistleBlowerReportId: assignTask.whistleBlowerReport?.id }"
+              class="btn btn-info btn-sm" data-cy="entityAssignButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Assign</span>
-              </button>
-              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_AUDITOR']" type="submit"
+              </button> -->
+              <button
+              *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT', 'ROLE_DIRECTOR', 'ROLE_MANAGER']"
+              type="submit" [routerLink]="['/assign-task', assignTask.id, 'edit']" class="btn btn-primary btn-sm"
+              data-cy="entityEditButton">
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.assign">Edit</span>
+            </button>
+              <!-- [queryParams]="{ whistleBlowerReportId: assignTask.whistleBlowerReport?.id }" -->
+              <!--               <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_AUDITOR']" type="submit"
               [routerLink]="['/assign-task', assignTask.id, 'startInvestigation']" class="btn btn-info btn-sm" data-cy="entityAssignButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" >	Start Investigation</span>
+              </button> -->
+              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_AUDITOR']" type="submit"
+                [routerLink]="['/assign-task', assignTask.id, 'startInvestigation']"
+                [queryParams]="{ whistleBlowerReportId: assignTask.whistleBlowerReport?.id, taskId: assignTask.task?.id }"
+                class="btn btn-info btn-sm" data-cy="entityAssignButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Start Investigation</span>
               </button>
             </div>
           </td>
@@ -208,15 +215,8 @@
     </div>
 
     <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [page]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="navigateToPage($event)"
-      ></ngb-pagination>
+      <ngb-pagination [collectionSize]="totalItems" [page]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true" (pageChange)="navigateToPage($event)"></ngb-pagination>
     </div>
   </div>
 </div>

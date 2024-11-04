@@ -25,6 +25,8 @@ public interface AssignTaskService {
      */
     AssignTaskDTO update(AssignTaskDTO assignTaskDTO);
 
+//    AssignTaskDTO assign(AssignTaskDTO assignTaskDTO);
+
     /**
      * Partially updates a assignTask.
      *

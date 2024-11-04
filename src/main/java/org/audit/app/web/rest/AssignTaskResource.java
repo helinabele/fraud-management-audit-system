@@ -12,6 +12,7 @@ import org.audit.app.repository.AssignTaskRepository;
 import org.audit.app.service.AssignTaskService;
 import org.audit.app.service.dto.AssignTaskDTO;
 import org.audit.app.service.NotificationService;
+import org.audit.app.service.dto.WhistleBlowerReportDTO;
 import org.audit.app.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,9 +76,78 @@ public class AssignTaskResource {
                 .created(new URI("/api/assign-tasks/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId()))
                 .body(result);
+   }
+
+/*  @PutMapping("/assign-tasks/{id}/assign")
+public ResponseEntity<AssignTaskDTO> assignTask(
+    @PathVariable String id,  // assignTask ID
+    @PathVariable String whistleBlowerReportId,  // whistleBlowerReport ID
+    @Valid @RequestBody AssignTaskDTO assignTaskDTO) {
+
+    log.debug("REST request to assign AssignTask : {}, with WhistleBlowerReport ID: {}", id, whistleBlowerReportId);
+
+    // Fetch the assign task by ID (ensure the assign task exists)
+    Optional<AssignTaskDTO> existingTaskOpt = assignTaskService.findOne(id);
+    if (!existingTaskOpt.isPresent()) {
+        return ResponseEntity.notFound().build(); // Return 404 if assignTask not found
     }
 
-    /**
+    // Fetch the whistleblower report by ID
+    Optional<WhistleBlowerReportDTO> whistleBlowerReportOpt = whistleBlowerReportService.findOne(whistleBlowerReportId);
+    if (!whistleBlowerReportOpt.isPresent()) {
+        return ResponseEntity.notFound().build(); // Return 404 if whistleBlowerReport not found
+    }
+
+    // Update the assign task details from the request
+    AssignTaskDTO existingTask = existingTaskOpt.get();
+    existingTask.setTaskAssignmentDate(assignTaskDTO.getTaskAssignmentDate());
+    existingTask.setTaskStartDate(assignTaskDTO.getTaskStartDate());
+    existingTask.setTaskEndDate(assignTaskDTO.getTaskEndDate());
+    existingTask.setDescription(assignTaskDTO.getDescription());
+    existingTask.setAttachment(assignTaskDTO.getAttachment());
+    existingTask.setAttachmentContentType(assignTaskDTO.getAttachmentContentType());
+
+    // Set the whistleblower report
+    existingTask.setWhistleBlowerReport(whistleBlowerReportOpt.get());
+
+    // Assign the task through the service logic
+    AssignTaskDTO result = assignTaskService.assign(existingTask);
+
+    return ResponseEntity.ok(result);
+}
+ */
+
+
+
+/*    @PutMapping("/assign-tasks/{id}")
+public ResponseEntity<AssignTaskDTO> updateAssignTask(
+    @PathVariable(value = "id", required = false) final String id,
+    @PathVariable(value = "whistleBlowerReportId", required = false) final String whistleBlowerReportId,
+    @RequestBody AssignTaskDTO assignTaskDTO) throws URISyntaxException {
+
+    log.debug("REST request to update AssignTask : {}, {}", id, assignTaskDTO);
+
+    if (assignTaskDTO.getId() == null) {
+        throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    }
+    if (!Objects.equals(id, assignTaskDTO.getId())) {
+        throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+    }
+    if (!assignTaskRepository.existsById(id)) {
+        throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+    }
+
+    // Optionally use whistleBlowerReportId for further logic
+
+    AssignTaskDTO result = assignTaskService.update(assignTaskDTO);
+    return ResponseEntity
+        .ok()
+        .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, assignTaskDTO.getId()))
+        .body(result);
+} */
+
+
+ /**
      * {@code PUT  /assign-tasks/:id} : Updates an existing assignTask.
      *
      * @param id            the id of the assignTaskDTO to save.

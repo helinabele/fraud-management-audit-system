@@ -47,8 +47,8 @@ public class AssignTaskServiceImpl implements AssignTaskService {
         if (assignTaskDTO.getWhistleBlowerReport() != null) {
             // Fetch the WhistleBlowerReport by ID
             WhistleBlowerReport whistleBlowerReport = whistleBlowerReportRepository.findById(assignTaskDTO.getWhistleBlowerReport().getId())
-                .orElseThrow(() -> new BadRequestAlertException("Invalid whistle blower ID", "whistle_blower_report", "idnotfound")); 
-log.debug("Fetched WhistleBlowerReport: {}", whistleBlowerReport);
+                .orElseThrow(() -> new BadRequestAlertException("Invalid whistle blower ID", "whistle_blower_report", "idnotfound"));
+            log.debug("Fetched WhistleBlowerReport: {}", whistleBlowerReport);
             // Set report status to "ON_PROGRESS"
             whistleBlowerReport.setReportStatus(ReportStatus.ON_PROGRESS);
 
@@ -66,11 +66,14 @@ log.debug("Fetched WhistleBlowerReport: {}", whistleBlowerReport);
         return assignTaskMapper.toDto(assignTask);
     }
 
-
     @Override
     public AssignTaskDTO update(AssignTaskDTO assignTaskDTO) {
         log.debug("Request to update AssignTask : {}", assignTaskDTO);
         AssignTask assignTask = assignTaskMapper.toEntity(assignTaskDTO);
+        // Ensure whistleBlowerReport is set properly before saving
+        if (assignTask.getWhistleBlowerReport() != null) {
+            assignTask.setWhistleBlowerReport(assignTask.getWhistleBlowerReport());
+        }
         assignTask = assignTaskRepository.save(assignTask);
         return assignTaskMapper.toDto(assignTask);
     }

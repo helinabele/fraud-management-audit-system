@@ -86,6 +86,8 @@ public class FraudInvestigationReportDTO implements Serializable {
 
     private TeamDTO team;
 
+    private WhistleBlowerReportDTO whistleBlowerReport;
+
     public String getId() {
         return id;
     }
@@ -373,7 +375,7 @@ public class FraudInvestigationReportDTO implements Serializable {
     public void setTeam(TeamDTO team) {
         this.team = team;
     }
-    
+
     public List<String> getComments() {
         return comments;
     }
@@ -446,4 +448,11 @@ public class FraudInvestigationReportDTO implements Serializable {
             "}";
     }
 
+    public WhistleBlowerReportDTO getWhistleBlowerReport() {
+        return whistleBlowerReport;
+    }
+
+    public void setWhistleBlowerReport(WhistleBlowerReportDTO whistleBlowerReport) {
+        this.whistleBlowerReport = whistleBlowerReport;
+    }
 }

@@ -21,30 +21,32 @@
 <table class="fraud-report-table">
     <thead>
       <tr>
+        <th>S.No</th>
         <th>Case Title</th>
         <th>Payment System Component</th>
         <th>Amount Involved</th>
         <th>Number of Frauds Attempted but Faild</th>
         <th>Number of Frauds Happened</th>
         <th>Subsequent Measures Taken Related to the Fraud/Incident</th>
-        <th></th>
         <!-- <th>sum</th> -->
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let report of fraudKnowledgeManagment, let i = index">
         <td>{{ i+1 }}</td>
-        <td>{{ report?.unit }}</td>
-        <td>{{ report?.creditAccount}}</td>
+        <td>{{ report.fraudInvestigationReport?.title }}</td>
+        <td>{{report?.bankService}}</td>
+        <td>{{ report?.actionInvolved}}</td>
+        <td>{{ report?.attemptIncident}}</td>
         <td>{{ report?.actualFraudAmount}}</td>
-        <td>{{ report?.financialLossAmount}}</td>
-        <td>
+        <td>{{ report?.measureTaken}}</td>
+        <!-- <td>
           <ng-container *ngFor="let i of [1, 2]">
             {{ report?.reportNumber }}
           </ng-container>
         </td>
         <td>{{ 2 * (report?.reportNumber ?? 0) }}</td>
-        <td>{{ (report?.reportNumber ?? 0) + (report?.reportNumber ?? 0) }}</td>
+        <td>{{ (report?.reportNumber ?? 0) + (report?.reportNumber ?? 0) }}</td> -->
       </tr>
     </tbody>
   </table>

@@ -45,22 +45,40 @@
   <button class="filter-button" (click)="filteredResults()">Search</button>
   <button class="filter-button" (click)="clearResults()">Clear</button>
 </div>
-<table class="fraud-report-table">
+<!-- <div class="table-responsive table-entities" id="entities" *ngIf="fraudKnowledgeManagements && fraudKnowledgeManagements.length > 0">
+  <table class="table table-striped" aria-describedby="page-heading"> -->
+<table class="fraud-report-table" style="display: flex;">
   <thead>
     <tr>
       <th>No</th>
       <th>Report Number</th>
       <th>Case Title</th>
+      <th>Fraud Type</th>
       <th>Fraud Incident</th>
       <th>Actual Incident</th>
       <th>Attempted Incident</th>
-      <th>Unit</th>
+      <th>Reason for failure Attempted fraud</th>
+      <th>District/Department/Branch</th>
       <th>Incident Date</th>
       <th>Date of Detection</th>
-      <th>Employee</th>
-
-      <th>Fraud Type</th>
-
+      <th>Reason For Delay</th>
+      <th>Suspected Fraudster</th>
+      <th>Amount Reported</th>
+      <th>Actual Fraud Amount</th>
+      <th>Debit Acc and Name</th>
+      <th>Credit Acc and Name</th>
+      <th>Technique and Technology used to commit</th>
+      <th>Cause For an incident</th>
+      <th>Effect</th>
+      <th>Type of Payment</th>
+      <th>Recommendations Drawn</th>
+      <th>Postistion/JG</th>
+      <th>Name/IDNo</th>
+      <th>Actions involved</th>
+      <th>Measured Taken</th>
+      <th>Fraud Amount Recovered</th>
+      <th>Fraud Amount Written off</th>
+      <th>Provisions held for fraud outstanding</th>
     </tr>
   </thead>
   <tbody *ngIf="fraudKnowledgeManagements?.length">
@@ -68,19 +86,36 @@
       <td>{{i+1}}</td>
       <td>{{ report.reportNumber }}</td>
       <td>{{ report.fraudInvestigationReport?.title }}</td>
+      <td>{{ report.fraudType?.fraudName }}</td>
       <td>{{ report.fraudIncident }}</td>
       <td>{{ report.actualIncident }}</td>
       <td>{{ report.attemptIncident }}</td>
+      <td></td>
       <td>{{ report.unit }}</td>
       <td>{{ report.incidentDate}}</td>
       <td>{{ report.dateOfDetection}}</td>
-      <td>{{ report.employee?.name }}</td>
-      <td>{{ report.fraudType?.fraudName }}</td>
+      <td>{{report?.reasonForDelay}}</td>
+      <td>{{report?.suspectedFraudster}}</td>
+      <td>{{report?.amount}}</td>
+      <td>{{report?.actualFraudAmount}}</td>
+      <td>{{report?.debitAccount}}</td>
+      <td>{{report?.creditAccount}}</td>
+      <td>{{report?.techniquesandTechnologiesUsed}}</td>
+      <td>{{report?.causeForAnIncident}}</td>
+      <td>{{report?.Effect}}</td>
+      <td>{{report?.bankService}}</td>
+      <td>{{report?.recommendationsDrawn}}</td>
+      <td>{{report?.positionJG}}</td>
+      <td>{{report?.nameIdNo}}</td>
+      <td>{{report?.actionInvolved}}</td>
+      <td>{{report?.measureTaken}}</td>
+      <td>{{report?.fraudAmountRecovered}}</td>
+      <td>{{report?.fraudAmountWrittenOff}}</td>
+      <td>{{report?.previouslyHeldForFraudOutstanding}}</td>
 
     </tr>
   </tbody>
 </table>
-
 <!-- Showing search results count -->
 <p>Showing {{fraudKnowledgeManagements?.length}} of {{totalItems}} results</p>
 

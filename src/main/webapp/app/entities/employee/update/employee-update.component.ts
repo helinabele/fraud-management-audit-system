@@ -181,14 +181,18 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    const req = {
+      page: 0,
+      size: 10000,
+    }
     this.userService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.employee?.user)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.directorService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<IDirector[]>) => res.body ?? []))
       .pipe(
         map((directors: IDirector[]) =>
@@ -198,7 +202,7 @@ export class EmployeeUpdateComponent implements OnInit {
       .subscribe((directors: IDirector[]) => (this.directorsSharedCollection = directors));
 
     this.managerialService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<IManagerial[]>) => res.body ?? []))
       .pipe(
         map((managerials: IManagerial[]) =>
@@ -208,7 +212,7 @@ export class EmployeeUpdateComponent implements OnInit {
       .subscribe((managerials: IManagerial[]) => (this.managerialsSharedCollection = managerials));
 
     this.teamLeadService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<ITeamLead[]>) => res.body ?? []))
       .pipe(
         map((teamLeads: ITeamLead[]) =>
@@ -218,7 +222,7 @@ export class EmployeeUpdateComponent implements OnInit {
       .subscribe((teamLeads: ITeamLead[]) => (this.teamLeadsSharedCollection = teamLeads));
 
     this.teamService
-      .query()
+      .query(req)
       .pipe(map((res: HttpResponse<ITeam[]>) => res.body ?? []))
       .pipe(map((teams: ITeam[]) => this.teamService.addTeamToCollectionIfMissing<ITeam>(teams, this.employee?.team)))
       .subscribe((teams: ITeam[]) => (this.teamsSharedCollection = teams));

@@ -1,38 +1,58 @@
 <h2 id="page-heading" data-cy="FraudKnowledgeManagementHeading">
-    <span>Weekly Fraud Report</span>
-  
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <!-- <fa-icon [icon]="['fas', 'sync']" [spin]="isLoading"></fa-icon> -->
-        <span jhiTranslate="fraudMgt.fraudKnowledgeManagement.home.refreshListLabel">Refresh list</span>
-      </button>
-    </div>
-  </h2>
-  <div class="filter-container">
-    <input class="filter-input" type="text" placeholder="Filter by Name" [(ngModel)]="nameFilter">
-    <input class="filter-input" type="text" placeholder="Filter by Address" [(ngModel)]="addressFilter">
-    <input class="filter-input" type="text" placeholder="Filter by Cause" [(ngModel)]="causeFilter">
-    <input class="filter-input" type="text" placeholder="Filter by Fraud" [(ngModel)]="fraudTypeFilter">
-    <button class="filter-button" (click)="filterResults()">Search</button>
-    <button class="filter-button">Cancle</button>
+  <span>Weekly Fraud Report</span>
+
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <!-- <fa-icon [icon]="['fas', 'sync']" [spin]="isLoading"></fa-icon> -->
+      <span jhiTranslate="fraudMgt.fraudKnowledgeManagement.home.refreshListLabel">Refresh list</span>
+    </button>
   </div>
+</h2>
+<div class="filter-container">
+  <input class="filter-input" type="text" placeholder="Filter by Name" [(ngModel)]="nameFilter">
+  <input class="filter-input" type="text" placeholder="Filter by Address" [(ngModel)]="addressFilter">
+  <input class="filter-input" type="text" placeholder="Filter by Cause" [(ngModel)]="causeFilter">
+  <input class="filter-input" type="text" placeholder="Filter by Fraud" [(ngModel)]="fraudTypeFilter">
+  <button class="filter-button" (click)="filterResults()">Search</button>
+  <button class="filter-button">Cancle</button>
+</div>
 <table class="fraud-report-table" data-cy="entityTable">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Fraudster Name</th>
-            <th>Fraudster Address</th>
-            <th>Cause of Fraud</th>
-            <th>Fraud Type by Occurence</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let report of filteredNameList, let i = index">
-            <td>{{ i+ 1}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Case Title/summary</th>
+      <th>Fraud Type</th>
+      <th>Fraud Type By Occurence</th>
+      <th>Reason for failure of the fraud action</th>
+      <th>Unit/Department/Branch</th>
+      <th>Incident Date</th>
+      <th>Date of Detection</th>
+      <th>Reason For Delay</th>
+      <th>Fraudser Name</th>
+      <th>Amount Reported</th>
+      <th>Cause for an incident/attempt</th>
+      <th>Technique and Technology used to commit the fraud</th>
+      <th>Recommendations Drawn</th>
+      <th>Fraud Amount Recovered</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of filteredNameList, let i = index">
+      <td>{{ i + 1}}</td>
+      <td>{{ report.fraudInvestigationReport?.title }}</td>
+      <td>{{ report.fraudType?.fraudName }}</td>
+      <td>{{report?.FraudTypeByIncident}}</td>
+      <td>{{report?.reasonForFailure}}</td>
+      <td>{{report?.unit}}</td>
+      <td>{{report.incidentDate}}</td>
+      <td>{{report?.dateOfDetection}}</td>
+      <td>{{report?.reasonForDelay}}</td>
+      <td>{{report?.SuspectedFraudster}}</td>
+      <td>{{report?.actualFraudAmount}}</td>
+      <td>{{ report?.causeForAnIncident}}</td>
+      <td>{{ report?.techniquesandTechnologiesUsed}}</td>
+      <td>{{ report?.recommendationsDrawn}}</td>
+      <td>{{ report?.fraudAmountRecovered }}</td>
+    </tr>
+  </tbody>
 </table>

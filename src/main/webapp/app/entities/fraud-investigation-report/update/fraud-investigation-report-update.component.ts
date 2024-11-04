@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
-import { FormBuilder} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { FraudInvestigationReportFormService, FraudInvestigationReportFormGroup } from './fraud-investigation-report-form.service';
 import { IFraudInvestigationReport } from '../fraud-investigation-report.model';
 import { FraudInvestigationReportService } from '../service/fraud-investigation-report.service';
@@ -22,6 +22,10 @@ import { User } from 'app/entities/user/user.model';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ITEM_CONFIRMED_EVENT } from 'app/config/navigation.constants';
+import { IWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle-blower-report.model';
+import { WhistleBlowerReportService } from 'app/entities/whistle-blower-report/service/whistle-blower-report.service';
+import { IAssignTask } from 'app/entities/assign-task/assign-task.model';
+import { AssignTaskService } from 'app/entities/assign-task/service/assign-task.service';
 
 @Component({
   selector: 'jhi-fraud-investigation-report-update',
@@ -29,6 +33,7 @@ import { ITEM_CONFIRMED_EVENT } from 'app/config/navigation.constants';
 })
 export class FraudInvestigationReportUpdateComponent implements OnInit {
   isSaving = false;
+  isSubmitted = false; // Track if the report is submitted
   fraudInvestigationReport: IFraudInvestigationReport | null = null;
   employee: IEmployee[] | undefined | null = [];
   employeesSharedCollection: IEmployee[] = [];
@@ -56,6 +61,10 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     ''
   ]);
 
+  assignTask: IAssignTask | undefined;
+  whistleBlowerReport: IWhistleBlowerReport | null = null;
+  task: ITask | null = null;
+
   constructor(
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
@@ -67,7 +76,10 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected signatureService: SignatureService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    protected whistleBlowerReportService: WhistleBlowerReportService,
+    private assignTaskService: AssignTaskService,
+    private router: Router
   ) { }
 
   compareEmployee = (o1: IEmployee | null, o2: IEmployee | null): boolean => this.employeeService.compareEmployee(o1, o2);
@@ -84,27 +96,85 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
         this.comments = fraudInvestigationReport.comments || [];
         this.objectiveComments = fraudInvestigationReport.objectiveComments || [];
       }
+  
       const userString = localStorage.getItem('user');
       if (userString) {
         this.currentUser = JSON.parse(userString) as User;
       }
+  
       this.loadRelationshipsOptions();
       this.loadEmployees();
       this.setSelectedEmployees();
-
-      //this.addDynamicControls(['Introduction', 'Objective']);
+    });
+  
+    this.activatedRoute.queryParams.subscribe(params => {
+      const whistleBlowerReportId = params['whistleBlowerReportId'];
+      const taskId = params['taskId'];
+  
+      if (whistleBlowerReportId) {
+        this.whistleBlowerReportService.find(whistleBlowerReportId).subscribe(response => {
+          this.whistleBlowerReport = response.body;
+        });
+      }
+  
+      if (taskId) {
+        // Fetch the task by ID and set it in the form
+        this.taskService.find(taskId).subscribe(response => {
+          const task = response.body;
+          if (task) {
+            this.editForm.patchValue({ task }); // Update the form control with the fetched task
+          }
+        });
+      }
     });
   }
+  
+  
 
-/*   addComment(): void {
-    const newCommentControl = this.editForm.get('newComment');
-    const newComment = newCommentControl!.value?.trim();
-    if (newComment) {
-      this.comments.push(newComment);
-      this.editForm.patchValue({ comments: this.comments });
-      newCommentControl!.reset();
-    }
-  } */
+  /*     ngOnInit(): void {
+        this.activatedRoute.data.subscribe(({ fraudInvestigationReport, task }) => {
+          this.fraudInvestigationReport = fraudInvestigationReport;
+          if (fraudInvestigationReport) {
+            this.updateForm(fraudInvestigationReport);
+            this.comments = fraudInvestigationReport.comments || [];
+            this.objectiveComments = fraudInvestigationReport.objectiveComments || [];
+          }
+          if (task && this.fraudInvestigationReport) { 
+            // Set the task from assignTask, checking fraudInvestigationReport is not null
+            this.fraudInvestigationReport.task = task;
+            this.updateForm(this.fraudInvestigationReport);
+          }
+      
+          const userString = localStorage.getItem('user');
+          if (userString) {
+            this.currentUser = JSON.parse(userString) as User;
+          }
+          this.loadRelationshipsOptions();
+          this.loadEmployees();
+          this.setSelectedEmployees();
+        });
+      
+        this.activatedRoute.queryParams.subscribe(params => {
+          const whistleBlowerReportId = params['whistleBlowerReportId'];
+          if (whistleBlowerReportId) {
+            this.whistleBlowerReportService.find(whistleBlowerReportId).subscribe(response => {
+              this.whistleBlowerReport = response.body;
+            });
+          }
+        });
+      }
+       */
+
+
+  /*   addComment(): void {
+      const newCommentControl = this.editForm.get('newComment');
+      const newComment = newCommentControl!.value?.trim();
+      if (newComment) {
+        this.comments.push(newComment);
+        this.editForm.patchValue({ comments: this.comments });
+        newCommentControl!.reset();
+      }
+    } */
 
   /*addObjectiveComment(): void {
      const newCommentControl1 = this.editForm.get('newObjectiveComment');
@@ -117,54 +187,54 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
   } */
 
 
-/*   addComment(): void {
-    const newCommentControl = this.editForm.get('newComment');
+  /*   addComment(): void {
+      const newCommentControl = this.editForm.get('newComment');
+      const newComment = newCommentControl!.value?.trim();
+  
+      if (newComment && this.currentUser) {
+        const newCommentWithAuthor = `${newComment} - ${this.currentUser.login}`;
+  
+        // Assuming direct manipulation for simplicity; consider using service for API calls
+        this.comments.push(newCommentWithAuthor);
+        console.log('Updated Comments:', this.comments);
+        this.editForm.patchValue({ comments: this.comments });
+        newCommentControl!.reset();
+      }
+    }
+  
+    addObjectiveComment(): void {
+      const newCommentControl = this.editForm.get('newComment');
+      const newComment = newCommentControl!.value?.trim();
+  
+      if (newComment && this.currentUser) {
+        const newCommentWithAuthor = `${newComment} - ${this.currentUser.login}`;
+  
+        // Assuming direct manipulation for simplicity; consider using service for API calls
+        this.comments.push(newCommentWithAuthor);
+        console.log('Updated Comments:', this.comments);
+        this.editForm.patchValue({ comments: this.comments });
+        newCommentControl!.reset();
+      }
+    } */
+
+  addComment(commentType: 'comments' | 'objectiveComments'): void {
+    const newCommentControl = this.editForm.get(commentType === 'comments' ? 'newComment' : 'newObjectiveComment');
     const newComment = newCommentControl!.value?.trim();
 
     if (newComment && this.currentUser) {
       const newCommentWithAuthor = `${newComment} - ${this.currentUser.login}`;
 
-      // Assuming direct manipulation for simplicity; consider using service for API calls
-      this.comments.push(newCommentWithAuthor);
-      console.log('Updated Comments:', this.comments);
-      this.editForm.patchValue({ comments: this.comments });
+      if (commentType === 'comments') {
+        this.comments.push(newCommentWithAuthor);
+      } else {
+        this.objectiveComments.push(newCommentWithAuthor);
+      }
+
+      console.log('Updated Comments:', commentType === 'comments' ? this.comments : this.objectiveComments);
       newCommentControl!.reset();
     }
   }
 
-  addObjectiveComment(): void {
-    const newCommentControl = this.editForm.get('newComment');
-    const newComment = newCommentControl!.value?.trim();
-
-    if (newComment && this.currentUser) {
-      const newCommentWithAuthor = `${newComment} - ${this.currentUser.login}`;
-
-      // Assuming direct manipulation for simplicity; consider using service for API calls
-      this.comments.push(newCommentWithAuthor);
-      console.log('Updated Comments:', this.comments);
-      this.editForm.patchValue({ comments: this.comments });
-      newCommentControl!.reset();
-    }
-  } */
-
-    addComment(commentType: 'comments' | 'objectiveComments'): void {
-      const newCommentControl = this.editForm.get(commentType === 'comments' ? 'newComment' : 'newObjectiveComment');
-      const newComment = newCommentControl!.value?.trim();
-
-      if (newComment && this.currentUser) {
-        const newCommentWithAuthor = `${newComment} - ${this.currentUser.login}`;
-
-        if (commentType === 'comments') {
-          this.comments.push(newCommentWithAuthor);
-        } else {
-          this.objectiveComments.push(newCommentWithAuthor);
-        }
-
-        console.log('Updated Comments:', commentType === 'comments' ? this.comments : this.objectiveComments);
-        newCommentControl!.reset();
-      }
-    }
-    
 
   /*   addDynamicControls(fields: string[]): void {
       fields.forEach(field => {
@@ -245,40 +315,56 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     event.preventDefault();
     this.isSaving = true;
     const fraudInvestigationReport = this.fraudInvestigationReportFormService.getFraudInvestigationReport(this.editForm);
+    // Attach the whistleBlowerReport to the fraudInvestigationReport
+    if (this.whistleBlowerReport) {
+      fraudInvestigationReport.whistleBlowerReport = this.whistleBlowerReport;
+    }
+
     if (fraudInvestigationReport.id !== null) {
       this.subscribeToSaveResponse(this.fraudInvestigationReportService.update(fraudInvestigationReport));
     } else {
       this.subscribeToSaveResponse(this.fraudInvestigationReportService.create(fraudInvestigationReport));
     }
   }
-  confirm(event: Event): void {
+  // Submit action with confirmation and status change
+  confirmSubmit(event: Event): void {
     event.preventDefault();
+
+    // Open confirmation dialog
     const modalRef = this.modalService.open(ConfirmationDialogComponent);
-    modalRef.componentInstance.message = 'Are you sure you want to submit?';
+    modalRef.componentInstance.message = 'Are you sure you want to submit? Once submitted, no further edits will be allowed.';
 
     modalRef.result.then((result) => {
-        if (result === ITEM_CONFIRMED_EVENT) {
-            this.save(event);
-        }
+      if (result === ITEM_CONFIRMED_EVENT) {
+        this.submit(event);
+      }
     }, (reason) => {
-        // Handle dismiss
+      // Handle dismiss
     });
-}
+  }
 
-//   showConfirmationPopup(event: Event) {
-//     event.preventDefault();
-//
-//     const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-//       width: '300px',
-//       data: { message: 'Are you sure you want to submit?' },
-//     });
-//
-//     dialogRef.afterClosed().subscribe((result) => {
-//       if (result) {
-//         this.save(event);
-//       }
-//     });
-//   }
+  // Submit logic
+  submit(event: Event): void {
+    event.preventDefault();
+    this.isSaving = true;
+
+    const fraudInvestigationReport = this.fraudInvestigationReportFormService.getFraudInvestigationReport(this.editForm);
+
+    // Set status to IMPLEMENTED for submission
+    // fraudInvestigationReport. = 'IMPLEMENTED';
+
+    // Save with status change
+    if (fraudInvestigationReport.id !== null) {
+      this.subscribeToSaveResponse(this.fraudInvestigationReportService.update(fraudInvestigationReport));
+    } else {
+      this.subscribeToSaveResponse(this.fraudInvestigationReportService.create(fraudInvestigationReport));
+    }
+
+    // After submission, disable further editing
+    this.isSubmitted = true;
+    this.editForm.disable(); // Disable form inputs after submission
+  }
+
   onEmployeeChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
     const selectedOptions = Array.from(target.selectedOptions);
@@ -343,7 +429,11 @@ export class FraudInvestigationReportUpdateComponent implements OnInit {
     this.taskService
       .query()
       .pipe(map((res: HttpResponse<ITask[]>) => res.body ?? []))
-      .pipe(map((tasks: ITask[]) => this.taskService.addTaskToCollectionIfMissing<ITask>(tasks, this.fraudInvestigationReport?.task)))
+      .pipe(
+        map((tasks: ITask[]) =>
+          this.taskService.addTaskToCollectionIfMissing<ITask>(tasks, this.fraudInvestigationReport?.task)
+        )
+      )
       .subscribe((tasks: ITask[]) => (this.tasksSharedCollection = tasks));
 
     this.teamService

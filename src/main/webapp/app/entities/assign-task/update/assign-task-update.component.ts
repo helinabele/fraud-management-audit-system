@@ -102,60 +102,117 @@ export class AssignTaskUpdateComponent implements OnInit {
 
   compareTeam = (o1: ITeam | null, o2: ITeam | null): boolean => this.teamService.compareTeam(o1, o2);
 
-  // ngOnInit(): void {
-  //   this.activatedRoute.data.subscribe(({ assignTask }) => {
-  //     this.assignTask = assignTask;
-  //     if (assignTask) {
-  //       this.updateForm(assignTask);
-  //     }
-  //     this.whistleBlowerReportService.selectedReport$.subscribe(report => {
-  //       this.selectedReport = report;
-  //     });
-  //     this.loadRelationshipsOptions();
-  //   });
-  // }
-
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ assignTask }) => {
-      this.assignTask = assignTask;
-      if (assignTask) {
-        this.updateForm(assignTask);
-        this.loadMoreInfo(assignTask);
-      }
-      this.loadRelationshipsOptions(() => {
-        this.loadPreviousTask(); // Ensure this function can work without needing the report ID
-        this.retrieveSelectedReport(); // This function will be modified next
+  /*   ngOnInit(): void {
+      this.activatedRoute.data.subscribe(({ assignTask }) => {
+        this.assignTask = assignTask;
+        if (assignTask) {
+          this.updateForm(assignTask);
+        }
+        this.whistleBlowerReportService.selectedReport$.subscribe(report => {
+          this.selectedReport = report;
+        });
+        this.loadRelationshipsOptions();
       });
-    });
+    } */
+
+  /*   ngOnInit(): void {
+      this.activatedRoute.data.subscribe(({ assignTask }) => {
+        this.assignTask = assignTask;
+        if (assignTask) {
+          this.updateForm(assignTask);
+          this.loadMoreInfo(assignTask);
+        }
+        this.loadRelationshipsOptions(() => {
+          this.loadPreviousTask(); // Ensure this function can work without needing the report ID
+          this.retrieveSelectedReport(); // This function will be modified next
+        });
+      });
   
-    // Using route parameters instead of query parameters
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.whistleBlowerReportId = params.get('id'); // Assuming the route is defined with `:id`
+      // Using route parameters instead of query parameters
+      this.activatedRoute.paramMap.subscribe(params => {
+        this.whistleBlowerReportId = params.get('id'); // Assuming the route is defined with `:id`
+  
+        // Fetch the selected report based on the retrieved ID
+        if (this.whistleBlowerReportId) {
+          console.log(this.whistleBlowerReportId);
+          this.whistleBlowerReportService.find(this.whistleBlowerReportId).subscribe(report => {
+            this.selectedReport = report.body;
+            if (this.selectedReport) {
+              this.preFillWhistleBlowerData(this.selectedReport);
+  
+              // Patch the form with whistleBlowerReport data
+              this.editForm.patchValue({
+                whistleBlowerReport: this.selectedReport
+              });
+            }
+          });
+        }
+      });
+    } */
+
+      ngOnInit(): void {
+        this.activatedRoute.data.subscribe(({ assignTask }) => {
+          this.assignTask = assignTask;
+          if (assignTask) {
+            this.updateForm(assignTask);
+            this.loadMoreInfo(assignTask);
       
-      // Fetch the selected report based on the retrieved ID
-      if (this.whistleBlowerReportId) {
-        this.whistleBlowerReportService.find(this.whistleBlowerReportId).subscribe(report => {
-          this.selectedReport = report.body;
-          if (this.selectedReport) {
-            this.preFillWhistleBlowerData(this.selectedReport);
-            
-            // Patch the form with whistleBlowerReport data
-            this.editForm.patchValue({
-              whistleBlowerReport: this.selectedReport
-            });
+            // Check if `whistleBlowerReportId` is present in assignTask directly
+            if (assignTask.whistleBlowerReport?.id) {
+              this.whistleBlowerReportId = assignTask.whistleBlowerReport.id;
+              if (this.whistleBlowerReportId) {  // Ensure non-null before passing
+                this.loadWhistleBlowerReport(this.whistleBlowerReportId);
+              }
+            }
+          }
+      
+          // Pass an empty callback function if none is needed
+          this.loadRelationshipsOptions(() => {});
+        });
+      
+        // Retrieve `whistleBlowerReportId` from URL parameters if navigating from WhistleBlowerReport component
+        this.activatedRoute.paramMap.subscribe(params => {
+          if (!this.whistleBlowerReportId) {  // Ensure it’s only retrieved if not set already
+            this.whistleBlowerReportId = params.get('id');
+            if (this.whistleBlowerReportId) {  // Ensure non-null before passing
+              this.loadWhistleBlowerReport(this.whistleBlowerReportId);
+            }
           }
         });
       }
-    });
-  }
-  
-  preFillWhistleBlowerData(report: IWhistleBlowerReport): void {
+      
+      loadWhistleBlowerReport(id: string): void {
+        if (!id) {
+          console.error("Invalid whistleBlowerReportId provided:", id);
+          return;
+        }
+      
+        this.whistleBlowerReportService.find(id).subscribe({
+          next: (response) => {
+            this.selectedReport = response.body;
+            if (this.selectedReport) {
+              this.editForm.patchValue({
+                whistleBlowerReport: this.selectedReport
+              });
+            }
+          },
+          error: (err) => {
+            console.error("Failed to load WhistleBlowerReport with id:", id, err);
+            // Optionally, you could add some user feedback here, like a message or alert
+          }
+        });
+      }
+      
+      
+
+
+/*   preFillWhistleBlowerData(report: IWhistleBlowerReport): void {
     if (report) {
       this.editForm.patchValue({
         whistleBlowerReport: { id: report.id },  // Ensure you pass an object with the 'id' property
       });
     }
-  }
+  } */
 
   loadMoreInfo(assignTask: any): void {
     if (assignTask.director?.id) {
@@ -186,22 +243,20 @@ export class AssignTaskUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const assignTask = this.assignTaskFormService.getAssignTask(this.editForm);
-    
+
     // Log the selectedReport and the assignTask
     console.log("Selected WhistleBlowerReport: ", this.selectedReport);
     console.log("AssignTask before save: ", assignTask);
-    
+
     // Explicitly assign whistleBlowerReport to assignTask
     assignTask.whistleBlowerReport = this.selectedReport;
 
     if (assignTask.id !== null) {
-        this.subscribeToSaveResponse(this.assignTaskService.update(assignTask));
+      this.subscribeToSaveResponse(this.assignTaskService.update(assignTask));
     } else {
-        this.subscribeToSaveResponse(this.assignTaskService.create(assignTask));
+      this.subscribeToSaveResponse(this.assignTaskService.create(assignTask));
     }
-}
-
-  
+  }
 
   // identifyUserRole(): void {
   //   this.account = JSON.parse(localStorage.getItem('user') ?? '{}');
@@ -219,7 +274,6 @@ export class AssignTaskUpdateComponent implements OnInit {
   //     this.getEmployee();
   //   }
   // }
-
 
   checkAuthority(values: any[]): void {
     this.roleId = values.find(t => t.user?.id === this.account.id)?.id;

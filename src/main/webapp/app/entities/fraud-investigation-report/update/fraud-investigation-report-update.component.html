@@ -24,6 +24,7 @@
                 </option>
               </select>
             </div>
+
             <div class="col-md-1"></div>
             <div class="col-md-6">
               <label class="form-label" jhiTranslate="fraudMgtApp.fraudInvestigationReport.title"
@@ -462,22 +463,30 @@
 
       </div>
       <div>
+
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
           (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
-        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+        <!-- Save Button (will be hidden after submission) -->
+        <button *ngIf="!isSubmitted" type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary" (click)="save($event)">
           <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
 
-        <button type="button" id="save-entity" data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving" class="btn btn-primary" (click)="confirm($event)">
+        <!-- Submit Button (available until submitted) -->
+        <button *ngIf="!isSubmitted" type="button" id="submit-entity" data-cy="entityCreateSubmitButton"
+          [disabled]="editForm.invalid || isSaving" class="btn btn-primary" (click)="confirmSubmit($event)">
           <fa-icon icon="save"></fa-icon>&nbsp;<span>Submit</span>
         </button>
 
+        <!-- Confirmation for disabling edit post submission -->
+        <button *ngIf="isSubmitted" type="button" class="btn btn-secondary" disabled>
+          Submitted - No further edits allowed
+        </button>
       </div>
+
     </form>
   </div>
 </div>

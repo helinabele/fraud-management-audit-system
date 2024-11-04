@@ -58,6 +58,7 @@ const assignTaskRoute: Routes = [
     },
     canActivate: [UserRouteAccessService]
   }
+  
 ];
 
 @NgModule({

@@ -21,6 +21,8 @@ import { IManagerial } from 'app/entities/managerial/managerial.model';
 import { ITeamLead } from 'app/entities/team-lead/team-lead.model';
 import { IEmployee } from 'app/entities/employee/employee.model';
 import { IWhistleBlowerReport } from 'app/entities/whistle-blower-report/whistle-blower-report.model';
+import { WhistleBlowerReportService } from 'app/entities/whistle-blower-report/service/whistle-blower-report.service';
+import { ITask } from 'app/entities/task/task.model';
 
 @Component({
   selector: 'jhi-assign-task',
@@ -40,8 +42,9 @@ export class AssignTaskComponent implements OnInit {
   account: any;
   role?: Authority;
   roleId?: string;
-  whistleBlowerReport?: IWhistleBlowerReport;
-  
+  whistleBlowerReport?: IWhistleBlowerReport[];
+  assignT?: IAssignTask;
+
   constructor(
     protected assignTaskService: AssignTaskService,
     protected activatedRoute: ActivatedRoute,
@@ -52,19 +55,82 @@ export class AssignTaskComponent implements OnInit {
     private directorService: DirectorService,
     private managerService: ManagerialService,
     private teamLeadService: TeamLeadService,
+    protected whistleBlowerReportService: WhistleBlowerReportService,
   ) { }
 
   trackId = (_index: number, item: IAssignTask): string => this.assignTaskService.getAssignTaskIdentifier(item);
 
   ngOnInit(): void {
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state) {
-      this.whistleBlowerReport = navigation.extras.state.whistleBlowerReport;
-    }
-    console.log('WhistleBlowerReport ID:', this.whistleBlowerReport?.id);
+    /*  const navigation = this.router.getCurrentNavigation();
+     if (navigation?.extras?.state) {
+       this.whistleBlowerReport = navigation.extras.state.whistleBlowerReport;
+     }
+     console.log('WhistleBlowerReport ID:', this.whistleBlowerReport?.id); */
     this.identifyUserRole();
     this.load();
   }
+
+  /*     ngOnInit(): void {
+        // Subscribe to route parameters
+        this.activatedRoute.params.subscribe(params => {
+          const assignTaskId = params['id'];
+          const whistleBlowerReportId = params['whistleBlowerReportId'];
+    
+          if (assignTaskId) {
+            // Here, you can fetch the assignTask based on the ID if needed
+            // this.loadAssignTask(assignTaskId); // Uncomment if fetching from a service
+            this.assignTask = { id: assignTaskId } as IAssignTask; // Initialize with an object if you fetch it
+          }
+    
+          if (whistleBlowerReportId) {
+            // Assuming you have a way to initialize the whistleBlowerReport
+            this.whistleBlowerReport = { id: whistleBlowerReportId } as IWhistleBlowerReport; // Initialize as needed
+          }
+        });
+    
+        // Optional: If you have a state from navigation
+        const navigation = this.router.getCurrentNavigation();
+        if (navigation?.extras?.state) {
+          this.whistleBlowerReport = navigation.extras.state.whistleBlowerReport;
+        }
+    
+        console.log('Assign Task ID:', this.assignTask?.id); // Safe access with optional chaining
+        console.log('WhistleBlowerReport ID:', this.whistleBlowerReport?.id); // Safe access with optional chaining
+        this.identifyUserRole();
+        this.load();
+      } */
+
+
+  /*  onAssignButtonClick(assignTask: IAssignTask): void {
+     const whistleBlowerReportId = assignTask.whistleBlowerReport?.id;
+ 
+     if (assignTask.id) {
+         if (whistleBlowerReportId) {
+             // Navigate using the correct endpoint format as per your Swagger documentation
+             this.router.navigate(['/assign-tasks', assignTask.id, 'assign', whistleBlowerReportId], {
+                 state: { whistleBlowerReport: { id: whistleBlowerReportId } }
+             });
+         } else {
+             console.error("The selected assign task does not have an associated WhistleBlowerReport.");
+         }
+     } else {
+         console.error("AssignTask ID is undefined");
+     }
+ } */
+
+/*   startInvestigation(assignTask: any): void {
+    this.router.navigate(['/assign-task', assignTask.id, 'startInvestigation'], {
+      state: {
+        task: assignTask.task
+      }
+    });
+  }
+  onInvestigateButtonClick(assignTask: IAssignTask): void {
+    this.assignTaskService.setSelectedReport(assignTask);
+    this.router.navigate(['/assign-task', assignTask.task?.id, 'startInvestigation'], {
+      state: { assignTask }
+    });
+  } */
 
   identifyUserRole(): void {
     this.account = JSON.parse(localStorage.getItem('user') ?? '{}');
@@ -175,7 +241,7 @@ export class AssignTaskComponent implements OnInit {
     }
     return assignTask;
   }
-  
+
   protected loadFromBackendWithRouteInformations(): Observable<EntityArrayResponseType> {
     return combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
       tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),

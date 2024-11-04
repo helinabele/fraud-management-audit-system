@@ -61,7 +61,7 @@
   <tbody *ngIf="fraudKnowledgeManagements?.length; else noReports">
     <tr *ngFor="let report of fraudKnowledgeManagements; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ report.fraudInvestigationReport?.title }}</td>
+      <td>{{ report.fraudType?.fraudName }}</td>
       <td>{{ fraudTypeCounts[report.fraudInvestigationReport?.title ?? ''] || 0 }}</td>      
     </tr>
   </tbody>

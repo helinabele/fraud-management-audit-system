@@ -47,10 +47,10 @@ public class FraudInvestigationReport implements Serializable {
 
     @Field("comments")
     private List<String> comments = new ArrayList<>();
-    
+
     @Field("objectiveComments")
     private List<String> objectiveComments = new ArrayList<>();
-    
+
     @NotNull
     @Field("objective")
     private String objective;
@@ -153,6 +153,10 @@ public class FraudInvestigationReport implements Serializable {
     @Field("findings")
     @JsonIgnoreProperties(value = { "fraudInvestigationReport" }, allowSetters = true)
     private Set<Findings> findings = new HashSet<>();
+
+    @DBRef
+    @Field("whistle_blower_report")
+    private WhistleBlowerReport whistleBlowerReport;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -669,7 +673,21 @@ public class FraudInvestigationReport implements Serializable {
     public void setObjectiveComments(List<String> objectiveComments) {
         this.objectiveComments = objectiveComments;
     }
-    
+
+
+    public WhistleBlowerReport getWhistleBlowerReport() {
+        return whistleBlowerReport;
+    }
+
+    public void setWhistleBlowerReport(WhistleBlowerReport whistleBlowerReport) {
+        this.whistleBlowerReport = whistleBlowerReport;
+    }
+
+    public FraudInvestigationReport whistleBlowerReport(WhistleBlowerReport whistleBlowerReport) {
+        this.setWhistleBlowerReport(whistleBlowerReport);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

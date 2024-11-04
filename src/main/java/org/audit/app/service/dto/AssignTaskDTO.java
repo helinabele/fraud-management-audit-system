@@ -1,5 +1,7 @@
 package org.audit.app.service.dto;
 
+import org.audit.app.domain.WhistleBlowerReport;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -141,9 +143,7 @@ public class AssignTaskDTO implements Serializable {
         this.team = team;
     }
 
-    public WhistleBlowerReportDTO getWhistleBlowerReport() {
-        return whistleBlowerReport;
-    }
+    public WhistleBlowerReportDTO getWhistleBlowerReport() { return whistleBlowerReport; }
 
     public void setWhistleBlowerReport(WhistleBlowerReportDTO whistleBlowerReport) {
         this.whistleBlowerReport = whistleBlowerReport;

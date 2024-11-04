@@ -2,6 +2,7 @@ import dayjs from 'dayjs/esm';
 import { IEmployee } from 'app/entities/employee/employee.model';
 import { ITask } from 'app/entities/task/task.model';
 import { ITeam } from 'app/entities/team/team.model';
+import { IWhistleBlowerReport } from '../whistle-blower-report/whistle-blower-report.model';
 
 export interface IFraudInvestigationReport {
   id: string;
@@ -43,6 +44,7 @@ export interface IFraudInvestigationReport {
   employee?: IEmployee[] | null | undefined;
   task?: Pick<ITask, 'id' | 'title'> | null;
   team?: Pick<ITeam, 'id' | 'teamName'> | null;
+  whistleBlowerReport?: IWhistleBlowerReport | null;
 }
 
 export type NewFraudInvestigationReport = Omit<IFraudInvestigationReport, 'id'> & { id: null };

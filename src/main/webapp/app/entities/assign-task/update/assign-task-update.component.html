@@ -1,212 +1,172 @@
 <div class="container">
-<div class="row">
-  <div class="col-md-3">
-    <div class="left-bar" *ngIf="selectedReport">
-      <h4>Report Details</h4>
-      <div class="report-info">
-        <p><strong>Full Name:</strong> {{ selectedReport.fullName }}</p>
-        <p><strong>Gender Type:</strong> {{ selectedReport.genderType }}</p>
-        <p><strong>Email Address:</strong> {{ selectedReport.emailAdress }}</p>
-        <p><strong>Message:</strong></p>
-        <div class="message">{{ selectedReport.message }}</div>
-      </div>
-      <hr>
-      <h4>Attachment</h4>
-      <div *ngIf="selectedReport.attachment">
-        <p>
-          <a (click)="openFile(selectedReport.attachment, selectedReport.attachmentContentType)"
-            jhiTranslate="entity.action.open">Open Attachment</a>
-        </p>
-        <p>
-          <span *ngIf="selectedReport.attachment">{{ selectedReport.attachmentContentType }},
-            {{ byteSize(selectedReport.attachment) }}</span>
-        </p>
-      </div>
-      <hr>
-      <div class="previous-task">
-        <div class="task-message">
-          <!-- <p>Welcome, {{ account?.name }}</p> -->
-          <p style="display: inline;"><strong>Message from:</strong></p>
-          <!-- <p style="display: inline;">{{ assignTask?.description }}</p> -->
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- <div>
-    <p>Whistle Blower Property: {{ whistleBlowerProperty }}</p>
-  </div> -->
   <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_PRESIDENT', 'ROLE_VICE_PRESIDENT', 'ROLE_MANAGER']">
     <input type="checkbox" id="myCheckbox" [(ngModel)]="isChecked">
     <label for="myCheckbox">If you need to create Team first click here</label>
-    <jhi-team-update *ngIf="isChecked" [navigateOnSave]="false" [showCancelButton]="false" (teamSaved)="onTeamSaved($event)"></jhi-team-update>
-</div>
-  <div class="col-md-9">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-assign-task-heading" data-cy="AssignTaskCreateUpdateHeading"
-        jhiTranslate="fraudMgtApp.assignTask.home.createOrEditLabel">
-        Create or edit a Assign Task
-      </h2>
-
-      <div>
-        <jhi-alert-error></jhi-alert-error>
-
-        <!-- <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
-            [readonly]="true" />
-        </div> -->
-        <div class="row">
-        <!-- <div class="col-md-6 mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.task" for="field_task">Task</label>
-          <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task"
-            [compareWith]="compareTask">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}
-            </option>
-          </select>
-        </div> -->
-        <div class="col-md-6 mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.task" for="field_task">Task</label>
-          <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task">
-            <option *ngFor="let taskOption of tasksSharedCollection" [ngValue]="taskOption.title" [selected]="taskOption.title === editForm.get('task')?.value">{{ taskOption.title }}</option>
-          </select>
-        </div>
-        
-        
-        
-        
-        
-        <!-- <div class="form-group">
-          <label for="task">Task</label>
-          <input type="text" class="form-control" id="task" name="task" [(ngModel)]="assignTask.task?.title">
-        </div> -->
-        <div class="col-md-6 mb-3" *jhiHasAnyAuthority="['ROLE_VICE_PRESIDENT']">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.director" for="field_director">Director</label>
-          <select class="form-control" id="field_director" data-cy="director" name="director" formControlName="director"
-            [compareWith]="compareDirector">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="directorOption" *ngFor="let directorOption of directorsSharedCollection">
-              {{ directorOption.directorName }}
-            </option>
-          </select>
-        </div>
-
-        <div class="col-md-6 mb-3" *jhiHasAnyAuthority="['ROLE_DIRECTOR']">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.manager" for="field_manager">Manager</label>
-          <select class="form-control" id="field_manager" data-cy="manager" name="manager" formControlName="manager"
-            [compareWith]="compareManagerial">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="managerialOption" *ngFor="let managerialOption of managerialsSharedCollection">
-              {{ managerialOption.managerialName }}
-            </option>
-          </select>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.taskAssignmentDate"
-            for="field_taskAssignmentDate">Task Assignment Date</label>
-          <div class="d-flex">
-            <input id="field_taskAssignmentDate" data-cy="taskAssignmentDate" type="datetime-local" class="form-control"
-              name="taskAssignmentDate" formControlName="taskAssignmentDate" placeholder="YYYY-MM-DD HH:mm" />
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.taskStartDate" for="field_taskStartDate">Task
-            Start Date</label>
-          <div class="d-flex">
-            <input id="field_taskStartDate" data-cy="taskStartDate" type="datetime-local" class="form-control"
-              name="taskStartDate" formControlName="taskStartDate" placeholder="YYYY-MM-DD HH:mm" />
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.taskEndDate" for="field_taskEndDate">Task End
-            Date</label>
-          <div class="d-flex">
-            <input id="field_taskEndDate" data-cy="taskEndDate" type="datetime-local" class="form-control"
-              name="taskEndDate" formControlName="taskEndDate" placeholder="YYYY-MM-DD HH:mm" />
-          </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.attachment"
-            for="field_attachment">Attachment</label>
-          <div>
-            <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
-              <a class="pull-start"
-                (click)="openFile(editForm.get('attachment')!.value!, editForm.get('attachmentContentType')!.value!)"
-                jhiTranslate="entity.action.open">Open</a><br />
-              <span class="pull-start">{{ editForm.get('attachmentContentType')!.value }}, {{
-                byteSize(editForm.get('attachment')!.value!) }}</span>
-              <button type="button"
-                (click)="editForm.patchValue({ attachment: undefined, attachmentContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end">
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </div>
-            <input type="file" id="file_attachment" data-cy="attachment"
-              (change)="setFileData($event, 'attachment', false)" jhiTranslate="entity.action.addblob" />
-          </div>
-          <input type="hidden" class="form-control" name="attachment" id="field_attachment" data-cy="attachment"
-            formControlName="attachment" />
-          <input type="hidden" class="form-control" name="attachmentContentType" id="field_attachmentContentType"
-            formControlName="attachmentContentType" />
-        </div>
-        <div class="col-md-6 mb-3">
-          <div class="mb-3" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_MANAGER']">
-            <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.team" for="field_team">Team</label>
-            <select class="form-control" id="field_team" data-cy="team" name="team" formControlName="team"
-              [compareWith]="compareTeam">
-              <option [ngValue]="null"></option>
-              <option [ngValue]="teamOption" *ngFor="let teamOption of teamsSharedCollection">{{ teamOption.teamName }}
-              </option>
-            </select>
-          </div>
-          </div>
-      </div>
-
-        <div class="mb-3">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.description"
-            for="field_description">Description</label>
-          <textarea type="text" class="form-control" name="description" id="field_description" data-cy="description"
-            formControlName="description" rows="4" ></textarea>
-        </div>
-
-        <!-- <div class="mb-3" *jhiHasAnyAuthority="['ROLE_MANAGER']">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.teamLead" for="field_teamLead">Team
-            Lead</label>
-          <select class="form-control" id="field_teamLead" data-cy="teamLead" name="teamLead" formControlName="teamLead"
-            [compareWith]="compareTeamLead">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="teamLeadOption" *ngFor="let teamLeadOption of teamLeadsSharedCollection">
-              {{ teamLeadOption.teamLeadName }}
-            </option>
-          </select>
-        </div> -->
-
-        <!-- <div class="mb-3" *jhiHasAnyAuthority="['ROLE_MANAGER']">
-          <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.employee" for="field_employee">Employee</label>
-          <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee"
-            [compareWith]="compareEmployee">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="employeeOption" *ngFor="let employeeOption of employeesSharedCollection">{{
-              employeeOption.name }}</option>
-          </select>
-        </div> -->
-       
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
-          (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
+    <jhi-team-update *ngIf="isChecked" [navigateOnSave]="false" [showCancelButton]="false"
+      (teamSaved)="onTeamSaved($event)"></jhi-team-update>
   </div>
-</div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="left-bar" *ngIf="selectedReport">
+        <h4>Report Details</h4>
+        <div class="report-info">
+          <p><strong>Full Name:</strong> {{ selectedReport.fullName }}</p>
+          <p><strong>Gender Type:</strong> {{ selectedReport.genderType }}</p>
+          <p><strong>Email Address:</strong> {{ selectedReport.emailAdress }}</p>
+          <p><strong>Message:</strong></p>
+          <div class="message">{{ selectedReport.message }}</div>
+        </div>
+        <hr>
+        <h4>Attachment</h4>
+        <div *ngIf="selectedReport.attachment">
+          <p>
+            <a (click)="openFile(selectedReport.attachment, selectedReport.attachmentContentType)"
+              jhiTranslate="entity.action.open">Open Attachment</a>
+          </p>
+          <p>
+            <span *ngIf="selectedReport.attachment">{{ selectedReport.attachmentContentType }},
+              {{ byteSize(selectedReport.attachment) }}</span>
+          </p>
+        </div>
+        <hr>
+        <div class="previous-task">
+          <div class="task-message">
+            <p>Welcome, {{ account?.name }}</p>
+            <p style="display: inline;"><strong>Message from:</strong></p>
+            <!-- <p style="display: inline;">{{ assignTask?.description }}</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div>
+    <p>Whistle Blower Property: {{ whistleBlowerProperty }}</p>
+  </div> -->
+    <div class="col-md-8">
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2 id="jhi-assign-task-heading" data-cy="AssignTaskCreateUpdateHeading"
+          jhiTranslate="fraudMgtApp.assignTask.home.createOrEditLabel">
+          Create or edit a Assign Task
+        </h2>
+
+        <div>
+          <jhi-alert-error></jhi-alert-error>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.task" for="field_task">Task</label>
+              <select class="form-control" id="field_task" data-cy="task" name="task" formControlName="task"
+                [compareWith]="compareTask">
+                <option [ngValue]="null">Select a task</option>
+                <option [ngValue]="taskOption" *ngFor="let taskOption of tasksSharedCollection">{{ taskOption.title }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3" *jhiHasAnyAuthority="['ROLE_VICE_PRESIDENT']">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.director"
+                for="field_director">Director</label>
+              <select class="form-control" id="field_director" data-cy="director" name="director"
+                formControlName="director" [compareWith]="compareDirector">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="directorOption" *ngFor="let directorOption of directorsSharedCollection">
+                  {{ directorOption.directorName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-6 mb-3" *jhiHasAnyAuthority="['ROLE_DIRECTOR']">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.manager"
+                for="field_manager">Manager</label>
+              <select class="form-control" id="field_manager" data-cy="manager" name="manager" formControlName="manager"
+                [compareWith]="compareManagerial">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="managerialOption" *ngFor="let managerialOption of managerialsSharedCollection">
+                  {{ managerialOption.managerialName }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.taskAssignmentDate"
+                for="field_taskAssignmentDate">Task Assignment Date</label>
+              <div class="d-flex">
+                <input id="field_taskAssignmentDate" data-cy="taskAssignmentDate" type="datetime-local"
+                  class="form-control" name="taskAssignmentDate" formControlName="taskAssignmentDate"
+                  placeholder="YYYY-MM-DD HH:mm" />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.taskStartDate"
+                for="field_taskStartDate">Task
+                Start Date</label>
+              <div class="d-flex">
+                <input id="field_taskStartDate" data-cy="taskStartDate" type="datetime-local" class="form-control"
+                  name="taskStartDate" formControlName="taskStartDate" placeholder="YYYY-MM-DD HH:mm" />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.taskEndDate" for="field_taskEndDate">Task
+                End
+                Date</label>
+              <div class="d-flex">
+                <input id="field_taskEndDate" data-cy="taskEndDate" type="datetime-local" class="form-control"
+                  name="taskEndDate" formControlName="taskEndDate" placeholder="YYYY-MM-DD HH:mm" />
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.attachment"
+                for="field_attachment">Attachment</label>
+              <div>
+                <div *ngIf="editForm.get('attachment')!.value" class="form-text text-danger clearfix">
+                  <a class="pull-start"
+                    (click)="openFile(editForm.get('attachment')!.value!, editForm.get('attachmentContentType')!.value!)"
+                    jhiTranslate="entity.action.open">Open</a><br />
+                  <span class="pull-start">{{ editForm.get('attachmentContentType')!.value }}, {{
+                    byteSize(editForm.get('attachment')!.value!) }}</span>
+                  <button type="button"
+                    (click)="editForm.patchValue({ attachment: undefined, attachmentContentType: undefined })"
+                    class="btn btn-secondary btn-xs pull-end">
+                    <fa-icon icon="times"></fa-icon>
+                  </button>
+                </div>
+                <input type="file" id="file_attachment" data-cy="attachment"
+                  (change)="setFileData($event, 'attachment', false)" jhiTranslate="entity.action.addblob" />
+              </div>
+              <input type="hidden" class="form-control" name="attachment" id="field_attachment" data-cy="attachment"
+                formControlName="attachment" />
+              <input type="hidden" class="form-control" name="attachmentContentType" id="field_attachmentContentType"
+                formControlName="attachmentContentType" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="mb-3" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_MANAGER']">
+                <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.team" for="field_team">Team</label>
+                <select class="form-control" id="field_team" data-cy="team" name="team" formControlName="team"
+                  [compareWith]="compareTeam">
+                  <option [ngValue]="null"></option>
+                  <option [ngValue]="teamOption" *ngFor="let teamOption of teamsSharedCollection">{{ teamOption.teamName
+                    }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="fraudMgtApp.assignTask.description"
+              for="field_description">Description</label>
+            <textarea type="text" class="form-control" name="description" id="field_description" data-cy="description"
+              formControlName="description" rows="4"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+            (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          </button>
+
+          <button type="submit" id="save-entity" data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

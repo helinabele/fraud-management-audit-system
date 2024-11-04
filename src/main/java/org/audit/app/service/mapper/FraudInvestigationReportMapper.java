@@ -20,6 +20,7 @@ public interface FraudInvestigationReportMapper extends EntityMapper<FraudInvest
     @Mapping(target = "employee", source = "employee", qualifiedByName = "employeeName")
     @Mapping(target = "task", source = "task", qualifiedByName = "taskTitle")
     @Mapping(target = "team", source = "team", qualifiedByName = "teamTeamName")
+    @Mapping(target = "whistleBlowerReport", source = "whistleBlowerReport")
     FraudInvestigationReportDTO toDto(FraudInvestigationReport s);
 
     @Named("employeeName")

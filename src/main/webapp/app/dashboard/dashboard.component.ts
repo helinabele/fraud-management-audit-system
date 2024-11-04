@@ -14,7 +14,6 @@ import { AccountService } from "app/core/auth/account.service";
   export class DashboardComponent implements OnInit{
     account: Account | null = null;
 
-  
     constructor(private accountService: AccountService,
         private router: Router,
         private tooltipConfig: NgbTooltipConfig,
@@ -24,6 +23,10 @@ import { AccountService } from "app/core/auth/account.service";
       }
     
       ngOnInit(): void {
-        
+       /*  this.accountService.identity().subscribe(() => {
+          if (this.accountService.isAuthenticated()) {
+            this.router.navigate(['']);
+          }
+        }); */
       }
     }

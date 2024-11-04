@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
 
@@ -30,9 +30,11 @@ export type EntityArrayResponseType = HttpResponse<IAssignTask[]>;
 
 @Injectable({ providedIn: 'root' })
 export class AssignTaskService {
+  selectedReportSubject = new BehaviorSubject<IWhistleBlowerReport | null>(null);
+
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/assign-tasks');
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) { }
 
   create(assignTask: NewAssignTask): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(assignTask);
@@ -46,6 +48,14 @@ export class AssignTaskService {
     return this.http
       .put<RestAssignTask>(`${this.resourceUrl}/${this.getAssignTaskIdentifier(assignTask)}`, copy, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
+  }
+
+  assign(assignTask: IAssignTask): Observable<EntityResponseType> {
+    return this.http
+      .put<IAssignTask>(`${this.resourceUrl}/${assignTask.id}/assign`, assignTask, { observe: 'response' });
+  }
+  setSelectedReport(report: IAssignTask): void {
+    this.selectedReportSubject.next(report);
   }
 
   partialUpdate(assignTask: PartialUpdateAssignTask): Observable<EntityResponseType> {
@@ -106,7 +116,7 @@ export class AssignTaskService {
       taskAssignmentDate: assignTask.taskAssignmentDate?.toJSON() ?? null,
       taskStartDate: assignTask.taskStartDate?.toJSON() ?? null,
       taskEndDate: assignTask.taskEndDate?.toJSON() ?? null,
-      whistleBlowerReport: assignTask.whistleBlowerReport, 
+      whistleBlowerReport: assignTask.whistleBlowerReport,
     };
   }
 
